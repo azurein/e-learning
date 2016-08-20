@@ -70,7 +70,7 @@ if(@$_GET['data'] == "pengajar") {
 	$pdf->Cell(10,6,'Kelas',1,0,'C');
 	$pdf->Ln(2);
 	$no = 1;
-	$sql = mysqli_query($db, "SELECT * FROM tb_siswa JOIN tb_kelas ON tb_siswa.id_kelas = tb_kelas.id_kelas WHERE status = 'aktif' ORDER BY id_siswa ASC") or die ($db->error);
+	$sql = mysqli_query($db, "SELECT * FROM tb_siswa LEFT JOIN tb_kelas ON tb_siswa.id_kelas = tb_kelas.id_kelas WHERE status = 'aktif' ORDER BY id_siswa ASC") or die ($db->error);
 	while($data = mysqli_fetch_array($sql)) {
 		$pdf->Ln(4);
 		$pdf->SetFont('Arial','',7);
@@ -107,7 +107,7 @@ if(@$_GET['data'] == "pengajar") {
 	$pdf->Cell(10,6,'Kelas',1,0,'C');
 	$pdf->Ln(2);
 	$no = 1;
-	$sql = mysqli_query($db, "SELECT * FROM tb_siswa JOIN tb_kelas ON tb_siswa.id_kelas = tb_kelas.id_kelas WHERE status = 'tidak aktif' ORDER BY id_siswa ASC") or die ($db->error);
+	$sql = mysqli_query($db, "SELECT * FROM tb_siswa LEFT JOIN tb_kelas ON tb_siswa.id_kelas = tb_kelas.id_kelas WHERE status = 'tidak aktif' ORDER BY id_siswa ASC") or die ($db->error);
 	while($data = mysqli_fetch_array($sql)) {
 		$pdf->Ln(4);
 		$pdf->SetFont('Arial','',7);

@@ -24,7 +24,7 @@ if(@$_SESSION['admin']) { ?>
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>No Unik</th>
+                                <th>NIP</th>
                                 <th>Nama Lengkap</th>
                                 <th>Jenis Kelamin</th>
                                 <th>Status</th>

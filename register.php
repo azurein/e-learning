@@ -79,7 +79,6 @@ $db = mysqli_connect("localhost", "root", "root", "elearn_db");
                     <div class="col-md-6">
                         <h4><i>Masukkan data Anda dengan benar !</i></h4>
                         <form method="post" enctype="multipart/form-data">
-                            No Unik* :<input type="text" name="nis" class="form-control" required />
                             Nama Lengkap* : <input type="text" name="nama_lengkap" class="form-control" required />
                             Tempat Lahir* : <input type="text" name="tempat_lahir" class="form-control" required />
                             Tanggal Lahir* : <input type="date" name="tgl_lahir" class="form-control" required />
@@ -104,23 +103,6 @@ $db = mysqli_connect("localhost", "root", "root", "elearn_db");
                             Nomor Telepon : <input type="text" name="no_telp" class="form-control" />
                             Email : <input type="email" name="email" class="form-control" />
                             Alamat* : <textarea name="alamat" class="form-control" rows="3" required></textarea>
-                            Kelas* :
-                            <select name="kelas" class="form-control" required>
-                                <option value="">- Pilih -</option>
-                                <?php
-                                $sql_kelas = mysqli_query($db, "SELECT * from tb_kelas") or die ($db->error);
-                                while($data_kelas = mysqli_fetch_array($sql_kelas)) {
-                                    echo '<option value="'.$data_kelas['id_kelas'].'">'.$data_kelas['nama_kelas'].'</option>';
-                                } ?>
-                            </select>
-                            Tahun Masuk* :
-                            <select name="thn_masuk" class="form-control" required>
-                                <option value="">- Pilih -</option>
-                                <?php
-                                for ($i = 2020; $i >= 2000; $i--) { 
-                                    echo '<option value="'.$i.'">'.$i.'</option>';
-                                } ?>
-                            </select>
                             Foto : <input type="file" name="gambar" class="form-control" />
                             Username* : <input type="text" name="user" class="form-control" required />
                             Password* : <input type="password" name="pass" class="form-control" required />
@@ -132,7 +114,6 @@ $db = mysqli_connect("localhost", "root", "root", "elearn_db");
                         </form>
                         <?php
                         if(@$_POST['daftar']) {
-                            $nis = @mysqli_real_escape_string($db, $_POST['nis']);
                             $nama_lengkap = @mysqli_real_escape_string($db, $_POST['nama_lengkap']);
                             $tempat_lahir = @mysqli_real_escape_string($db, $_POST['tempat_lahir']);
                             $tgl_lahir = @mysqli_real_escape_string($db, $_POST['tgl_lahir']);
@@ -144,7 +125,6 @@ $db = mysqli_connect("localhost", "root", "root", "elearn_db");
                             $email = @mysqli_real_escape_string($db, $_POST['email']);
                             $alamat = @mysqli_real_escape_string($db, $_POST['alamat']);
                             $kelas = @mysqli_real_escape_string($db, $_POST['kelas']);
-                            $thn_masuk = @mysqli_real_escape_string($db, $_POST['thn_masuk']);
                             $user = @mysqli_real_escape_string($db, $_POST['user']);
                             $pass = @mysqli_real_escape_string($db, $_POST['pass']);
 
@@ -152,19 +132,36 @@ $db = mysqli_connect("localhost", "root", "root", "elearn_db");
                             $target = 'img/foto_siswa/';
                             $nama_gambar = @$_FILES['gambar']['name'];
 
+                            $sql_generate_nis = mysqli_query($db, "
+                                SELECT IF(
+                                    (SELECT DISTINCT 1=1 FROM tb_siswa WHERE LEFT(nis,4) = DATE_FORMAT(NOW(),'%y%m')),
+                                    (SELECT MAX(nis)+1 FROM tb_siswa),
+                                    CONCAT(DATE_FORMAT(NOW(),'%y%m'),'000001')) as nis
+                                ");
+
+                            $nis = mysqli_fetch_array($sql_generate_nis)[0];
+
                             $sql_cek_user = mysqli_query($db, "SELECT * FROM tb_siswa WHERE username = '$user'") or die ($db->error);
                             if(mysqli_num_rows($sql_cek_user) > 0) {
                                 echo "<script>alert('Username yang Anda pilih sudah ada, silahkan ganti yang lain');</script>";
                             } else {
                                 if($nama_gambar != '') {
                                     if(move_uploaded_file($sumber, $target.$nama_gambar)) {
-                                        mysqli_query($db, "INSERT INTO tb_siswa VALUES('', '$nis', '$nama_lengkap', '$tempat_lahir', '$tgl_lahir', '$jenis_kelamin', '$agama', '$nama_ayah', '$nama_ibu', '$no_telp', '$email', '$alamat', '$kelas', '$thn_masuk', '$nama_gambar', '$user', md5('$pass'), '$pass', 'tidak aktif')") or die ($db->error);          
-                                        echo '<script>alert("Pendaftaran berhasil, silahkan login"); window.location="./"</script>';
+                                        mysqli_query($db, 
+                                            "INSERT INTO tb_siswa VALUES(0, $nis, '$nama_lengkap', '$tempat_lahir', '$tgl_lahir', '$jenis_kelamin', 
+                                            '$agama', '$nama_ayah', '$nama_ibu', '$no_telp', '$email', '$alamat', NULL, YEAR(NOW()), '$nama_gambar',
+                                            '$user', md5('$pass'), '$pass', 'tidak aktif')"
+                                        ) or die ($db->error);          
+                                        echo '<script>alert("Pendaftaran berhasil, tunggu akun aktif dan silahkan login"); window.location="./"</script>';
                                     } else {
                                         echo '<script>alert("Gagal mendaftar, foto gagal diupload, coba lagi!");</script>';
                                     }
                                 } else {
-                                    mysqli_query($db, "INSERT INTO tb_siswa VALUES('', '$nis', '$nama_lengkap', '$tempat_lahir', '$tgl_lahir', '$jenis_kelamin', '$agama', '$nama_ayah', '$nama_ibu', '$no_telp', '$email', '$alamat', '$kelas', '$thn_masuk', 'anonim.png', '$user', md5('$pass'), '$pass', 'tidak aktif')") or die ($db->error);          
+                                    mysqli_query($db, 
+                                        "INSERT INTO tb_siswa VALUES(0, '$nis', '$nama_lengkap', '$tempat_lahir', '$tgl_lahir', '$jenis_kelamin', 
+                                        '$agama', '$nama_ayah', '$nama_ibu', '$no_telp', '$email', '$alamat', NULL, YEAR(NOW()), 'anonim.png', 
+                                        '$user', md5('$pass'), '$pass', 'tidak aktif')"
+                                    ) or die ($db->error);
                                     echo '<script>alert("Pendaftaran berhasil, tunggu akun aktif dan silahkan login"); window.location="./"</script>';
                                 }
                             }

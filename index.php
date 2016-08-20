@@ -24,7 +24,7 @@ if(!@$_SESSION['siswa']) {
 <script src="style/assets/js/jquery-1.11.1.js"></script>
 <script src="style/assets/js/bootstrap.js"></script>
 <?php
-$sql_terlogin = mysqli_query($db, "SELECT * FROM tb_siswa JOIN tb_kelas ON tb_siswa.id_siswa = '$_SESSION[siswa]' AND tb_kelas.id_kelas = tb_siswa.id_kelas") or die ($db->error);
+$sql_terlogin = mysqli_query($db, "SELECT * FROM tb_siswa WHERE id_siswa = '$_SESSION[siswa]'") or die ($db->error);
 $data_terlogin = mysqli_fetch_array($sql_terlogin);
 ?>
     <header>
