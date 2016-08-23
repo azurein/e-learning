@@ -16,9 +16,7 @@ if(@$_SESSION['admin'] || @$_SESSION['pengajar']) {
     <link href='style/assets/css/font-opensans.css' rel='stylesheet' />
     <link href="style/assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
     <link href="style/assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
-    <style type="text/css">
-    .link:hover { cursor:pointer; }
-    </style>
+    <link href="style/assets/css/style.css" rel="stylesheet" />
 </head>
 
 <body>

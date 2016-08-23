@@ -140,7 +140,6 @@ if(@$_GET['hal'] == '') { ?>
             </form>
             <?php
             if(@$_POST['simpan']) {
-                $nis = @mysqli_real_escape_string($db, $_POST['nis']);
                 $nama_lengkap = @mysqli_real_escape_string($db, $_POST['nama_lengkap']);
                 $tempat_lahir = @mysqli_real_escape_string($db, $_POST['tempat_lahir']);
                 $tgl_lahir = @mysqli_real_escape_string($db, $_POST['tgl_lahir']);
@@ -151,8 +150,6 @@ if(@$_GET['hal'] == '') { ?>
                 $no_telp = @mysqli_real_escape_string($db, $_POST['no_telp']);
                 $email = @mysqli_real_escape_string($db, $_POST['email']);
                 $alamat = @mysqli_real_escape_string($db, $_POST['alamat']);
-                $kelas = @mysqli_real_escape_string($db, $_POST['kelas']);
-                $thn_masuk = @mysqli_real_escape_string($db, $_POST['thn_masuk']);
                 $user = @mysqli_real_escape_string($db, $_POST['user']);
                 $pass = @mysqli_real_escape_string($db, $_POST['pass']);
 
