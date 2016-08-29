@@ -260,7 +260,7 @@ if(@$_SESSION[admin]) {
                             $kelas = @mysqli_real_escape_string($db, $_POST['kelas']);
                             $ket = @mysqli_real_escape_string($db, $_POST['ket']);
                             $pengajar = @$_SESSION['pengajar'];
-                            mysqli_query($db, "INSERT INTO tb_kelas_ajar VALUES('', '$kelas', '$pengajar', '$ket')") or die ($db->error);
+                            mysqli_query($db, "INSERT INTO tb_kelas_ajar VALUES(NULL '$kelas', '$pengajar', '$ket')") or die ($db->error);
                             echo "<script>window.location='?page=kelas';</script>";
                         }
                         ?>

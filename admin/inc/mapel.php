@@ -75,7 +75,7 @@ if(@$_SESSION[admin]) {
                     if(@$_POST['simpan']) {
                         $kode_mapel = @mysqli_real_escape_string($db, $_POST['kode_mapel']);
                         $mapel = @mysqli_real_escape_string($db, $_POST['mapel']);
-                        mysqli_query($db, "INSERT INTO tb_mapel VALUES('', '$kode_mapel', '$mapel')") or die ($db->error);
+                        mysqli_query($db, "INSERT INTO tb_mapel VALUES(NULL, '$kode_mapel', '$mapel')") or die ($db->error);
                         echo "<script>window.location='?page=mapel';</script>";
                     }
                     ?>
@@ -215,7 +215,7 @@ if(@$_SESSION[admin]) {
                         $kelas = @mysqli_real_escape_string($db, $_POST['kelas']);
                         $pengajar = @$_SESSION['pengajar'];
                         $ket = @mysqli_real_escape_string($db, $_POST['ket']);
-                        mysqli_query($db, "INSERT INTO tb_mapel_ajar VALUES('', '$mapel', '$kelas', '$pengajar', '$ket')") or die ($db->error);
+                        mysqli_query($db, "INSERT INTO tb_mapel_ajar VALUES(NULL, '$mapel', '$kelas', '$pengajar', '$ket')") or die ($db->error);
                         echo "<script>window.location='?page=mapel';</script>";
                     }
                     ?>

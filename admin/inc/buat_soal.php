@@ -6,11 +6,11 @@
 	        Buat Jenis Soal : <a href="?page=quiz&action=buatsoal&hal=soalpilgan&id=<?php echo $id; ?>" class="btn btn-primary btn-sm">Pilihan Ganda</a> 
 	        <a href="?page=quiz&action=buatsoal&hal=soalessay&id=<?php echo $id; ?>" class="btn btn-primary btn-sm">Essay</a>
 	    </div>
-	    <div class="panel-body" style="padding-bottom:0;">
+	    <!-- <div class="panel-body" style="padding-bottom:0;">
 			<div class="alert alert-warning">
 		        Perhatian, pembuatan soal wajib ada pilihan gandanya, jangan essay saja. Kalo soal pilihan ganda saja tanpa essay atau ada keduanya tidak masalah. 
 	        </div>
-	    </div>
+	    </div> -->
 	</div>
 </div>
 
@@ -122,7 +122,7 @@ if(@$_GET['hal'] == "soalpilgan") { ?>
                     $nama_gambar = @$_FILES['gambar']['name'];
 
                     move_uploaded_file($sumber, $target.$nama_gambar);
-                    mysqli_query($db, "INSERT INTO tb_soal_pilgan VALUES('', '$id', '$pertanyaan', '$nama_gambar', '$pilA', '$pilB', '$pilC', '$pilD', '$pilE', '$kunci', now())") or die ($db->error);          
+                    mysqli_query($db, "INSERT INTO tb_soal_pilgan VALUES(NULL, '$id', '$pertanyaan', '$nama_gambar', '$pilA', '$pilB', '$pilC', '$pilD', '$pilE', '$kunci', now())") or die ($db->error);          
                     echo '<script>window.location="?page=quiz&action=daftarsoal&hal=pilgan&id='.$id.'"</script>';
 	            } ?>
 		    </div>
@@ -168,7 +168,7 @@ if(@$_GET['hal'] == "soalpilgan") { ?>
                     $nama_gambar = @$_FILES['gambar']['name'];
 
                     move_uploaded_file($sumber, $target.$nama_gambar);
-                    mysqli_query($db, "INSERT INTO tb_soal_essay VALUES('', '$id', '$pertanyaan', '$nama_gambar', now())") or die ($db->error);          
+                    mysqli_query($db, "INSERT INTO tb_soal_essay VALUES(NULL, '$id', '$pertanyaan', '$nama_gambar', now())") or die ($db->error);          
                     echo '<script>window.location="?page=quiz&action=daftarsoal&hal=essay&id='.$id.'"</script>';
 	            }
 	            ?>

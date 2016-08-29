@@ -88,7 +88,7 @@ if(@$_GET['hal'] == 'essay') { ?>
                     $nilai = $nilai + $value;
                 }
                 $nilai_total = $nilai / $jumlah_soal;
-                mysqli_query($db, "INSERT INTO tb_nilai_essay VALUES('', '$id_tq', '$_GET[id_siswa]', '$nilai_total')") or die ($db->error);
+                mysqli_query($db, "INSERT INTO tb_nilai_essay VALUES(NULL, '$id_tq', '$_GET[id_siswa]', '$nilai_total')") or die ($db->error);
                 echo "<script>window.location='?page=quiz&action=pesertakoreksi&id_tq=".$id_tq."';</script>";
             }
             ?>

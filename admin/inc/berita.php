@@ -107,9 +107,9 @@ if(@$_GET['action'] == '') { ?>
                     	$isi = @mysqli_real_escape_string($db, $_POST['isi']);
                     	$status = @mysqli_real_escape_string($db, $_POST['status']);
                     	if(@$_SESSION[admin]) {
-                            mysqli_query($db, "INSERT INTO tb_berita VALUES('', '$judul', '$isi', now(), 'admin', '$status')") or die ($db->error);           
+                            mysqli_query($db, "INSERT INTO tb_berita VALUES(NULL, '$judul', '$isi', now(), 'admin', '$status')") or die ($db->error);           
                         } else if(@$_SESSION[pengajar]) {
-                        	mysqli_query($db, "INSERT INTO tb_berita VALUES('', '$judul', '$isi', now(), '$_SESSION[pengajar]', '$status')") or die ($db->error);
+                        	mysqli_query($db, "INSERT INTO tb_berita VALUES(NULL, '$judul', '$isi', now(), '$_SESSION[pengajar]', '$status')") or die ($db->error);
                         }
                         echo '<script>window.location="?page=berita";</script>';
                     } ?>

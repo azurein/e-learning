@@ -103,7 +103,13 @@ if(@$_GET['action'] == '') {
     mysqli_query($db, "DELETE FROM tb_siswa WHERE id_siswa = '$id'") or die ($db->error);
     echo "<script>window.location='?page=siswa';</script>";
 } else if(@$_GET['action'] == 'editprofil') {
-    $sql_siswa_per_id = mysqli_query($db, "SELECT * FROM tb_siswa WHERE id_siswa = '$_GET[IDsiswa]'") or die ($db->error);
+    $sql_siswa_per_id = mysqli_query($db, "
+        SELECT a.*,b.nama_kelas 
+        FROM tb_siswa a
+        JOIN tb_kelas b
+        ON a.id_kelas = b.id_kelas
+        WHERE id_siswa = '15'
+    ") or die ($db->error);
     $data = mysqli_fetch_array($sql_siswa_per_id);
     ?>
     <div class="row">
@@ -135,6 +141,41 @@ if(@$_GET['action'] == '') {
                 Nomor Telepon : <input type="text" name="no_telp" value="<?php echo $data['no_telp']; ?>" class="form-control" />
                 Email : <input type="email" name="email" value="<?php echo $data['email']; ?>" class="form-control" />
                 Alamat* : <textarea name="alamat" class="form-control" rows="3" required><?php echo $data['alamat']; ?></textarea>
+                Kelas :
+                <select name="kelas" class="form-control" required>
+                    <?php 
+                    if(!isset($data['id_kelas'])) { ?>
+                        <option value="">- Pilih -</option>
+                    <?php 
+                    } else { ?>
+                        <option value="<?php echo $data['id_kelas']; ?>"><?php echo $data['nama_kelas']; ?></option>
+                    <?php 
+                    } ?>
+                    <?php
+                    $sql_kelas = mysqli_query($db, "SELECT * from tb_kelas") or die ($db->error);
+                    while($data_kelas = mysqli_fetch_array($sql_kelas)) {
+                        if($data['id_kelas'] != $data_kelas['id_kelas']) {
+                            echo '<option value="'.$data_kelas['id_kelas'].'">'.$data_kelas['nama_kelas'].'</option>';
+                        }
+                    } ?>
+                </select>
+                Tahun Masuk :
+                <select name="thn_masuk" class="form-control" required>
+                    <?php 
+                    if(!isset($data['thn_masuk'])) { ?>
+                        <option value="">- Pilih -</option>
+                    <?php 
+                    } else { ?>
+                        <option value="<?php echo $data['thn_masuk']; ?>"><?php echo $data['thn_masuk']; ?></option>
+                    <?php 
+                    } ?>
+                    <?php
+                    for ($i = 2020; $i >= 2000; $i--) { 
+                        if($data['thn_masuk'] != $i) {
+                            echo '<option value="'.$i.'">'.$i.'</option>';
+                        }
+                    } ?>
+                </select>
                 Foto : <br /><img src="../img/foto_siswa/<?php echo $data['foto']; ?>" width="150px" style="margin-bottom:5px;" /><input type="file" name="gambar" class="form-control" />
                 Username* : <input type="text" name="user" value="<?php echo $data['username']; ?>" class="form-control" required />
                 Password* : <input type="text" name="pass" value="<?php echo $data['pass']; ?>" class="form-control" required />
@@ -154,6 +195,8 @@ if(@$_GET['action'] == '') {
                 $no_telp = @mysqli_real_escape_string($db, $_POST['no_telp']);
                 $email = @mysqli_real_escape_string($db, $_POST['email']);
                 $alamat = @mysqli_real_escape_string($db, $_POST['alamat']);
+                $kelas = @mysqli_real_escape_string($db, $_POST['kelas']);
+                $thn_masuk = @mysqli_real_escape_string($db, $_POST['thn_masuk']);
                 $user = @mysqli_real_escape_string($db, $_POST['user']);
                 $pass = @mysqli_real_escape_string($db, $_POST['pass']);
 
@@ -162,11 +205,11 @@ if(@$_GET['action'] == '') {
                 $nama_gambar = @$_FILES['gambar']['name'];
 
                 if($nama_gambar == '') {
-                    mysqli_query($db, "UPDATE tb_siswa SET nama_lengkap = '$nama_lengkap', tempat_lahir = '$tempat_lahir', tgl_lahir = '$tgl_lahir', jenis_kelamin = '$jenis_kelamin', agama = '$agama', nama_ayah = '$nama_ayah', nama_ibu = '$nama_ibu', no_telp = '$no_telp', email = '$email', alamat = '$alamat', username = '$user', password = md5('$pass'), pass = '$pass' WHERE id_siswa = '$_GET[IDsiswa]'") or die ($db->error);          
+                    mysqli_query($db, "UPDATE tb_siswa SET nama_lengkap = '$nama_lengkap', tempat_lahir = '$tempat_lahir', tgl_lahir = '$tgl_lahir', jenis_kelamin = '$jenis_kelamin', agama = '$agama', nama_ayah = '$nama_ayah', nama_ibu = '$nama_ibu', no_telp = '$no_telp', email = '$email', alamat = '$alamat', id_kelas = '$kelas', thn_masuk = '$thn_masuk', username = '$user', password = md5('$pass'), pass = '$pass' WHERE id_siswa = '$_GET[IDsiswa]'") or die ($db->error);          
                     echo '<script>window.location="?page=siswa&action=detail&IDsiswa='.$_GET[IDsiswa].'";</script>';
                 } else {
                     if(move_uploaded_file($sumber, $target.$nama_gambar)) {
-                        mysqli_query($db, "UPDATE tb_siswa SET nama_lengkap = '$nama_lengkap', tempat_lahir = '$tempat_lahir', tgl_lahir = '$tgl_lahir', jenis_kelamin = '$jenis_kelamin', agama = '$agama', nama_ayah = '$nama_ayah', nama_ibu = '$nama_ibu', no_telp = '$no_telp', email = '$email', alamat = '$alamat', foto = '$nama_gambar', username = '$user', password = md5('$pass'), pass = '$pass' WHERE id_siswa = '$_GET[IDsiswa]'") or die ($db->error);           
+                        mysqli_query($db, "UPDATE tb_siswa SET nama_lengkap = '$nama_lengkap', tempat_lahir = '$tempat_lahir', tgl_lahir = '$tgl_lahir', jenis_kelamin = '$jenis_kelamin', agama = '$agama', nama_ayah = '$nama_ayah', nama_ibu = '$nama_ibu', no_telp = '$no_telp', email = '$email', alamat = '$alamat', id_kelas = '$kelas', thn_masuk = '$thn_masuk', foto = '$nama_gambar', username = '$user', password = md5('$pass'), pass = '$pass' WHERE id_siswa = '$_GET[IDsiswa]'") or die ($db->error);           
                         echo '<script>window.location="?page=siswa&action=detail&IDsiswa='.$_GET[IDsiswa].'";</script>';
                     } else {
                         echo '<script>alert("Gagal mengedit info profil, foto gagal diupload, coba lagi!");</script>';
@@ -181,7 +224,13 @@ if(@$_GET['action'] == '') {
     </div>
 <?php 
 } else if(@$_GET['action'] == 'detail') {
-    $sql_siswa_per_id = mysqli_query($db, "SELECT * FROM tb_siswa WHERE id_siswa = '$_GET[IDsiswa]'") or die ($db->error);
+   $sql_siswa_per_id = mysqli_query($db, "
+        SELECT a.*,b.nama_kelas 
+        FROM tb_siswa a
+        JOIN tb_kelas b
+        ON a.id_kelas = b.id_kelas
+        WHERE id_siswa = '15'
+    ") or die ($db->error);
     $data = mysqli_fetch_array($sql_siswa_per_id);
     ?>
     <div class="row">

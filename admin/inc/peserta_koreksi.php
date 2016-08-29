@@ -17,7 +17,37 @@
                     </thead>
                     <tbody>
 					<?php
-					$sql_siswa_mengikuti_tes = mysqli_query($db, "SELECT * FROM tb_nilai_pilgan JOIN tb_siswa ON tb_nilai_pilgan.id_siswa = tb_siswa.id_siswa JOIN tb_kelas ON tb_siswa.id_kelas = tb_kelas.id_kelas WHERE id_tq = '$id_tq'") or die ($db->error);
+					$sql_siswa_mengikuti_tes = mysqli_query($db, "
+                        
+                        SELECT DISTINCT
+                        tb_jawaban.id_siswa,
+                        tb_siswa.nama_lengkap,
+                        tb_nilai_pilgan.presentase,
+                        tb_nilai_essay.nilai as 'nilai_essay',
+                        tb_kelas.nama_kelas
+
+                        FROM tb_topik_quiz
+
+                        JOIN tb_jawaban
+                        ON tb_jawaban.id_tq = tb_topik_quiz.id_tq
+
+                        JOIN tb_siswa 
+                        ON tb_jawaban.id_siswa = tb_siswa.id_siswa
+
+                        LEFT JOIN tb_nilai_pilgan 
+                        ON tb_jawaban.id_tq = tb_nilai_pilgan.id_tq
+                        AND tb_siswa.id_siswa = tb_nilai_pilgan.id_siswa
+
+                        LEFT JOIN tb_nilai_essay
+                        ON tb_jawaban.id_tq = tb_nilai_essay.id_tq 
+                        AND tb_siswa.id_siswa = tb_nilai_essay.id_siswa
+
+                        JOIN tb_kelas ON tb_siswa.id_kelas = tb_kelas.id_kelas 
+
+                        WHERE tb_topik_quiz.status like 'aktif'
+                        AND tb_topik_quiz.id_tq = '6'
+
+                    ") or die ($db->error);
                     if(mysqli_num_rows($sql_siswa_mengikuti_tes) > 0) {
     					while($data_siswa_mengikuti_tes = mysqli_fetch_array($sql_siswa_mengikuti_tes)) {
     						?>
@@ -33,12 +63,24 @@
                             	$data_essay = mysqli_fetch_array($sql_essay);
                             	?>
                             	<td>
-                            		Nilai soal pilihan ganda : <?php echo $data_pilgan['presentase']; ?><br />
+
+                            		Nilai soal pilihan ganda : <?php echo $data_pilgan['presentase']; ?>
+                                    <?php
+                                    if(mysqli_num_rows($sql_jwb) > 0) {
+                                        if(mysqli_num_rows($sql_pilgan) > 0) {
+                                            echo $data_pilgan['presentase'];
+                                        } else {
+                                            echo "(belum dikoreksi)";
+                                        }
+                                    } else {
+                                        echo "Ujian ini tidak ada soal pilihan ganda";
+                                    } ?>
+                                    <br />
                             		Nilai soal essay : 
                             		<?php
                                     if(mysqli_num_rows($sql_jwb) > 0) {
                                 		if(mysqli_num_rows($sql_essay) > 0) {
-                                			echo $data_essay['nilai'];
+                                			echo $data_essay['nilai_essay'];
                                 		} else {
                                 			echo "(belum dikoreksi)";
                                 		}

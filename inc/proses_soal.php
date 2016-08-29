@@ -30,10 +30,10 @@ if (!empty($pilganda) AND !empty($esay)) {
     $tidakjawab = $jumlah - $benar - $salah;
     $persen = $benar / $jumlah;
     $hasil = $persen * 100;
-    mysqli_query($db, "INSERT INTO tb_nilai_pilgan VALUES ('', '$id_tq', '$_SESSION[siswa]', '$benar', '$salah', '$tidakjawab', '$hasil')") or die ($db->error);
+    mysqli_query($db, "INSERT INTO tb_nilai_pilgan VALUES (NULL, '$id_tq', '$_SESSION[siswa]', '$benar', '$salah', '$tidakjawab', '$hasil')") or die ($db->error);
   } else if(empty($_POST['soal_pilganda'])){
       $jumlah = $_POST['jumlahsoalpilgan'];
-      mysqli_query($db, "INSERT INTO tb_nilai_pilgan VALUES ('', '$id_tq', '$_SESSION[siswa]', '0', '0', '$jumlah', '0')") or die ($db->error);
+      mysqli_query($db, "INSERT INTO tb_nilai_pilgan VALUES (NULL, '$id_tq', '$_SESSION[siswa]', '0', '0', '$jumlah', '0')") or die ($db->error);
   }
 
   if(!empty($_POST['soal_essay'])) {
@@ -41,11 +41,11 @@ if (!empty($pilganda) AND !empty($esay)) {
         $jawaban = $value;
         $cek = mysqli_query($db, "SELECT * FROM tb_soal_essay WHERE id_essay = '$key2'");
         while($data = mysqli_fetch_array($cek)) {
-            mysqli_query($db, "INSERT INTO tb_jawaban VALUES('', '$id_tq','$data[id_essay]','$_SESSION[siswa]','$jawaban')") or die ($db->error);
+            mysqli_query($db, "INSERT INTO tb_jawaban VALUES(NULL, '$id_tq','$data[id_essay]','$_SESSION[siswa]','$jawaban')") or die ($db->error);
         }
       }
   } else if (empty($_POST['soal_esay'])){
-      mysqli_query($db, "INSERT INTO tb_jawaban VALUES('', '$id_tq','$data[id_essay]','$_SESSION[siswa]','')") or die ($db->error);
+      mysqli_query($db, "INSERT INTO tb_jawaban VALUES(NULL, '$id_tq','$data[id_essay]','$_SESSION[siswa]','')") or die ($db->error);
   }
   echo "<script>window.location='./../?page=quiz&action=infokerjakan&id_tq=".$id_tq."';</script>";
 }
@@ -58,11 +58,11 @@ if (empty($pilganda) AND !empty($esay)) {
       $jawaban = $value;
       $cek = mysqli_query($db, "SELECT * FROM tb_soal_essay WHERE id_essay = '$key2'");
       while($data = mysqli_fetch_array($cek)) {
-          mysqli_query($db, "INSERT INTO tb_jawaban VALUES('', '$id_tq', '$data[id_essay]', '$_SESSION[siswa]', '$jawaban')") or die ($db->error);
+          mysqli_query($db, "INSERT INTO tb_jawaban VALUES(NULL, '$id_tq', '$data[id_essay]', '$_SESSION[siswa]', '$jawaban')") or die ($db->error);
       }
     }
   } else if(empty($_POST['soal_essay'])) {
-    mysqli_query($db, "INSERT INTO tb_jawaban VALUES('', '$id_tq', '$data[id_essay]', '$_SESSION[siswa]','')") or die ($db->error);
+    mysqli_query($db, "INSERT INTO tb_jawaban VALUES(NULL, '$id_tq', '$data[id_essay]', '$_SESSION[siswa]','')") or die ($db->error);
   }
   echo "<script>window.location='./../?page=quiz&action=infokerjakan&id_tq=".$id_tq."';</script>";
 }
@@ -86,11 +86,11 @@ if (!empty($pilganda) AND empty($esay)) {
       $tidakjawab = $jumlah - $benar - $salah;
       $persen = $benar / $jumlah;
       $hasil = $persen * 100;
-      mysqli_query($db, "INSERT INTO tb_nilai_pilgan VALUES('', '$id_tq', '$_SESSION[siswa]', '$benar', '$salah', '$tidakjawab', '$hasil')") or die ($db->error);
+      mysqli_query($db, "INSERT INTO tb_nilai_pilgan VALUES(NULL, '$id_tq', '$_SESSION[siswa]', '$benar', '$salah', '$tidakjawab', '$hasil')") or die ($db->error);
 
   } else if(empty($_POST['soal_pilgan'])) {
       $jumlah = $_POST['jumlahsoalpilgan'];
-      mysqli_query($db, "INSERT INTO tb_nilai_pilgan VALUES('', '$id_tq', '$_SESSION[siswa]', '0', '0', '$jumlah', '0')") or die ($db->error);
+      mysqli_query($db, "INSERT INTO tb_nilai_pilgan VALUES(NULL, '$id_tq', '$_SESSION[siswa]', '0', '0', '$jumlah', '0')") or die ($db->error);
   }
   echo "<script>window.location='./../?page=quiz&action=infokerjakan&id_tq=".$id_tq."';</script>";
 } ?>

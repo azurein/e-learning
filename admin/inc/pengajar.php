@@ -271,13 +271,13 @@ if(@$_SESSION['admin']) { ?>
 
 		if($nama_gambar != '') {
 			if(move_uploaded_file($sumber, $target.$nama_gambar)) {
-				mysqli_query($db, "INSERT INTO tb_pengajar VALUES('', '$nip', '$nama_lengkap', '$tempat_lahir', '$tgl_lahir', '$jenis_kelamin', '$agama', '$no_telp', '$email', '$alamat', '$jabatan', '$nama_gambar', '$web', '$username', md5('$password'), '$password', '$status')") or die ($db->error);
+				mysqli_query($db, "INSERT INTO tb_pengajar VALUES(NULL, '$nip', '$nama_lengkap', '$tempat_lahir', '$tgl_lahir', '$jenis_kelamin', '$agama', '$no_telp', '$email', '$alamat', '$jabatan', '$nama_gambar', '$web', '$username', md5('$password'), '$password', '$status')") or die ($db->error);
 				echo '<script>window.location="?page=pengajar";</script>';
 			} else {
 				echo '<script>alert("Gagal menambah data pengajar, foto gagal diupload, coba lagi!"); window.location="?page=pengajar";</script>';
 			}
 		} else {
-			mysqli_query($db, "INSERT INTO tb_pengajar VALUES('', '$nip', '$nama_lengkap', '$tempat_lahir', '$tgl_lahir', '$jenis_kelamin', '$agama', '$no_telp', '$email', '$alamat', '$jabatan', 'anonim.png', '$web', '$username', md5('$password'), '$password', '$status')") or die ($db->error);
+			mysqli_query($db, "INSERT INTO tb_pengajar VALUES(NULL, '$nip', '$nama_lengkap', '$tempat_lahir', '$tgl_lahir', '$jenis_kelamin', '$agama', '$no_telp', '$email', '$alamat', '$jabatan', 'anonim.png', '$web', '$username', md5('$password'), '$password', '$status')") or die ($db->error);
 			echo '<script>window.location="?page=pengajar";</script>';
 		}
 	} else if(@$_GET['action'] == 'edit') {
