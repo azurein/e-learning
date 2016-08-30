@@ -36,36 +36,7 @@ if(@$_GET['hal'] == 'essay') { ?>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="nilai_essay[<?php echo $urut++; ?>]" value="10">10
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="nilai_essay[<?php echo $urut++; ?>]" value="20">20
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="nilai_essay[<?php echo $urut++; ?>]" value="30">30
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="nilai_essay[<?php echo $urut++; ?>]" value="40">40
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="nilai_essay[<?php echo $urut++; ?>]" value="50">50
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="nilai_essay[<?php echo $urut++; ?>]" value="60">60
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="nilai_essay[<?php echo $urut++; ?>]" value="70">70
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="nilai_essay[<?php echo $urut++; ?>]" value="80">80
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="nilai_essay[<?php echo $urut++; ?>]" value="90">90
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="nilai_essay[<?php echo $urut++; ?>]" value="100">100
-                                                </label>
+                                                <input type="text" name="nilai_essay[<?php echo $urut++; ?>]">
                                             </td>
                                         </tr>
                                     </table>
@@ -107,7 +78,22 @@ if(@$_GET['hal'] == 'essay') { ?>
                     <table width="100%">
                         <?php
                         $urut = 1;
-                        $sql_jawaban = mysqli_query($db, "SELECT * FROM tb_jawaban JOIN tb_soal_essay ON tb_jawaban.id_soal =  tb_soal_essay.id_essay WHERE tb_jawaban.id_tq = '$id_tq' AND tb_jawaban.id_siswa = '$_GET[id_siswa]'") or die ($db->error);
+                        $sql_jawaban = mysqli_query($db, "
+                            
+                            SELECT * FROM tb_jawaban 
+
+                            JOIN tb_soal_essay 
+                            ON tb_jawaban.id_soal = tb_soal_essay.id_essay 
+                            AND tb_jawaban.id_tq = tb_soal_essay.id_tq
+
+                            JOIN tb_nilai_essay
+                            ON tb_jawaban.id_siswa = tb_nilai_essay.id_siswa
+                            AND tb_soal_essay.id_tq = tb_jawaban.id_tq
+
+                            WHERE tb_jawaban.id_tq = '$id_tq' AND
+                            tb_jawaban.id_siswa = '$_GET[id_siswa]'
+
+                        ") or die ($db->error);
                         $jumlah_soal = mysqli_num_rows($sql_jawaban);
                         while($data_jawaban = mysqli_fetch_array($sql_jawaban)) { ?>
                             <tr>
@@ -127,40 +113,11 @@ if(@$_GET['hal'] == 'essay') { ?>
                                             <td><?php echo $data_jawaban['jawaban']; ?></td>
                                         </tr>
                                         <tr>
-                                            <td><b>Presentase tiap soal <small>(Untuk mengedit silahkan pilih ulang nilainya)</small> :</b></td>
+                                            <td><b>Presentase tiap soal <small>(Untuk mengedit, silahkan masukkan ulang nilainya)</small> :</b></td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="nilai_essay[<?php echo $urut++; ?>]" value="10">10
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="nilai_essay[<?php echo $urut++; ?>]" value="20">20
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="nilai_essay[<?php echo $urut++; ?>]" value="30">30
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="nilai_essay[<?php echo $urut++; ?>]" value="40">40
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="nilai_essay[<?php echo $urut++; ?>]" value="50">50
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="nilai_essay[<?php echo $urut++; ?>]" value="60">60
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="nilai_essay[<?php echo $urut++; ?>]" value="70">70
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="nilai_essay[<?php echo $urut++; ?>]" value="80">80
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="nilai_essay[<?php echo $urut++; ?>]" value="90">90
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="nilai_essay[<?php echo $urut++; ?>]" value="100">100
-                                                </label>
+                                               <input type="text" name="nilai_essay[<?php echo $urut++; ?>]" value="<?php echo $data_jawaban['nilai']; ?>">
                                             </td>
                                         </tr>
                                     </table>

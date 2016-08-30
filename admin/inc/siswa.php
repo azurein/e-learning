@@ -108,7 +108,7 @@ if(@$_GET['action'] == '') {
         FROM tb_siswa a
         JOIN tb_kelas b
         ON a.id_kelas = b.id_kelas
-        WHERE id_siswa = '15'
+        WHERE id_siswa = '$_GET[IDsiswa]'
     ") or die ($db->error);
     $data = mysqli_fetch_array($sql_siswa_per_id);
     ?>
@@ -229,7 +229,7 @@ if(@$_GET['action'] == '') {
         FROM tb_siswa a
         JOIN tb_kelas b
         ON a.id_kelas = b.id_kelas
-        WHERE id_siswa = '15'
+        WHERE id_siswa = '$_GET[IDsiswa]'
     ") or die ($db->error);
     $data = mysqli_fetch_array($sql_siswa_per_id);
     ?>
