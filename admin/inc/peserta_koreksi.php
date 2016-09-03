@@ -62,7 +62,7 @@
                             		Nilai soal pilihan ganda : 
                                     <?php
                                     if(mysqli_num_rows($sql_pilgan) > 0) {
-                                        echo $data_pilgan['presentase'];
+                                        echo round($data_pilgan['presentase']);
                                     } else {
                                         echo "Ujian ini tidak ada soal pilihan ganda";
                                     } ?>
@@ -71,7 +71,7 @@
                             		<?php
                                     if(mysqli_num_rows($sql_jwb) > 0) {
                                 		if(mysqli_num_rows($sql_essay) > 0) {
-                                			echo $data_essay['nilai'];
+                                			echo round($data_essay['nilai']);
                                 		} else {
                                 			echo "(belum dikoreksi)";
                                 		}

@@ -177,7 +177,11 @@ if(@$_SESSION['siswa']) { ?>
                             <div class="panel-body">
                                 <div class="table-responsive">
                                     <?php
-                                    while($data_soal_pilgan = mysqli_fetch_array($sql_soal_pilgan)) { ?>
+                                    while($data_soal_pilgan = mysqli_fetch_array($sql_soal_pilgan)) { 
+                                        $choice = array('a','b','c','d','e');
+                                        $randomized_choice = array('a','b','c','d','e');
+                                        shuffle($randomized_choice);
+                                    ?>
         								<table class="table">
         							    	<tr>
         							    		<td width="10%">( <?php echo $no++; ?> )</td>
@@ -190,57 +194,24 @@ if(@$_SESSION['siswa']) { ?>
                                                         <img width="220px" src="admin/img/gambar_soal_pilgan/<?php echo $data_soal_pilgan['gambar']; ?>" />
                                                     </td>
                                                 </tr>
-                                            <?php } ?>
-        							        <tr>
-        							        	<td></td>
-        							            <td>
-                                                    <div class="radio mrg-del">
-                                                        <label>
-                                                            <input type="radio" name="soal_pilgan[<?php echo $data_soal_pilgan['id_pilgan']; ?>]" value="A" /> A. <?php echo $data_soal_pilgan['pil_a']; ?>
-                                                        </label>
-                                                    </div>
-                                                </td>
-        							        </tr>
-        							        <tr>
-        							        	<td></td>
-        							            <td>
-                                                    <div class="radio mrg-del">
-                                                        <label>
-                                                            <input type="radio" name="soal_pilgan[<?php echo $data_soal_pilgan['id_pilgan']; ?>]" value="B" /> B. <?php echo $data_soal_pilgan['pil_b']; ?>
-                                                        </label>
-                                                    </div>
-                                                </td>
-        							        </tr>
-        							        <tr>
-        							        	<td></td>
-        							            <td>
-                                                    <div class="radio mrg-del">
-                                                        <label>
-                                                            <input type="radio" name="soal_pilgan[<?php echo $data_soal_pilgan['id_pilgan']; ?>]" value="C" /> C. <?php echo $data_soal_pilgan['pil_c']; ?>
-                                                        </label>
-                                                    </div>
-                                                </td>
-        							        </tr>
-        							        <tr>
-        							        	<td></td>
-        							            <td>
-                                                    <div class="radio mrg-del">
-                                                        <label>
-                                                            <input type="radio" name="soal_pilgan[<?php echo $data_soal_pilgan['id_pilgan']; ?>]" value="D" /> D. <?php echo $data_soal_pilgan['pil_d']; ?>
-                                                        </label>
-                                                    </div>
-                                                </td>
-        							        </tr>
-        							        <tr>
-        							        	<td></td>
-        							            <td>
-                                                    <div class="radio mrg-del">
-                                                        <label>
-                                                            <input type="radio" name="soal_pilgan[<?php echo $data_soal_pilgan['id_pilgan']; ?>]" value="E" /> E. <?php echo $data_soal_pilgan['pil_e']; ?>
-                                                        </label>
-                                                    </div>
-                                                </td>
-        							        </tr>
+                                            <?php 
+                                            } 
+
+                                            foreach ($randomized_choice as $key => $value) { ?>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>
+                                                        <div class="radio mrg-del">
+                                                            <label>
+                                                                <input type="radio" name="soal_pilgan[<?php echo $data_soal_pilgan['id_pilgan']; ?>]" 
+                                                                value="<?php echo strtoupper($value); ?>" /> 
+                                                                <?php echo strtoupper($choice[$key]).". ".$data_soal_pilgan['pil_'.$value]; ?>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            <?php 
+                                            } ?>
         								</table>
                                     <?php
                                     } ?>

@@ -69,7 +69,7 @@
                                             echo "Benar : ".$data_nilai['benar']." soal<br />";
                                             echo "Salah : ".$data_nilai['salah']." soal<br />";
                                             echo "Tidak dikerjakan : ".$data_nilai['tidak_dikerjakan']." soal<br />";
-                                            echo "Presentase : ".$data_nilai['presentase']; 
+                                            echo "Presentase : ".round($data_nilai['presentase']); 
                                         } else {
                                             echo "Ujian ini tidak ada soal pilihan ganda";
                                         } ?>
@@ -82,11 +82,13 @@
                 						$data_nilai_essay = mysqli_fetch_array($sql_cek_nilai_essay);
                                         
                                         if(mysqli_num_rows($sql_cek_nilai_essay) > 0) {
-                                            echo "<td>".$data_nilai_essay['nilai']."</td>";
+                                            echo "<td>".round($data_nilai_essay['nilai'])."</td>";
                                             if(isset($data_nilai['id_pilgan'])) {
-                                                echo "<td>".(($data_nilai['presentase']+$data_nilai_essay['nilai'])/2)."</td>";
+                                                $nilaifinal = (($data_nilai['presentase']+$data_nilai_essay['nilai'])/2);
+                                                echo "<td>".round($nilaifinal)."</td>";
                                             } else {
-                                                echo "<td>".($data_nilai['presentase']+$data_nilai_essay['nilai'])."</td>";
+                                                $nilaifinal = ($data_nilai['presentase']+$data_nilai_essay['nilai']);
+                                                echo "<td>".round($nilaifinal)."</td>";
                                             }
                 						} else {
                 							echo "<td>Soal essay belum dikoreksi</td>";
