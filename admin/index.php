@@ -127,24 +127,30 @@ if(@$_SESSION['admin'] || @$_SESSION['pengajar']) {
                                 </li>
                             </ul>
                         </li>
+                        <li>
+                            <a class="<?php if(@$_GET['page'] == 'kelas') { echo 'active-menu'; } ?>" href="?page=kelas"><i class="fa fa-table"></i> Manajemen Kelas</a>
+                        </li>
+                        <li>
+                            <a class="<?php if(@$_GET['page'] == 'mapel') { echo 'active-menu'; } ?>" href="?page=mapel"><i class="fa fa-fw fa-file"></i> Mata Pelajaran</a>
+                        </li>
                     <?php
                     }
                     ?>
-                    <li>
-                        <a class="<?php if(@$_GET['page'] == 'kelas') { echo 'active-menu'; } ?>" href="?page=kelas"><i class="fa fa-table"></i> Manajemen Kelas</a>
-                    </li>
-                    <li>
-                        <a class="<?php if(@$_GET['page'] == 'mapel') { echo 'active-menu'; } ?>" href="?page=mapel"><i class="fa fa-fw fa-file"></i> Mata Pelajaran</a>
-                    </li>
                     <li>
                         <a class="<?php if(@$_GET['page'] == 'quiz') { echo 'active-menu'; } ?>" href="?page=quiz"><i class="fa fa-bar-chart-o"></i> Manajemen Tugas / Quiz</a>
                     </li>
                     <li>
                         <a class="<?php if(@$_GET['page'] == 'materi') { echo 'active-menu'; } ?>" href="?page=materi"><i class="fa fa-qrcode"></i> Materi</a>
                     </li>
-                    <li>
-                        <a class="<?php if(@$_GET['page'] == 'berita') { echo 'active-menu'; } ?>" href="?page=berita"><i class="fa fa-desktop"></i> Berita</a>
-                    </li>
+                    <?php
+                    if(@$_SESSION['admin']) {
+                    ?>
+                        <li>
+                            <a class="<?php if(@$_GET['page'] == 'berita') { echo 'active-menu'; } ?>" href="?page=berita"><i class="fa fa-desktop"></i> Berita</a>
+                        </li>
+                    <?php
+                    }
+                    ?>
                 </ul>
             </div>
         </nav>

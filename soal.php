@@ -167,7 +167,7 @@ if(@$_SESSION['siswa']) { ?>
 		    </div>
 
 		    <div class="col-md-8">
-		    	<form action="inc/proses_soal.php" method="post">
+		    	<form action="inc/proses_soal.php" method="post" enctype="multipart/form-data">
 					<?php
                     $sql_soal_pilgan = mysqli_query($db, "SELECT * FROM tb_soal_pilgan WHERE id_tq = '$id_tq' ORDER BY rand()") or die ($db->error);
 					if(mysqli_num_rows($sql_soal_pilgan) > 0) {
@@ -233,7 +233,7 @@ if(@$_SESSION['siswa']) { ?>
                                     while($data_soal_essay = mysqli_fetch_array($sql_soal_essay)) { ?>
                                         <table class="table">
                                             <tr>
-                                                <td width="10%">( <?php echo $no2++; ?> )</td>
+                                                <td width="10%">( <?php $no1 = $no2; echo $no2++; ?> )</td>
                                                 <td><b><?php echo $data_soal_essay['pertanyaan']; ?></b></td>
                                             </tr>
                                             <?php if($data_soal_essay['gambar'] != '') { ?>
@@ -248,6 +248,12 @@ if(@$_SESSION['siswa']) { ?>
                                                 <td>Jawab</td>
                                                 <td>
                                                     <textarea name="soal_essay[<?php echo $data_soal_essay['id_essay']; ?>]" class="form-control" rows="3"></textarea>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Lampiran<br><br><sup>(Optional)</sup></td>
+                                                <td>
+                                                    <input type="file" name="gambar[<?php echo $data_soal_essay['id_essay']; ?>]" class="form-control" />
                                                 </td>
                                             </tr>
                                         </table>
@@ -268,7 +274,8 @@ if(@$_SESSION['siswa']) { ?>
                                 <input type="reset" value="Reset Jawaban" class="btn btn-danger" />
                             </div>
                             <div id="konfirm" style="display:none; margin-top:15px;">
-                                Apakah Anda yakin sudah selesai mengerjakan soal dan akan mengirim jawaban? &nbsp; <input onClick="selesai();" type="submit" id="kirim" value="Ya" class="btn btn-info btn-sm" />
+                                Apakah Anda yakin sudah selesai mengerjakan soal dan akan mengirim jawaban? &nbsp; <input onClick="selesai();" 
+                                type="submit" name="simpan" id="kirim" value="Ya" class="btn btn-info btn-sm" />
                             </div>
                             <script type="text/javascript">
                             $("#selesai").click(function() {

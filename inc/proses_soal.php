@@ -2,6 +2,12 @@
 @session_start();
 include "../+koneksi.php";
 
+if(@$_POST['simpan']) {
+
+$sumber = @$_FILES['gambar']['tmp_name'];
+$target = '../uploads/essay_attachment/';
+$nama_gambar = @$_FILES['gambar']['name'];
+
 $id_tq = mysqli_real_escape_string($db, $_POST['id_tq']);
 
 $soal = mysqli_query($db, "SELECT * FROM tb_soal_pilgan where id_tq = '$id_tq'") or die ($db->error);
@@ -41,11 +47,31 @@ if (!empty($pilganda) AND !empty($esay)) {
         $jawaban = $value;
         $cek = mysqli_query($db, "SELECT * FROM tb_soal_essay WHERE id_essay = '$key2'");
         while($data = mysqli_fetch_array($cek)) {
-            mysqli_query($db, "INSERT INTO tb_jawaban VALUES(NULL, '$id_tq','$data[id_essay]','$_SESSION[siswa]','$jawaban')") or die ($db->error);
+          if($nama_gambar[$key2] == '') {
+            mysqli_query($db, "INSERT INTO tb_jawaban VALUES(NULL, '$id_tq','$data[id_essay]','$_SESSION[siswa]','$jawaban','')") 
+            or die ($db->error);
+          } else {
+            if(move_uploaded_file($sumber[$key2], $target.$nama_gambar[$key2])) {
+              mysqli_query($db, "INSERT INTO tb_jawaban VALUES(NULL, '$id_tq','$data[id_essay]','$_SESSION[siswa]','$jawaban','$nama_gambar[$key2]')") 
+              or die ($db->error);          
+            } else {
+              echo '<script>alert("Lampiran gagal diupload, coba lagi!");</script>';
+            }
+          }
         }
       }
   } else if (empty($_POST['soal_esay'])){
-      mysqli_query($db, "INSERT INTO tb_jawaban VALUES(NULL, '$id_tq','$data[id_essay]','$_SESSION[siswa]','')") or die ($db->error);
+      if($nama_gambar[$key2] == '') {
+        mysqli_query($db, "INSERT INTO tb_jawaban VALUES(NULL, '$id_tq','$data[id_essay]','$_SESSION[siswa]','','')") 
+        or die ($db->error);
+      } else {
+        if(move_uploaded_file($sumber[$key2], $target.$nama_gambar[$key2])) {
+          mysqli_query($db, "INSERT INTO tb_jawaban VALUES(NULL, '$id_tq','$data[id_essay]','$_SESSION[siswa]','','$nama_gambar[$key2]')") 
+          or die ($db->error);          
+        } else {
+          echo '<script>alert("Lampiran gagal diupload, coba lagi!");</script>';
+        }
+      }
   }
   echo "<script>window.location='./../?page=quiz&action=infokerjakan&id_tq=".$id_tq."';</script>";
 }
@@ -58,11 +84,31 @@ if (empty($pilganda) AND !empty($esay)) {
       $jawaban = $value;
       $cek = mysqli_query($db, "SELECT * FROM tb_soal_essay WHERE id_essay = '$key2'");
       while($data = mysqli_fetch_array($cek)) {
-          mysqli_query($db, "INSERT INTO tb_jawaban VALUES(NULL, '$id_tq', '$data[id_essay]', '$_SESSION[siswa]', '$jawaban')") or die ($db->error);
+        if($nama_gambar[$key2] == '') {
+          mysqli_query($db, "INSERT INTO tb_jawaban VALUES(NULL, '$id_tq','$data[id_essay]','$_SESSION[siswa]','$jawaban','')") 
+          or die ($db->error);
+        } else {
+          if(move_uploaded_file($sumber[$key2], $target.$nama_gambar[$key2])) {
+            mysqli_query($db, "INSERT INTO tb_jawaban VALUES(NULL, '$id_tq','$data[id_essay]','$_SESSION[siswa]','$jawaban','$nama_gambar[$key2]')") 
+            or die ($db->error);          
+          } else {
+            echo '<script>alert("Lampiran gagal diupload, coba lagi!");</script>';
+          }
+        }
       }
     }
   } else if(empty($_POST['soal_essay'])) {
-    mysqli_query($db, "INSERT INTO tb_jawaban VALUES(NULL, '$id_tq', '$data[id_essay]', '$_SESSION[siswa]','')") or die ($db->error);
+    if($nama_gambar[$key2] == '') {
+      mysqli_query($db, "INSERT INTO tb_jawaban VALUES(NULL, '$id_tq','$data[id_essay]','$_SESSION[siswa]','','')") 
+      or die ($db->error);
+    } else {
+      if(move_uploaded_file($sumber[$key2], $target.$nama_gambar[$key2])) {
+        mysqli_query($db, "INSERT INTO tb_jawaban VALUES(NULL, '$id_tq','$data[id_essay]','$_SESSION[siswa]','','$nama_gambar[$key2]')") 
+        or die ($db->error);          
+      } else {
+        echo '<script>alert("Lampiran gagal diupload, coba lagi!");</script>';
+      }
+    }
   }
   echo "<script>window.location='./../?page=quiz&action=infokerjakan&id_tq=".$id_tq."';</script>";
 }
@@ -93,4 +139,7 @@ if (!empty($pilganda) AND empty($esay)) {
       mysqli_query($db, "INSERT INTO tb_nilai_pilgan VALUES(NULL, '$id_tq', '$_SESSION[siswa]', '0', '0', '$jumlah', '0')") or die ($db->error);
   }
   echo "<script>window.location='./../?page=quiz&action=infokerjakan&id_tq=".$id_tq."';</script>";
-} ?>
+} 
+
+}
+?>

@@ -12,7 +12,29 @@ if(@$_GET['hal'] == 'essay') { ?>
                     <table width="100%">
                         <?php
                         $urut = 1;
-                        $sql_jawaban = mysqli_query($db, "SELECT * FROM tb_jawaban JOIN tb_soal_essay ON tb_jawaban.id_soal =  tb_soal_essay.id_essay WHERE tb_jawaban.id_tq = '$id_tq' AND tb_jawaban.id_siswa = '$_GET[id_siswa]'") or die ($db->error);
+                        $sql_jawaban = mysqli_query($db, "
+
+                            SELECT
+                            tb_soal_essay.pertanyaan,
+                            tb_soal_essay.gambar,
+                            tb_jawaban.jawaban,
+                            tb_jawaban.gambar as attachment
+
+
+                            FROM tb_jawaban 
+
+                            JOIN tb_soal_essay 
+                            ON tb_jawaban.id_soal = tb_soal_essay.id_essay 
+                            AND tb_jawaban.id_tq = tb_soal_essay.id_tq
+
+                            LEFT JOIN tb_nilai_essay
+                            ON tb_jawaban.id_siswa = tb_nilai_essay.id_siswa
+                            AND tb_soal_essay.id_tq = tb_jawaban.id_tq
+
+                            WHERE tb_jawaban.id_tq = '$id_tq' AND
+                            tb_jawaban.id_siswa = '$_GET[id_siswa]'
+
+                        ") or die ($db->error);
                         $jumlah_soal = mysqli_num_rows($sql_jawaban);
                         while($data_jawaban = mysqli_fetch_array($sql_jawaban)) { ?>
                             <tr>
@@ -25,12 +47,27 @@ if(@$_GET['hal'] == 'essay') { ?>
                                         <tr>
                                             <td><?php echo $data_jawaban['pertanyaan']; ?></td>
                                         </tr>
+                                        <?php if($data_jawaban['gambar'] != '') { ?>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <img width="220px" src="../admin/img/gambar_soal_essay/<?php echo $data_jawaban['gambar']; ?>" />
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
                                         <tr>
                                             <td><b>Jawaban :</b></td>
                                         </tr>
                                         <tr>
                                             <td><?php echo $data_jawaban['jawaban']; ?></td>
                                         </tr>
+                                         <?php
+                                        if($data_jawaban['attachment'] != '') { ?>
+                                            <tr>
+                                                <td colspan="2"><a href="../uploads/essay_attachment/<?php echo $data_jawaban['attachment']; ?>" 
+                                                download>Unduh lampiran</a></td>
+                                            </tr>
+                                        <?php
+                                        } ?>
                                         <tr>
                                             <td><b>Presentase nilai tiap soal :</b></td>
                                         </tr>
@@ -80,13 +117,20 @@ if(@$_GET['hal'] == 'essay') { ?>
                         $urut = 1;
                         $sql_jawaban = mysqli_query($db, "
                             
-                            SELECT * FROM tb_jawaban 
+                            SELECT
+                            tb_soal_essay.pertanyaan,
+                            tb_soal_essay.gambar,
+                            tb_jawaban.jawaban,
+                            tb_jawaban.gambar as attachment
+
+
+                            FROM tb_jawaban 
 
                             JOIN tb_soal_essay 
                             ON tb_jawaban.id_soal = tb_soal_essay.id_essay 
                             AND tb_jawaban.id_tq = tb_soal_essay.id_tq
 
-                            JOIN tb_nilai_essay
+                            LEFT JOIN tb_nilai_essay
                             ON tb_jawaban.id_siswa = tb_nilai_essay.id_siswa
                             AND tb_soal_essay.id_tq = tb_jawaban.id_tq
 
@@ -106,12 +150,27 @@ if(@$_GET['hal'] == 'essay') { ?>
                                         <tr>
                                             <td><?php echo $data_jawaban['pertanyaan']; ?></td>
                                         </tr>
+                                        <?php if($data_jawaban['gambar'] != '') { ?>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <img width="220px" src="../admin/img/gambar_soal_essay/<?php echo $data_jawaban['gambar']; ?>" />
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
                                         <tr>
                                             <td><b>Jawaban :</b></td>
                                         </tr>
                                         <tr>
                                             <td><?php echo $data_jawaban['jawaban']; ?></td>
                                         </tr>
+                                        <?php
+                                        if($data_jawaban['attachment'] != '') { ?>
+                                            <tr>
+                                                <td colspan="2"><a href="../uploads/essay_attachment
+                                                <?php echo $data_jawaban['attachment']; ?>" target="_blank">Unduh lampiran</a></td>
+                                            </tr>
+                                        <?php
+                                        } ?>
                                         <tr>
                                             <td><b>Presentase tiap soal <small>(Untuk mengedit, silahkan masukkan ulang nilainya)</small> :</b></td>
                                         </tr>

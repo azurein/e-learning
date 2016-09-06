@@ -117,13 +117,23 @@ if(@$_GET['hal'] == "soalpilgan") { ?>
 	            	$pilE = @mysqli_real_escape_string($db, $_POST['pilE']);
 	            	$kunci = @mysqli_real_escape_string($db, $_POST['kunci']);
 
-	            	$sumber = @$_FILES['gambar']['tmp_name'];
-                    $target = 'img/gambar_soal_pilgan/';
-                    $nama_gambar = @$_FILES['gambar']['name'];
+	            	if(empty($_FILES['gambar']['tmp_name']) || !is_uploaded_file($_FILES['gambar']['tmp_name'])) {
+	            		mysqli_query($db, "INSERT INTO tb_soal_pilgan VALUES(NULL, '$id', '$pertanyaan', '', '$pilA', '$pilB', '$pilC', '$pilD', 
+						'$pilE', '$kunci', now())") or die ($db->error);          
+                    	echo '<script>window.location="?page=quiz&action=daftarsoal&hal=pilgan&id='.$id.'"</script>';
+					} else {
+						$sumber = @$_FILES['gambar']['tmp_name'];
+                    	$target = 'img/gambar_soal_pilgan/';
+	                    $nama_gambar = @$_FILES['gambar']['name'];
 
-                    move_uploaded_file($sumber, $target.$nama_gambar);
-                    mysqli_query($db, "INSERT INTO tb_soal_pilgan VALUES(NULL, '$id', '$pertanyaan', '$nama_gambar', '$pilA', '$pilB', '$pilC', '$pilD', '$pilE', '$kunci', now())") or die ($db->error);          
-                    echo '<script>window.location="?page=quiz&action=daftarsoal&hal=pilgan&id='.$id.'"</script>';
+	                    if(move_uploaded_file($sumber, $target.$nama_gambar)) {
+							mysqli_query($db, "INSERT INTO tb_soal_pilgan VALUES(NULL, '$id', '$pertanyaan', '$nama_gambar', '$pilA', '$pilB', '$pilC', '$pilD', 
+							'$pilE', '$kunci', now())") or die ($db->error);          
+	                    	echo '<script>window.location="?page=quiz&action=daftarsoal&hal=pilgan&id='.$id.'"</script>';
+	                    } else {
+							echo '<script>alert("Gagal menambah soal, gambar gagal diupload, coba lagi!");</script>';
+	                    }
+					}
 	            } ?>
 		    </div>
 		</div>
