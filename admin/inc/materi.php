@@ -1,15 +1,13 @@
-<div class="row">
-    <div class="col-md-12">
-        <h1 class="page-header">Management File Materi</h1>
-    </div>
-</div>
-
 <?php
 if(@$_GET['action'] == '') { ?>
 	<div class="row">
 		<div class="col-md-12">
 	        <div class="panel panel-default">
-	            <div class="panel-heading"><a href="?page=materi&action=tambah" class="btn btn-primary btn-xs">Tambah Data</a> &nbsp; <a href="./laporan/cetak.php?data=materi" target="_blank" class="btn btn-default btn-xs">Cetak</a></div>
+	            <div class="panel-heading">
+	            	<a href="?page=kelas&action=daftaroutline&kelas=1&mapel=1" class="btn btn-danger btn-sm">Kembali</a> &nbsp; 
+	            	<a href="?page=materi&action=tambah" class="btn btn-primary btn-sm">Tambah Data</a> &nbsp; 
+	            	<a href="./laporan/cetak.php?data=materi" target="_blank" class="btn btn-default btn-sm">Cetak</a> 
+	            </div>
 	            <div class="panel-body">
 	                <div class="table-responsive">
 	                    <table class="table table-striped table-bordered table-hover" id="datamateri">

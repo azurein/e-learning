@@ -9,7 +9,25 @@ $id = @$_GET['id'];
 $sql_per_id = mysqli_query($db, "SELECT * FROM tb_kelas WHERE id_kelas = '$id'") or die ($db->error);
 $data = mysqli_fetch_array($sql_per_id);
 
-$sql_kelas = mysqli_query($db, "SELECT * FROM tb_kelas") or die ($db->error);
+$sql_kelas = mysqli_query($db, "
+    SELECT
+    tb_kelas.id_kelas,
+    nama_kelas,
+    id_mapel,
+    kode_mapel,
+    mapel,
+    ruang,
+    wali_kelas,
+    ketua_kelas
+
+    FROM tb_kelas
+
+    JOIN tb_mapel_ajar
+    ON tb_kelas.id_kelas = tb_mapel_ajar.id_kelas
+
+    JOIN tb_mapel
+    ON tb_mapel_ajar.id_mapel = tb_mapel.id
+") or die ($db->error);
 $no = 1;
 
 if(@$_SESSION[admin]) {
@@ -26,6 +44,7 @@ if(@$_SESSION[admin]) {
                                 <tr>
                                     <th>#</th>
                                     <th>Nama Kelas</th>
+                                    <th>Mata Pelajaran</th>
                                     <th>Ruang</th>
                                     <th>Wali Kelas</th>
                                     <th>Ketua Kelas</th>
@@ -38,6 +57,7 @@ if(@$_SESSION[admin]) {
                                 <tr>
                                     <td><?php echo $no++; ?></td>
                                     <td><?php echo $data_kelas['nama_kelas']; ?></td>
+                                    <td><?php echo $data_kelas['mapel']; ?></td>
                                     <td><?php echo $data_kelas['ruang']; ?></td>
                                     <?php
                                     $sql_tampil_guru = tampil_per_id("tb_pengajar", "id_pengajar = '$data_kelas[wali_kelas]'");
@@ -60,7 +80,17 @@ if(@$_SESSION[admin]) {
                                     <td align="center" width="200px">
                                         <a href="?page=kelas&action=edit&id=<?php echo $data_kelas['id_kelas']; ?>" class="badge" style="background-color:#f60;">Edit</a>
                                         <a onclick="return confirm('Yakin akan menghapus data?');" href="?page=kelas&action=hapus&id=<?php echo $data_kelas['id_kelas']; ?>" class="badge" style="background-color:#f00;">Hapus</a>
-                                        <a href="?page=siswa&IDkelas=<?php echo $data_kelas['id_kelas']; ?>&kelas=<?php echo $data_kelas['nama_kelas']; ?>" class="badge">Lihat Siswa</a>
+                                        <a style="background-color:#390;" href="?page=siswa&IDkelas=<?php echo $data_kelas['id_kelas']; ?>&kelas=<?php echo $data_kelas['nama_kelas']; ?>" class="badge">Siswa</a>
+                                        <br>
+                                        <a href="?page=kelas&action=buatoutline&kelas=<?php echo $data_kelas['id_kelas']; ?>&mapel=<?php echo $data_kelas['id_mapel']; ?>" class="badge">
+                                            Buat Outline
+                                        </a>
+                                        <a href="?page=kelas&action=copyoutline" class="badge">
+                                            Copy Outline
+                                        </a>
+                                        <a href="?page=kelas&action=daftaroutline&kelas=<?php echo $data_kelas['id_kelas']; ?>&mapel=<?php echo $data_kelas['id_mapel']; ?>" class="badge">
+                                            Daftar Outline
+                                        </a>
                                     </td>
                                 </tr>
                             <?php
@@ -177,6 +207,41 @@ if(@$_SESSION[admin]) {
     } else if(@$_GET['action'] == 'hapus') {
         mysqli_query($db, "DELETE FROM tb_kelas WHERE id_kelas = '$id'") or die ($db->error);  
         echo "<script>window.location='?page=kelas';</script>"; 
+    } else if(@$_GET['action'] == 'buatoutline') {
+        include "buat_outline.php";
+    } else if(@$_GET['action'] == 'copyoutline') { ?>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Copy Outline dari Kelas Lain &nbsp; <a href="?page=kelas" class="btn btn-warning btn-sm">Kembali</a></div>
+                <div class="panel-body">
+                    <form method="post">
+                        <div class="form-group">
+                            <label>Nama Kelas</label>
+                            <select name="wali_kelas" class="form-control">
+                                <?php
+                                $sql_kelasddl = mysqli_query($db, "SELECT * FROM tb_kelas") or die ($db->error);
+                                $data_kelasddl = mysqli_fetch_array($sql_kelasddl);
+                                echo '<option value="">- Pilih -</option>';
+                                while($data_kelasddl = mysqli_fetch_array($sql_kelasddl)) {
+                                    echo '<option value="'.$data_kelasddl['id_kelas'].'">'.$data_kelasddl['nama_kelas'].'</option>';
+                                } ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" name="simpan" value="Simpan" class="btn btn-success" />
+                        </div>
+                    </form>
+                    <?php
+                    if(@$_POST['simpan']) {
+                        
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+        <?php
+    } else if(@$_GET['action'] == 'daftaroutline') {
+        include "daftar_outline.php";
     }
     echo "</div>";
 
