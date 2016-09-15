@@ -18,7 +18,7 @@
                     <tbody>
 					<?php
 					$sql_siswa_mengikuti_tes = mysqli_query($db, "
-                        
+
                         SELECT DISTINCT
                         tb_siswa.id_siswa,
                         tb_siswa.nama_lengkap,
@@ -28,17 +28,17 @@
 
                         FROM tb_topik_quiz
 
-                        LEFT JOIN tb_nilai_pilgan 
+                        LEFT JOIN tb_nilai_pilgan
                         ON tb_topik_quiz.id_tq = tb_nilai_pilgan.id_tq
 
                         LEFT JOIN tb_nilai_essay
-                        ON tb_topik_quiz.id_tq = tb_nilai_essay.id_tq 
-                        
-                        JOIN tb_siswa 
+                        ON tb_topik_quiz.id_tq = tb_nilai_essay.id_tq
+
+                        JOIN tb_siswa
                         ON tb_nilai_pilgan.id_siswa = tb_nilai_pilgan.id_siswa
-                        OR tb_nilai_essay.id_siswa = tb_siswa.id_siswa 
-                        
-                        JOIN tb_kelas ON tb_siswa.id_kelas = tb_kelas.id_kelas 
+                        OR tb_nilai_essay.id_siswa = tb_siswa.id_siswa
+
+                        JOIN tb_kelas ON tb_siswa.id_kelas = tb_kelas.id_kelas
 
                         WHERE tb_topik_quiz.status like 'aktif'
                         AND tb_topik_quiz.id_tq = '$id_tq'
@@ -59,7 +59,7 @@
                             	$data_essay = mysqli_fetch_array($sql_essay);
                             	?>
                             	<td>
-                            		Nilai soal pilihan ganda : 
+                            		Nilai soal pilihan ganda :
                                     <?php
                                     if(mysqli_num_rows($sql_pilgan) > 0) {
                                         echo round($data_pilgan['presentase']);
@@ -67,7 +67,7 @@
                                         echo "Ujian ini tidak ada soal pilihan ganda";
                                     } ?>
                                     <br />
-                            		Nilai soal essay : 
+                            		Nilai soal essay :
                             		<?php
                                     if(mysqli_num_rows($sql_jwb) > 0) {
                                 		if(mysqli_num_rows($sql_essay) > 0) {
@@ -83,14 +83,14 @@
                                     <?php
                                     if(mysqli_num_rows($sql_jwb) > 0) {
                                         if(mysqli_num_rows($sql_essay) > 0) { ?>
-                                            <a href="?page=quiz&action=koreksi&hal=editessay&id_tq=<?php echo $id_tq; ?>&id_siswa=<?php echo $data_siswa_mengikuti_tes['id_siswa']; ?>&id_nilai=<?php echo $data_essay['id']; ?>" class="badge" style="background-color:#f60;">Edit Koreksi Essay</a>
+                                            <a href="?page=quiz&action=koreksi&hal=editessay&id_tq=<?php echo $id_tq; ?>&id_siswa=<?php echo $data_siswa_mengikuti_tes['id_siswa']; ?>&id_nilai=<?php echo $data_essay['id']; ?>" class="btn btn-default btn-xs">Edit Koreksi Essay</a>
                                         <?php
                                         } else { ?>
-                                            <a href="?page=quiz&action=koreksi&hal=essay&id_tq=<?php echo $id_tq; ?>&id_siswa=<?php echo $data_siswa_mengikuti_tes['id_siswa']; ?>" class="badge" style="background-color:#f60;">Koreksi Jawaban Essay</a>
+                                            <a href="?page=quiz&action=koreksi&hal=essay&id_tq=<?php echo $id_tq; ?>&id_siswa=<?php echo $data_siswa_mengikuti_tes['id_siswa']; ?>" class="btn btn-default btn-xs">Koreksi Jawaban Essay</a>
                                         <?php
                                         }
                                     } ?>
-                                    <a onclick="return confirm('Yakin akan menghapus siswa ini dari daftar peserta ujian?');" href="?page=quiz&action=hapuspeserta&id_tq=<?php echo $id_tq; ?>&id_siswa=<?php echo $data_siswa_mengikuti_tes['id_siswa']; ?>" class="badge" style="background-color:#f00;">Hapus Siswa dari Peserta Ujian</a>
+                                    <a onclick="return confirm('Yakin akan menghapus siswa ini dari daftar peserta ujian?');" href="?page=quiz&action=hapuspeserta&id_tq=<?php echo $id_tq; ?>&id_siswa=<?php echo $data_siswa_mengikuti_tes['id_siswa']; ?>" class="btn btn-default btn-xs">Hapus Siswa dari Peserta Ujian</a>
                                 </td>
                             </tr>
     					<?php

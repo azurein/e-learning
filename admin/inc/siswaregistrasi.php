@@ -2,7 +2,7 @@
 $no = 1;
 $id = @$_GET['id'];
 
-if(@$_SESSION['admin']) { 
+if(@$_SESSION['admin']) {
 ?>
 
     <div class="row">
@@ -11,8 +11,8 @@ if(@$_SESSION['admin']) {
         </div>
     </div>
 
-    <?php 
-    if(@$_GET['action'] == '') { 
+    <?php
+    if(@$_GET['action'] == '') {
     ?>
 
     <div class="row">
@@ -48,9 +48,9 @@ if(@$_SESSION['admin']) {
     	                                <td><?php echo $data_siswa['alamat']; ?></td>
     	                                <td><?php echo ucfirst($data_siswa['status']); ?></td>
     	                                <td align="center" width="200px">
-    	                                    <a href="?page=siswaregistrasi&action=aktifkan&id=<?php echo $data_siswa['id_siswa']; ?>" class="badge" style="background-color:#390;">Aktifkan</a>
-                                            <a onclick="return confirm('Yakin akan menghapus data ?');" href="?page=siswaregistrasi&action=hapus&id=<?php echo $data_siswa['id_siswa']; ?>" class="badge" style="background-color:#f00;">Hapus</a>
-                                             <a href="?page=siswaregistrasi&action=detail&IDsiswa=<?php echo $data_siswa['id_siswa']; ?>" class="badge">Detail</a>
+    	                                    <a href="?page=siswaregistrasi&action=aktifkan&id=<?php echo $data_siswa['id_siswa']; ?>" class="btn btn-success btn-xs">Aktifkan</a>
+                                            <a onclick="return confirm('Yakin akan menghapus data ?');" href="?page=siswaregistrasi&action=hapus&id=<?php echo $data_siswa['id_siswa']; ?>" class="btn btn-danger btn-xs">Hapus</a>
+                                             <a href="?page=siswaregistrasi&action=detail&IDsiswa=<?php echo $data_siswa['id_siswa']; ?>" class="btn btn-default btn-xs">Detail</a>
     	                                </td>
     	                            </tr>
     	                        <?php

@@ -45,9 +45,9 @@ if(@$_SESSION['admin']) { ?>
 	                                <td><?php echo $data_pengajar['jenis_kelamin']; ?></td>
 	                                <td><?php echo ucfirst($data_pengajar['status']); ?></td>
 	                                <td align="center" width="170px">
-	                                    <a href="?page=pengajar&action=edit&id=<?php echo $data_pengajar['id_pengajar']; ?>" class="badge" style="background-color:#f60;">Edit</a>
-	                                    <a onclick="return confirm('Yakin akan menghapus data?');" href="?page=pengajar&action=hapus&id=<?php echo $data_pengajar['id_pengajar']; ?>" class="badge" style="background-color:#f00;">Hapus</a>
-	                                    <a href="?page=pengajar&action=detail&id=<?php echo $data_pengajar['id_pengajar']; ?>" class="badge">Detail</a>
+	                                    <a href="?page=pengajar&action=edit&id=<?php echo $data_pengajar['id_pengajar']; ?>" class="btn btn-warning btn-xs">Edit</a>
+	                                    <a onclick="return confirm('Yakin akan menghapus data?');" href="?page=pengajar&action=hapus&id=<?php echo $data_pengajar['id_pengajar']; ?>" class="btn btn-danger btn-xs">Hapus</a>
+	                                    <a href="?page=pengajar&action=detail&id=<?php echo $data_pengajar['id_pengajar']; ?>" class="btn btn-default btn-xs">Detail</a>
 	                                </td>
 	                            </tr>
 	                        <?php
@@ -391,11 +391,11 @@ if(@$_SESSION['admin']) { ?>
 		$nama_gambar = @$_FILES['gambar']['name'];
 
 		if($nama_gambar == '') {
-			mysqli_query($db, "UPDATE tb_pengajar SET nip = '$nip', nama_lengkap = '$nama_lengkap', tempat_lahir = '$tempat_lahir', tgl_lahir = '$tgl_lahir', jenis_kelamin = '$jenis_kelamin', agama = '$agama', no_telp = '$no_telp', email = '$email', alamat = '$alamat', jabatan = '$jabatan', web = '$web', username = '$username', password = md5('$password'), pass = '$password', status = '$status' WHERE id_pengajar = '$id'") or die ($db->error);			
+			mysqli_query($db, "UPDATE tb_pengajar SET nip = '$nip', nama_lengkap = '$nama_lengkap', tempat_lahir = '$tempat_lahir', tgl_lahir = '$tgl_lahir', jenis_kelamin = '$jenis_kelamin', agama = '$agama', no_telp = '$no_telp', email = '$email', alamat = '$alamat', jabatan = '$jabatan', web = '$web', username = '$username', password = md5('$password'), pass = '$password', status = '$status' WHERE id_pengajar = '$id'") or die ($db->error);
 			echo '<script>window.location="?page=pengajar";</script>';
 		} else {
 			if(move_uploaded_file($sumber, $target.$nama_gambar)) {
-				mysqli_query($db, "UPDATE tb_pengajar SET nip = '$nip', nama_lengkap = '$nama_lengkap', tempat_lahir = '$tempat_lahir', tgl_lahir = '$tgl_lahir', jenis_kelamin = '$jenis_kelamin', agama = '$agama', no_telp = '$no_telp', email = '$email', alamat = '$alamat', jabatan = '$jabatan', foto = '$nama_gambar', web = '$web', username = '$username', password = md5('$password'), pass = '$password', status = '$status' WHERE id_pengajar = '$id'") or die ($db->error);			
+				mysqli_query($db, "UPDATE tb_pengajar SET nip = '$nip', nama_lengkap = '$nama_lengkap', tempat_lahir = '$tempat_lahir', tgl_lahir = '$tgl_lahir', jenis_kelamin = '$jenis_kelamin', agama = '$agama', no_telp = '$no_telp', email = '$email', alamat = '$alamat', jabatan = '$jabatan', foto = '$nama_gambar', web = '$web', username = '$username', password = md5('$password'), pass = '$password', status = '$status' WHERE id_pengajar = '$id'") or die ($db->error);
 				echo '<script>window.location="?page=pengajar";</script>';
 			} else {
 				echo '<script>alert("Gagal mengedit data pengajar, foto gagal diupload, coba lagi!"); window.location="?page=pengajar";</script>';

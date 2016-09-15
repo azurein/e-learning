@@ -11,7 +11,7 @@ if(@$_SESSION['admin']) { ?>
 <?php
 }
 
-if(@$_GET['action'] == '') {    
+if(@$_GET['action'] == '') {
 
 ?>
 
@@ -25,7 +25,7 @@ if(@$_GET['action'] == '') {
                 } else if(@$_GET['IDkelas'] != '') {
                     echo "Data Siswa Per Kelas ".@$_GET['kelas']." yang Aktif &nbsp; <a href='?page=kelas' class='btn btn-warning btn-sm'>Kembali</a>";
                 } ?>
-                    
+
                 </div>
                 <div class="panel-body">
                 	<div class="table-responsive">
@@ -52,7 +52,7 @@ if(@$_GET['action'] == '') {
                             } else if(@$_GET['IDkelas'] != '') {
                                 $sql_siswa = mysqli_query($db, "SELECT * FROM tb_siswa JOIN tb_kelas ON tb_siswa.id_kelas = tb_kelas.id_kelas WHERE tb_siswa.status = 'aktif' AND tb_siswa.id_kelas = '$_GET[IDkelas]'") or die ($db->error);
                             }
-                            
+
                             if(mysqli_num_rows($sql_siswa) > 0) {
     	                        while($data_siswa = mysqli_fetch_array($sql_siswa)) { ?>
     	                            <tr>
@@ -67,11 +67,11 @@ if(@$_GET['action'] == '') {
                                         <?php } ?>
     	                                <td align="center">
                                             <?php if(@$_SESSION[admin]) { ?>
-        	                                    <a href="?page=siswa&action=nonaktifkan&id=<?php echo $data_siswa['id_siswa']; ?>" class="badge" style="background-color:#0000FF;">Non aktifkan</a>
-                                                <a href="?page=siswa&action=editprofil&IDsiswa=<?php echo $data_siswa['id_siswa']; ?>" class="badge" style="background-color:#f60;">Edit</a>
-                                                <a onclick="return confirm('Yakin akan menghapus data ?');" href="?page=siswa&action=hapus&id=<?php echo $data_siswa['id_siswa']; ?>" class="badge" style="background-color:#f00;">Hapus</a>
+        	                                    <a href="?page=siswa&action=nonaktifkan&id=<?php echo $data_siswa['id_siswa']; ?>" class="btn btn-primary btn-xs">Non Aktifkan</a>
+                                                <a href="?page=siswa&action=editprofil&IDsiswa=<?php echo $data_siswa['id_siswa']; ?>" class="btn btn-warning btn-xs">Edit</a>
+                                                <a onclick="return confirm('Yakin akan menghapus data ?');" href="?page=siswa&action=hapus&id=<?php echo $data_siswa['id_siswa']; ?>" class="btn btn-danger btn-xs">Hapus</a>
                                             <?php } ?>
-                                            <a href="?page=siswa&action=detail&IDsiswa=<?php echo $data_siswa['id_siswa']; ?>" class="badge">Detail</a>
+                                            <a href="?page=siswa&action=detail&IDsiswa=<?php echo $data_siswa['id_siswa']; ?>" class="btn btn-default btn-xs">Detail</a>
     	                                </td>
     	                            </tr>
     	                        <?php
@@ -104,7 +104,7 @@ if(@$_GET['action'] == '') {
     echo "<script>window.location='?page=siswa';</script>";
 } else if(@$_GET['action'] == 'editprofil') {
     $sql_siswa_per_id = mysqli_query($db, "
-        SELECT a.*,b.nama_kelas 
+        SELECT a.*,b.nama_kelas
         FROM tb_siswa a
         JOIN tb_kelas b
         ON a.id_kelas = b.id_kelas
@@ -117,7 +117,7 @@ if(@$_GET['action'] == '') {
         <div class="panel panel-default">
             <div class="panel-heading">Edit Profil Siswa</div>
             <div class="panel-body">
-            
+
             <form method="post" enctype="multipart/form-data">
                 Nama Lengkap* : <input type="text" name="nama_lengkap" value="<?php echo $data['nama_lengkap']; ?>" class="form-control" required />
                 Tempat Lahir* : <input type="text" name="tempat_lahir" value="<?php echo $data['tempat_lahir']; ?>" class="form-control" required />
@@ -143,13 +143,13 @@ if(@$_GET['action'] == '') {
                 Alamat* : <textarea name="alamat" class="form-control" rows="3" required><?php echo $data['alamat']; ?></textarea>
                 Kelas :
                 <select name="kelas" class="form-control" required>
-                    <?php 
+                    <?php
                     if(!isset($data['id_kelas'])) { ?>
                         <option value="">- Pilih -</option>
-                    <?php 
+                    <?php
                     } else { ?>
                         <option value="<?php echo $data['id_kelas']; ?>"><?php echo $data['nama_kelas']; ?></option>
-                    <?php 
+                    <?php
                     } ?>
                     <?php
                     $sql_kelas = mysqli_query($db, "SELECT * from tb_kelas") or die ($db->error);
@@ -161,16 +161,16 @@ if(@$_GET['action'] == '') {
                 </select>
                 Tahun Masuk :
                 <select name="thn_masuk" class="form-control" required>
-                    <?php 
+                    <?php
                     if(!isset($data['thn_masuk'])) { ?>
                         <option value="">- Pilih -</option>
-                    <?php 
+                    <?php
                     } else { ?>
                         <option value="<?php echo $data['thn_masuk']; ?>"><?php echo $data['thn_masuk']; ?></option>
-                    <?php 
+                    <?php
                     } ?>
                     <?php
-                    for ($i = 2020; $i >= 2000; $i--) { 
+                    for ($i = 2020; $i >= 2000; $i--) {
                         if($data['thn_masuk'] != $i) {
                             echo '<option value="'.$i.'">'.$i.'</option>';
                         }
@@ -205,11 +205,11 @@ if(@$_GET['action'] == '') {
                 $nama_gambar = @$_FILES['gambar']['name'];
 
                 if($nama_gambar == '') {
-                    mysqli_query($db, "UPDATE tb_siswa SET nama_lengkap = '$nama_lengkap', tempat_lahir = '$tempat_lahir', tgl_lahir = '$tgl_lahir', jenis_kelamin = '$jenis_kelamin', agama = '$agama', nama_ayah = '$nama_ayah', nama_ibu = '$nama_ibu', no_telp = '$no_telp', email = '$email', alamat = '$alamat', id_kelas = '$kelas', thn_masuk = '$thn_masuk', username = '$user', password = md5('$pass'), pass = '$pass' WHERE id_siswa = '$_GET[IDsiswa]'") or die ($db->error);          
+                    mysqli_query($db, "UPDATE tb_siswa SET nama_lengkap = '$nama_lengkap', tempat_lahir = '$tempat_lahir', tgl_lahir = '$tgl_lahir', jenis_kelamin = '$jenis_kelamin', agama = '$agama', nama_ayah = '$nama_ayah', nama_ibu = '$nama_ibu', no_telp = '$no_telp', email = '$email', alamat = '$alamat', id_kelas = '$kelas', thn_masuk = '$thn_masuk', username = '$user', password = md5('$pass'), pass = '$pass' WHERE id_siswa = '$_GET[IDsiswa]'") or die ($db->error);
                     echo '<script>window.location="?page=siswa&action=detail&IDsiswa='.$_GET[IDsiswa].'";</script>';
                 } else {
                     if(move_uploaded_file($sumber, $target.$nama_gambar)) {
-                        mysqli_query($db, "UPDATE tb_siswa SET nama_lengkap = '$nama_lengkap', tempat_lahir = '$tempat_lahir', tgl_lahir = '$tgl_lahir', jenis_kelamin = '$jenis_kelamin', agama = '$agama', nama_ayah = '$nama_ayah', nama_ibu = '$nama_ibu', no_telp = '$no_telp', email = '$email', alamat = '$alamat', id_kelas = '$kelas', thn_masuk = '$thn_masuk', foto = '$nama_gambar', username = '$user', password = md5('$pass'), pass = '$pass' WHERE id_siswa = '$_GET[IDsiswa]'") or die ($db->error);           
+                        mysqli_query($db, "UPDATE tb_siswa SET nama_lengkap = '$nama_lengkap', tempat_lahir = '$tempat_lahir', tgl_lahir = '$tgl_lahir', jenis_kelamin = '$jenis_kelamin', agama = '$agama', nama_ayah = '$nama_ayah', nama_ibu = '$nama_ibu', no_telp = '$no_telp', email = '$email', alamat = '$alamat', id_kelas = '$kelas', thn_masuk = '$thn_masuk', foto = '$nama_gambar', username = '$user', password = md5('$pass'), pass = '$pass' WHERE id_siswa = '$_GET[IDsiswa]'") or die ($db->error);
                         echo '<script>window.location="?page=siswa&action=detail&IDsiswa='.$_GET[IDsiswa].'";</script>';
                     } else {
                         echo '<script>alert("Gagal mengedit info profil, foto gagal diupload, coba lagi!");</script>';
@@ -222,10 +222,10 @@ if(@$_GET['action'] == '') {
         </div>
     </div>
     </div>
-<?php 
+<?php
 } else if(@$_GET['action'] == 'detail') {
    $sql_siswa_per_id = mysqli_query($db, "
-        SELECT a.*,b.nama_kelas 
+        SELECT a.*,b.nama_kelas
         FROM tb_siswa a
         JOIN tb_kelas b
         ON a.id_kelas = b.id_kelas

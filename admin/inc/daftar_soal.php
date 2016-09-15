@@ -5,8 +5,8 @@ $sql_essay = mysqli_query($db, "SELECT * FROM tb_soal_essay WHERE id_tq = '$id'"
 <div class="row">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<a href="?page=quiz" class="btn btn-danger btn-sm">Kembali</a> &nbsp; 
-			Lihat Daftar Jenis Soal : <a href="?page=quiz&action=daftarsoal&hal=pilgan&id=<?php echo $id; ?>" class="btn btn-primary btn-sm">Pilihan Ganda (<?php echo mysqli_num_rows($sql_pilgan); ?> soal)</a> 
+			<a href="?page=quiz" class="btn btn-danger btn-sm">Kembali</a> &nbsp;
+			Lihat Daftar Jenis Soal : <a href="?page=quiz&action=daftarsoal&hal=pilgan&id=<?php echo $id; ?>" class="btn btn-primary btn-sm">Pilihan Ganda (<?php echo mysqli_num_rows($sql_pilgan); ?> soal)</a>
 			<a href="?page=quiz&action=daftarsoal&hal=essay&id=<?php echo $id; ?>" class="btn btn-primary btn-sm">Essay (<?php echo mysqli_num_rows($sql_essay); ?> soal)</a>
 		</div>
 		<?php
@@ -119,8 +119,8 @@ if(@$_GET['hal'] == "pilgan") { ?>
 											<td>Opsi</td>
 											<td>:</td>
 											<td>
-												<a href="?page=quiz&action=daftarsoal&hal=editsoalpilgan&id=<?php echo $id; ?>&idsoal=<?php echo $data_pilgan['id_pilgan']; ?>&ke=<?php echo $k++; ?>" class="badge" style="background-color:#f60;">Edit</a>
-												<a onclick="return confirm('Yakin akan menghapus data?');" href="?page=quiz&action=daftarsoal&hal=hapussoalpilgan&id=<?php echo $id; ?>&idsoal=<?php echo $data_pilgan['id_pilgan']; ?>" class="badge" style="background-color:#f00;">Hapus</a>
+												<a href="?page=quiz&action=daftarsoal&hal=editsoalpilgan&id=<?php echo $id; ?>&idsoal=<?php echo $data_pilgan['id_pilgan']; ?>&ke=<?php echo $k++; ?>" class="btn btn-warning btn-xs">Edit</a>
+												<a onclick="return confirm('Yakin akan menghapus data?');" href="?page=quiz&action=daftarsoal&hal=hapussoalpilgan&id=<?php echo $id; ?>&idsoal=<?php echo $data_pilgan['id_pilgan']; ?>" class="btn btn-danger btn-xs">Hapus</a>
 											</td>
 										</tr>
 									</tbody>
@@ -128,7 +128,7 @@ if(@$_GET['hal'] == "pilgan") { ?>
 							</td>
 						</tr>
 					</table>
-					
+
 					<?php
 					}
 				} else { ?>
@@ -173,8 +173,8 @@ if(@$_GET['hal'] == "pilgan") { ?>
 								</td>
 								<td align="center" width="160px"><?php echo tgl_indo($data_essay['tgl_buat']); ?></td>
 								<td align="center" width="120px">
-									<a href="?page=quiz&action=daftarsoal&hal=editsoalessay&id=<?php echo $id; ?>&idsoal=<?php echo $data_essay['id_essay']; ?>&ke=<?php echo $k++; ?>" class="badge" style="background-color:#f60;">Edit</a>
-									<a onclick="return confirm('Yakin akan menghapus data?');" href="?page=quiz&action=daftarsoal&hal=hapussoalessay&id=<?php echo $id; ?>&idsoal=<?php echo $data_essay['id_essay']; ?>" class="badge" style="background-color:#f00;">Hapus</a>
+									<a href="?page=quiz&action=daftarsoal&hal=editsoalessay&id=<?php echo $id; ?>&idsoal=<?php echo $data_essay['id_essay']; ?>&ke=<?php echo $k++; ?>" class="btn btn-warning btn-xs">Edit</a>
+									<a onclick="return confirm('Yakin akan menghapus data?');" href="?page=quiz&action=daftarsoal&hal=hapussoalessay&id=<?php echo $id; ?>&idsoal=<?php echo $data_essay['id_essay']; ?>" class="btn btn-danger btn-xs">Hapus</a>
 								</td>
 							</tr>
 							<?php
@@ -225,7 +225,7 @@ if(@$_GET['hal'] == "pilgan") { ?>
 							} ?>
 						</div>
 					</div>
-					
+
 					<div class="col-md-2">
 						<label>Pilihan A</label>
 					</div>
@@ -318,7 +318,7 @@ if(@$_GET['hal'] == "pilgan") { ?>
 						}
 					} else {
 						if($nama_gambar == '') {
-							mysqli_query($db, "UPDATE tb_soal_pilgan SET pertanyaan = '$pertanyaan', pil_a = '$pilA', pil_b = '$pilB', pil_c = '$pilC', pil_d = '$pilD', pil_e = '$pilE', kunci = '$kunci' WHERE id_pilgan = '$idsoal'") or die ($db->error);          
+							mysqli_query($db, "UPDATE tb_soal_pilgan SET pertanyaan = '$pertanyaan', pil_a = '$pilA', pil_b = '$pilB', pil_c = '$pilC', pil_d = '$pilD', pil_e = '$pilE', kunci = '$kunci' WHERE id_pilgan = '$idsoal'") or die ($db->error);
 							// echo "gambar tidak dihapus dan tidak diperbarui (tetap)";
 						} else {
 							move_uploaded_file($sumber, $target.$nama_gambar);
@@ -396,14 +396,14 @@ if(@$_GET['hal'] == "pilgan") { ?>
 						}
 					} else {
 						if($nama_gambar == '') {
-							mysqli_query($db, "UPDATE tb_soal_essay SET pertanyaan = '$pertanyaan' WHERE id_essay = '$idsoal'") or die ($db->error); 
+							mysqli_query($db, "UPDATE tb_soal_essay SET pertanyaan = '$pertanyaan' WHERE id_essay = '$idsoal'") or die ($db->error);
 							// echo "gambar tidak dihapus dan tidak diperbarui (tetap)";
 						} else {
 							move_uploaded_file($sumber, $target.$nama_gambar);
 							mysqli_query($db, "UPDATE tb_soal_essay SET pertanyaan = '$pertanyaan', gambar = '$nama_gambar' WHERE id_essay = '$idsoal'") or die ($db->error);
 							// echo "gambar diperbarui dari sebelumnya";
 						}
-					}        
+					}
                     echo '<script>window.location="?page=quiz&action=daftarsoal&hal=essay&id='.$id.'"</script>';
 	            } ?>
 

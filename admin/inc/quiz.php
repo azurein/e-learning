@@ -14,7 +14,7 @@ if(@$_SESSION[admin]) {
 } else if(@$_SESSION[pengajar]) {
     $sql_topik = mysqli_query($db, "SELECT * FROM tb_topik_quiz JOIN tb_kelas ON tb_topik_quiz.id_kelas = tb_kelas.id_kelas JOIN tb_mapel ON tb_topik_quiz.id_mapel = tb_mapel.id WHERE pembuat != 'admin' AND pembuat = '$_SESSION[pengajar]' ORDER BY tgl_buat ASC") or die ($db->error);
     $pembuat = @$_SESSION['pengajar'];
-} 
+}
 
 if(@$_GET['action'] == '') { ?>
     <div class="row">
@@ -22,7 +22,7 @@ if(@$_GET['action'] == '') { ?>
             <div class="panel panel-default">
                 <div class="panel-heading">Daftar Topik Ujian / Tugas &nbsp; <a href="?page=quiz&action=tambah" class="btn btn-primary btn-sm">Tambah Topik</a> &nbsp; <a href="./laporan/cetak.php?data=topikquiz" target="_blank" class="btn btn-default btn-sm">Cetak</a></div>
                 <div class="panel-body">
-                    <div class="table-responsive">                        
+                    <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover" id="dataquiz">
                             <thead>
                                 <tr>
@@ -65,11 +65,11 @@ if(@$_GET['action'] == '') { ?>
                                         <td><?php echo $data_topik['info']; ?></td>
                                         <td align="center"><?php echo ucfirst($data_topik['status']); ?></td>
                                         <td align="center">
-                                            <a href="?page=quiz&action=edit&id=<?php echo $data_topik['id_tq']; ?>" class="badge" style="background-color:#f60;">Edit</a>
-                                            <a onclick="return confirm('Hati-hati saat menghapus topik quiz karena Anda akan menghapus semua data yang berhubungan dengan topik ini, termasuk data soal dan nilai. Apakah Anda tetap yakin akan menghapus topik ini?');" href="?page=quiz&action=hapus&id_tq=<?php echo $data_topik['id_tq']; ?>" class="badge" style="background-color:#f00;">Hapus</a>
-                                            <br /><a href="?page=quiz&action=buatsoal&id=<?php echo $data_topik['id_tq']; ?>" class="badge">Buat Soal</a>
-                                            <a href="?page=quiz&action=daftarsoal&id=<?php echo $data_topik['id_tq']; ?>" class="badge">Daftar Soal</a>
-                                            <a href="?page=quiz&action=pesertakoreksi&id_tq=<?php echo $data_topik['id_tq']; ?>" class="badge">Peserta & Koreksi</a>
+                                            <a href="?page=quiz&action=edit&id=<?php echo $data_topik['id_tq']; ?>" class="btn btn-warning btn-xs">Edit</a>
+                                            <a onclick="return confirm('Hati-hati saat menghapus topik quiz karena Anda akan menghapus semua data yang berhubungan dengan topik ini, termasuk data soal dan nilai. Apakah Anda tetap yakin akan menghapus topik ini?');" href="?page=quiz&action=hapus&id_tq=<?php echo $data_topik['id_tq']; ?>" class="btn btn-danger btn-xs">Hapus</a>
+                                            <br /><a href="?page=quiz&action=buatsoal&id=<?php echo $data_topik['id_tq']; ?>" class="btn btn-default btn-xs">Buat Soal</a>
+                                            <a href="?page=quiz&action=daftarsoal&id=<?php echo $data_topik['id_tq']; ?>" class="btn btn-default btn-xs">Daftar Soal</a>
+                                            <a href="?page=quiz&action=pesertakoreksi&id_tq=<?php echo $data_topik['id_tq']; ?>" class="btn btn-default btn-xs">Peserta & Koreksi</a>
                                         </td>
                                     </tr>
                                 <?php
