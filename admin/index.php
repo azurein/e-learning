@@ -156,7 +156,7 @@ if(@$_SESSION['admin'] || @$_SESSION['pengajar']) {
                 } ?>
 
 				<footer>
-				  <p> &copy; 2016 e-Learning - Tax INSTITUTE | By : Yose Kedavra </p>
+				  <p>2016 E-Learning - Tax INSTITUTE</p>
 				</footer>
             </div>
         </div>

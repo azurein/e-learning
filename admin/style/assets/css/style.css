@@ -10,3 +10,7 @@
 .btn {
     margin: 2px 0px;
 }
+
+textarea {
+    resize:vertical ;
+}

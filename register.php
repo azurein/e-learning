@@ -147,19 +147,19 @@ $db = mysqli_connect("localhost", "root", "root", "elearn_db");
                             } else {
                                 if($nama_gambar != '') {
                                     if(move_uploaded_file($sumber, $target.$nama_gambar)) {
-                                        mysqli_query($db, 
-                                            "INSERT INTO tb_siswa VALUES(0, $nis, '$nama_lengkap', '$tempat_lahir', '$tgl_lahir', '$jenis_kelamin', 
+                                        mysqli_query($db,
+                                            "INSERT INTO tb_siswa VALUES(0, $nis, '$nama_lengkap', '$tempat_lahir', '$tgl_lahir', '$jenis_kelamin',
                                             '$agama', '$nama_ayah', '$nama_ibu', '$no_telp', '$email', '$alamat', NULL, YEAR(NOW()), '$nama_gambar',
                                             '$user', md5('$pass'), '$pass', 'tidak aktif')"
-                                        ) or die ($db->error);          
+                                        ) or die ($db->error);
                                         echo '<script>alert("Pendaftaran berhasil, tunggu akun aktif dan silahkan login"); window.location="./"</script>';
                                     } else {
                                         echo '<script>alert("Gagal mendaftar, foto gagal diupload, coba lagi!");</script>';
                                     }
                                 } else {
-                                    mysqli_query($db, 
-                                        "INSERT INTO tb_siswa VALUES(0, '$nis', '$nama_lengkap', '$tempat_lahir', '$tgl_lahir', '$jenis_kelamin', 
-                                        '$agama', '$nama_ayah', '$nama_ibu', '$no_telp', '$email', '$alamat', NULL, YEAR(NOW()), 'anonim.png', 
+                                    mysqli_query($db,
+                                        "INSERT INTO tb_siswa VALUES(0, '$nis', '$nama_lengkap', '$tempat_lahir', '$tgl_lahir', '$jenis_kelamin',
+                                        '$agama', '$nama_ayah', '$nama_ibu', '$no_telp', '$email', '$alamat', NULL, YEAR(NOW()), 'anonim.png',
                                         '$user', md5('$pass'), '$pass', 'tidak aktif')"
                                     ) or die ($db->error);
                                     echo '<script>alert("Pendaftaran berhasil, tunggu akun aktif dan silahkan login"); window.location="./"</script>';
@@ -184,7 +184,7 @@ $db = mysqli_connect("localhost", "root", "root", "elearn_db");
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    &copy; 2016 E-Learning TAX INSTITUTE | By : Yose Kedavra
+                    &copy; 2016 E-Learning TAX INSTITUTE
                 </div>
 
             </div>

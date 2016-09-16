@@ -36,8 +36,8 @@ if(@$_GET['action'] == '') {
                                     <th>NIS</th>
                                     <th>Nama Lengkap</th>
                                     <th>Jenis Kelamin</th>
+                                    <th>TTL</th>
                                     <th>Alamat</th>
-                                    <th>Kelas</th>
                                     <?php if(@$_SESSION[admin]) { ?>
                                         <th>Status</th>
                                     <?php } ?>
@@ -54,14 +54,21 @@ if(@$_GET['action'] == '') {
                             }
 
                             if(mysqli_num_rows($sql_siswa) > 0) {
-    	                        while($data_siswa = mysqli_fetch_array($sql_siswa)) { ?>
+    	                        while($data_siswa = mysqli_fetch_array($sql_siswa)) {
+
+                                    if($data_siswa['jenis_kelamin'] == 'L') {
+                                        $gender_persiswa = 'Laki-laki';
+                                    } else {
+                                        $gender_persiswa = 'Perempuan';
+                                    }
+                                ?>
     	                            <tr>
     	                                <td align="center"><?php echo $no++; ?></td>
     	                                <td><?php echo $data_siswa['nis']; ?></td>
     	                                <td><?php echo $data_siswa['nama_lengkap']; ?></td>
-    	                                <td><?php echo $data_siswa['jenis_kelamin']; ?></td>
+    	                                <td><?php echo $gender_persiswa; ?></td>
+                                        <td><?php echo $data_siswa['tempat_lahir'].", ".tgl_indo($data_siswa['tgl_lahir']); ?></td>
     	                                <td><?php echo $data_siswa['alamat']; ?></td>
-                                        <td align="center"><?php echo $data_siswa['nama_kelas']; ?></td>
                                         <?php if(@$_SESSION[admin]) { ?>
         	                                <td><?php echo ucfirst($data_siswa['status']); ?></td>
                                         <?php } ?>

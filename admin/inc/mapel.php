@@ -17,7 +17,7 @@ if(@$_SESSION[admin]) {
                 <div class="panel-heading"><a href="?page=mapel&action=tambah" class="btn btn-primary btn-sm">Tambah Data</a> &nbsp; <a href="./laporan/cetak.php?data=mapel" target="_blank" class="btn btn-default btn-sm">Cetak</a></div>
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover">
+                        <table class="table table-striped table-bordered table-hover" id="datamapel">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -47,6 +47,11 @@ if(@$_SESSION[admin]) {
                         	} ?>
                             </tbody>
                         </table>
+                        <script>
+                        $(document).ready(function () {
+                            $('#datamapel').dataTable();
+                        });
+                        </script>
                     </div>
                 </div>
             </div>
