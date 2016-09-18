@@ -67,4 +67,7 @@ function tampil_per_ID($table, $where = null) {
 	return $query;
 	mysqli_close($db);
 }
+
+$file_materi = $_SERVER['DOCUMENT_ROOT'].'/elearn/admin/file_materi/';
+$file_buku = $_SERVER['DOCUMENT_ROOT'].'/elearn/admin/file_buku/';
 ?>
