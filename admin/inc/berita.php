@@ -52,7 +52,7 @@ if(@$_GET['action'] == '') { ?>
 										</td>
 										<td><?php echo ucfirst($data_berita['status']); ?></td>
 										<td align="center" width="90px">
-											<a href="?page=berita&action=edit&id=<?php echo $data_berita['id_berita']; ?>" class="btn btn-success btn-xs">Edit</a>
+											<a href="?page=berita&action=edit&id=<?php echo $data_berita['id_berita']; ?>" class="btn btn-warning btn-xs">Edit</a>
 	                                        <a onclick="return confirm('Yakin akan menghapus data?');" href="?page=berita&action=hapus&id=<?php echo $data_berita['id_berita']; ?>" class="btn btn-danger btn-xs">Hapus</a>
                                         </td>
 									</tr>
@@ -107,7 +107,7 @@ if(@$_GET['action'] == '') { ?>
                     	$isi = @mysqli_real_escape_string($db, $_POST['isi']);
                     	$status = @mysqli_real_escape_string($db, $_POST['status']);
                     	if(@$_SESSION[admin]) {
-                            mysqli_query($db, "INSERT INTO tb_berita VALUES(NULL, '$judul', '$isi', now(), 'admin', '$status')") or die ($db->error);           
+                            mysqli_query($db, "INSERT INTO tb_berita VALUES(NULL, '$judul', '$isi', now(), 'admin', '$status')") or die ($db->error);
                         } else if(@$_SESSION[pengajar]) {
                         	mysqli_query($db, "INSERT INTO tb_berita VALUES(NULL, '$judul', '$isi', now(), '$_SESSION[pengajar]', '$status')") or die ($db->error);
                         }
@@ -153,7 +153,7 @@ if(@$_GET['action'] == '') { ?>
                     	$judul = @mysqli_real_escape_string($db, $_POST['judul']);
                     	$isi = @mysqli_real_escape_string($db, $_POST['isi']);
                     	$status = @mysqli_real_escape_string($db, $_POST['status']);
-                        mysqli_query($db, "UPDATE tb_berita SET judul = '$judul', isi = '$isi', status = '$status' WHERE id_berita = '$_GET[id]'") or die ($db->error);           
+                        mysqli_query($db, "UPDATE tb_berita SET judul = '$judul', isi = '$isi', status = '$status' WHERE id_berita = '$_GET[id]'") or die ($db->error);
                     	echo '<script>window.location="?page=berita";</script>';
                     } ?>
                 </div>

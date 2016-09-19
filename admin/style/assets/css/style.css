@@ -3,6 +3,14 @@
   border-top: none;
 }
 
-.link:hover { 
-	cursor:pointer; 
+.link:hover {
+	cursor:pointer;
+}
+
+.btn {
+    margin: 2px 0px;
+}
+
+textarea {
+    resize:vertical ;
 }

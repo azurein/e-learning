@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 08, 2016 at 02:26 PM
+-- Generation Time: Sep 16, 2016 at 01:15 PM
 -- Server version: 5.7.13
 -- PHP Version: 5.5.36
 
@@ -78,8 +78,7 @@ INSERT INTO `tb_berita` (`id_berita`, `judul`, `isi`, `tgl_posting`, `penerbit`,
 
 CREATE TABLE `tb_buku` (
   `id_buku` int(11) NOT NULL,
-  `id_kelas` int(11) NOT NULL,
-  `id_mapel` int(11) NOT NULL,
+  `id_mapel_ajar` int(11) NOT NULL,
   `judul` varchar(500) DEFAULT NULL,
   `sinopsis` varchar(800) DEFAULT NULL,
   `tahun` year(4) DEFAULT NULL,
@@ -99,9 +98,8 @@ CREATE TABLE `tb_buku` (
 
 CREATE TABLE `tb_file_materi` (
   `id_materi` int(11) NOT NULL,
+  `id_mapel_ajar` int(4) NOT NULL,
   `judul` varchar(200) NOT NULL,
-  `id_kelas` int(4) NOT NULL,
-  `id_mapel` int(4) NOT NULL,
   `nama_file` varchar(250) NOT NULL,
   `tgl_posting` date NOT NULL,
   `pembuat` varchar(10) NOT NULL,
@@ -112,10 +110,24 @@ CREATE TABLE `tb_file_materi` (
 -- Dumping data for table `tb_file_materi`
 --
 
-INSERT INTO `tb_file_materi` (`id_materi`, `judul`, `id_kelas`, `id_mapel`, `nama_file`, `tgl_posting`, `pembuat`, `hits`) VALUES
-(3, 'Modul Latihan', 3, 2, 'Cetak Soal Tryout P1.pdf', '2015-08-15', 'admin', 4),
-(4, 'Modul 1', 1, 1, 'kumpulan_soal_20152.pdf', '2015-08-15', '1', 7),
-(5, 'Modul 2', 1, 1, '2072-P1-SPK-Rekayasa Perangkat Lunak.doc', '2015-08-15', '1', 3);
+INSERT INTO `tb_file_materi` (`id_materi`, `id_mapel_ajar`, `judul`, `nama_file`, `tgl_posting`, `pembuat`, `hits`) VALUES
+(3, 3, 'Modul Latihan', 'Cetak Soal Tryout P1.pdf', '2015-08-15', 'admin', 4),
+(4, 1, 'Modul 1', 'kumpulan_soal_20152.pdf', '2015-08-15', '1', 7),
+(5, 1, 'Modul 2', '2072-P1-SPK-Rekayasa Perangkat Lunak.doc', '2015-08-15', '1', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_jadwal_ajar`
+--
+
+CREATE TABLE `tb_jadwal_ajar` (
+  `id_jadwal` int(11) NOT NULL,
+  `id_mapel_ajar` int(11) NOT NULL,
+  `jadwal_mulai` datetime DEFAULT NULL,
+  `jadwal_selesai` datetime DEFAULT NULL,
+  `ruang` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -148,44 +160,27 @@ INSERT INTO `tb_jawaban` (`id`, `id_tq`, `id_soal`, `id_siswa`, `jawaban`, `gamb
 
 CREATE TABLE `tb_kelas` (
   `id_kelas` int(11) NOT NULL,
-  `nama_kelas` varchar(50) NOT NULL,
-  `ruang` varchar(20) NOT NULL,
-  `wali_kelas` int(5) DEFAULT NULL,
-  `ketua_kelas` int(5) DEFAULT NULL
+  `nama_kelas` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_kelas`
 --
 
-INSERT INTO `tb_kelas` (`id_kelas`, `nama_kelas`, `ruang`, `wali_kelas`, `ketua_kelas`) VALUES
-(1, 'X-A', 'G-1', 8, 1),
-(2, 'X-B', 'G-2', 1, 2),
-(3, 'X-C', 'G-3', 10, 3),
-(4, 'X-D', 'G-4', 0, 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tb_kelas_ajar`
---
-
-CREATE TABLE `tb_kelas_ajar` (
-  `id` int(11) NOT NULL,
-  `id_kelas` int(5) NOT NULL,
-  `id_pengajar` int(5) NOT NULL,
-  `keterangan` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tb_kelas_ajar`
---
-
-INSERT INTO `tb_kelas_ajar` (`id`, `id_kelas`, `id_pengajar`, `keterangan`) VALUES
-(1, 1, 1, 'Halo'),
-(2, 1, 8, 'aaa'),
-(4, 3, 8, 'bbb'),
-(5, 2, 1, 'Halo');
+INSERT INTO `tb_kelas` (`id_kelas`, `nama_kelas`) VALUES
+(1, 'X-A'),
+(2, 'X-B'),
+(3, 'X-C'),
+(4, 'X-D'),
+(15, 'qq'),
+(17, 'kelas baru 1'),
+(18, 'kelas baru 2'),
+(19, 'kelas baru 3'),
+(20, 'kelas baru 4'),
+(21, 'sd'),
+(22, 'baru nie'),
+(23, 'baruuu'),
+(24, 'kelas wew');
 
 -- --------------------------------------------------------
 
@@ -220,18 +215,31 @@ CREATE TABLE `tb_mapel_ajar` (
   `id` int(11) NOT NULL,
   `id_mapel` int(5) NOT NULL,
   `id_kelas` int(5) NOT NULL,
-  `id_pengajar` int(5) NOT NULL,
-  `keterangan` varchar(200) NOT NULL
+  `id_pengajar` int(5) DEFAULT NULL,
+  `keterangan` varchar(200) DEFAULT NULL,
+  `tgl_mulai` datetime DEFAULT NULL,
+  `tgl_selesai` datetime DEFAULT NULL,
+  `status_aktif` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_mapel_ajar`
 --
 
-INSERT INTO `tb_mapel_ajar` (`id`, `id_mapel`, `id_kelas`, `id_pengajar`, `keterangan`) VALUES
-(6, 1, 2, 1, 'aaa'),
-(7, 1, 1, 1, 'Kelas baik'),
-(8, 5, 2, 1, 'asd');
+INSERT INTO `tb_mapel_ajar` (`id`, `id_mapel`, `id_kelas`, `id_pengajar`, `keterangan`, `tgl_mulai`, `tgl_selesai`, `status_aktif`) VALUES
+(8, 5, 2, 0, '', '2001-01-01 00:00:00', '2001-01-01 00:00:00', 1),
+(10, 3, 17, 10, 'kelas baru', '2010-01-01 00:00:00', '2011-02-02 00:00:00', 0),
+(11, 4, 2, 1, 'kelas udah ada sblmnnya', '2016-01-01 00:00:00', '2016-12-12 00:00:00', 1),
+(12, 2, 2, 12, 'asd', '2017-01-01 00:00:00', '2017-02-02 00:00:00', 0),
+(13, 1, 0, 1, '', '2015-11-11 00:00:00', '2016-02-02 00:00:00', 0),
+(14, 1, 0, 1, '', '2015-11-11 00:00:00', '2016-02-02 00:00:00', 0),
+(15, 1, 0, 1, 'sad', '2016-01-01 00:00:00', '2017-01-01 00:00:00', 0),
+(19, 1, 17, 1, '', '1992-01-01 00:00:00', '1992-02-02 00:00:00', 0),
+(20, 1, 18, 1, '123', '1992-01-01 00:00:00', '1992-01-01 00:00:00', 1),
+(23, 1, 1, 1, 'asd', '2001-01-01 00:00:00', '2001-01-01 00:00:00', 0),
+(24, 3, 22, 1, '', '0001-01-01 00:00:00', '0001-01-01 00:00:00', 1),
+(25, 3, 2, 8, 'wew', '1991-01-01 00:00:00', '1992-01-01 00:00:00', 0),
+(27, 1, 24, 0, '', '2001-01-01 00:00:00', '2001-01-01 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -323,8 +331,7 @@ INSERT INTO `tb_pengajar` (`id_pengajar`, `nip`, `nama_lengkap`, `tempat_lahir`,
 
 CREATE TABLE `tb_sertifikasi` (
   `id_sertifikasi` int(11) NOT NULL,
-  `id_kelas` int(11) NOT NULL,
-  `id_mapel` int(11) NOT NULL,
+  `id_mapel_ajar` int(11) NOT NULL,
   `nama_sertifikasi` varchar(200) DEFAULT NULL,
   `deskripsi_sertifikasi` varchar(500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -364,6 +371,17 @@ CREATE TABLE `tb_siswa` (
 INSERT INTO `tb_siswa` (`id_siswa`, `nis`, `nama_lengkap`, `tempat_lahir`, `tgl_lahir`, `jenis_kelamin`, `agama`, `nama_ayah`, `nama_ibu`, `no_telp`, `email`, `alamat`, `id_kelas`, `thn_masuk`, `foto`, `username`, `password`, `pass`, `status`) VALUES
 (14, '1608000006', 'Melisa Aryani', 'Jakarta', '1992-11-11', 'P', 'Kristen', 'Ayah Melisa', 'Ibu Melisa', '08999999999', 'melisaaryani@gmail.com', 'Taman Palem Lestari Blok A7 No.14', NULL, 2016, 'MelisaAryani.jpg', 'melisa', '207bc608101a56a807388a7e5ef1343a', 'aryani', 'tidak aktif'),
 (15, '1608000007', 'Robin Cosamas', 'Jakarta', '1992-11-06', 'L', 'Katholik', 'Ayah Robin', 'Ibu Robin', '+628988360025', 'robin.cosamas@gmail.com', 'Jalan Kamal Raya No. 40, RT.001 - RW.006, Tegal Alur, Kalideres', '2', 2016, 'CalvinKvvan.jpg', 'robin', '8ee60a2e00c90d7e00d5069188dc115b', 'robin', 'aktif');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tb_siswa_ajar`
+--
+
+CREATE TABLE `tb_siswa_ajar` (
+  `id_siswa` int(11) NOT NULL,
+  `id_mapel_ajar` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -447,8 +465,7 @@ INSERT INTO `tb_topik_quiz` (`id_tq`, `judul`, `id_kelas`, `id_mapel`, `tgl_buat
 
 CREATE TABLE `tb_tujuan_ajar` (
   `id_tujuan_ajar` int(11) NOT NULL,
-  `id_kelas` int(11) NOT NULL,
-  `id_mapel` int(11) NOT NULL,
+  `id_mapel_ajar` int(11) NOT NULL,
   `tujuan_ajar` varchar(500) DEFAULT NULL,
   `prioritas` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -482,6 +499,12 @@ ALTER TABLE `tb_file_materi`
   ADD PRIMARY KEY (`id_materi`);
 
 --
+-- Indexes for table `tb_jadwal_ajar`
+--
+ALTER TABLE `tb_jadwal_ajar`
+  ADD PRIMARY KEY (`id_jadwal`);
+
+--
 -- Indexes for table `tb_jawaban`
 --
 ALTER TABLE `tb_jawaban`
@@ -492,12 +515,6 @@ ALTER TABLE `tb_jawaban`
 --
 ALTER TABLE `tb_kelas`
   ADD PRIMARY KEY (`id_kelas`);
-
---
--- Indexes for table `tb_kelas_ajar`
---
-ALTER TABLE `tb_kelas_ajar`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `tb_mapel`
@@ -540,6 +557,12 @@ ALTER TABLE `tb_sertifikasi`
 --
 ALTER TABLE `tb_siswa`
   ADD PRIMARY KEY (`id_siswa`);
+
+--
+-- Indexes for table `tb_siswa_ajar`
+--
+ALTER TABLE `tb_siswa_ajar`
+  ADD PRIMARY KEY (`id_siswa`,`id_mapel_ajar`);
 
 --
 -- Indexes for table `tb_soal_essay`
@@ -598,12 +621,7 @@ ALTER TABLE `tb_jawaban`
 -- AUTO_INCREMENT for table `tb_kelas`
 --
 ALTER TABLE `tb_kelas`
-  MODIFY `id_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `tb_kelas_ajar`
---
-ALTER TABLE `tb_kelas_ajar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT for table `tb_mapel`
 --
@@ -613,7 +631,7 @@ ALTER TABLE `tb_mapel`
 -- AUTO_INCREMENT for table `tb_mapel_ajar`
 --
 ALTER TABLE `tb_mapel_ajar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT for table `tb_nilai_essay`
 --

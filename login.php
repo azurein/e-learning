@@ -122,7 +122,7 @@ $db = mysqli_connect("localhost", "root", "root", "elearn_db");
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    &copy; 2016 E-Learning TAX INSTITUTE | By : Yose Kedavra
+                    &copy; 2016 E-Learning TAX INSTITUTE
                 </div>
 
             </div>

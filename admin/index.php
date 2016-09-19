@@ -27,7 +27,7 @@ if(@$_SESSION['admin'] || @$_SESSION['pengajar']) {
     <script src="style/assets/js/morris/morris.js"></script>
     <script src="style/assets/js/dataTables/jquery.dataTables.js"></script>
     <script src="style/assets/js/dataTables/dataTables.bootstrap.js"></script>
-    <script src="style/assets/js/custom-scripts.js"></script>    
+    <script src="style/assets/js/custom-scripts.js"></script>
 
     <div id="wrapper">
         <nav class="navbar navbar-default top-navbar" role="navigation">
@@ -39,37 +39,6 @@ if(@$_SESSION['admin'] || @$_SESSION['pengajar']) {
             </div>
 
             <ul class="nav navbar-top-links navbar-right">
-                <!-- <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                        <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-alerts">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-comment fa-fw"></i> New User
-                                    <span class="pull-right text-muted small">4 min</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                    <span class="pull-right text-muted small">4 min</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="#">
-                                <strong>See All Alerts</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </li> -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
                         <?php
@@ -128,25 +97,28 @@ if(@$_SESSION['admin'] || @$_SESSION['pengajar']) {
                             </ul>
                         </li>
                         <li>
-                            <a class="<?php if(@$_GET['page'] == 'kelas') { echo 'active-menu'; } ?>" href="?page=kelas"><i class="fa fa-table"></i> Manajemen Kelas</a>
+                            <a class="<?php if(@$_GET['page'] == 'mapel') { echo 'active-menu'; } ?>" href="?page=mapel"><i class="fa fa-fw fa-th-list"></i> Mata Pelajaran</a>
                         </li>
                         <li>
-                            <a class="<?php if(@$_GET['page'] == 'mapel') { echo 'active-menu'; } ?>" href="?page=mapel"><i class="fa fa-fw fa-file"></i> Mata Pelajaran</a>
+                            <a class="<?php if(@$_GET['page'] == 'kelas') { echo 'active-menu'; } ?>" href="?page=kelas"><i class="fa fa-list-alt"></i> Manajemen Kelas</a>
+                        </li>
+                        <li>
+                            <a class="<?php if(@$_GET['page'] == 'jadwal') { echo 'active-menu'; } ?>" href="?page=jadwal"><i class="fa fa-table"></i> Manajemen Jadwal</a>
                         </li>
                     <?php
                     }
                     ?>
                     <li>
-                        <a class="<?php if(@$_GET['page'] == 'quiz') { echo 'active-menu'; } ?>" href="?page=quiz"><i class="fa fa-bar-chart-o"></i> Manajemen Tugas / Quiz</a>
+                        <a class="<?php if(@$_GET['page'] == 'quiz') { echo 'active-menu'; } ?>" href="?page=quiz"><i class="fa fa-file"></i> Manajemen Tugas / Quiz</a>
                     </li>
                     <li>
-                        <a class="<?php if(@$_GET['page'] == 'materi') { echo 'active-menu'; } ?>" href="?page=materi"><i class="fa fa-qrcode"></i> Materi</a>
+                        <a class="<?php if(@$_GET['page'] == 'materi') { echo 'active-menu'; } ?>" href="?page=materi"><i class="fa fa-file-text"></i> Materi</a>
                     </li>
                     <?php
                     if(@$_SESSION['admin']) {
                     ?>
                         <li>
-                            <a class="<?php if(@$_GET['page'] == 'berita') { echo 'active-menu'; } ?>" href="?page=berita"><i class="fa fa-desktop"></i> Berita</a>
+                            <a class="<?php if(@$_GET['page'] == 'berita') { echo 'active-menu'; } ?>" href="?page=berita"><i class="fa fa-newspaper-o"></i> Berita</a>
                         </li>
                     <?php
                     }
@@ -157,20 +129,22 @@ if(@$_SESSION['admin'] || @$_SESSION['pengajar']) {
 
         <div id="page-wrapper">
             <div id="page-inner">
-                
+
                 <?php
                 if(@$_GET['page'] == '') {
                     include "inc/dashboard.php";
                 } else if(@$_GET['page'] == 'pengajar') {
                     include "inc/pengajar.php";
-                } else if(@$_GET['page'] == 'siswaregistrasi') {
-                    include "inc/siswaregistrasi.php";
                 } else if(@$_GET['page'] == 'siswa') {
                     include "inc/siswa.php";
-                } else if(@$_GET['page'] == 'kelas') {
-                    include "inc/kelas.php";
+                } else if(@$_GET['page'] == 'siswaregistrasi') {
+                    include "inc/siswaregistrasi.php";
                 } else if(@$_GET['page'] == 'mapel') {
                     include "inc/mapel.php";
+                } else if(@$_GET['page'] == 'kelas') {
+                    include "inc/kelas.php";
+                } else if(@$_GET['page'] == 'jadwal') {
+                    include "inc/jadwal.php";
                 } else if(@$_GET['page'] == 'quiz') {
                     include "inc/quiz.php";
                 } else if(@$_GET['page'] == 'materi') {
@@ -180,9 +154,9 @@ if(@$_SESSION['admin'] || @$_SESSION['pengajar']) {
                 } else {
                     echo "<div class='col-xs-12'><div class='alert alert-danger'>[404] Halaman tidak ditemukan! Silahkan pilih menu yang ada!</div></div>";
                 } ?>
-                
+
 				<footer>
-				  <p> &copy; 2016 e-Learning - Tax INSTITUTE | By : Yose Kedavra </p>
+				  <p>2016 E-Learning - Tax INSTITUTE</p>
 				</footer>
             </div>
         </div>

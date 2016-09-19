@@ -17,7 +17,7 @@ if(@$_SESSION[admin]) {
                 <div class="panel-heading"><a href="?page=mapel&action=tambah" class="btn btn-primary btn-sm">Tambah Data</a> &nbsp; <a href="./laporan/cetak.php?data=mapel" target="_blank" class="btn btn-default btn-sm">Cetak</a></div>
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover">
+                        <table class="table table-striped table-bordered table-hover" id="datamapel">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -36,8 +36,8 @@ if(@$_SESSION[admin]) {
 	                                    <td><?php echo $data_mapel['kode_mapel']; ?></td>
 	                                    <td><?php echo $data_mapel['mapel']; ?></td>
 	                                    <td align="center" width="150px">
-	                                        <a href="?page=mapel&action=edit&id=<?php echo $data_mapel['id']; ?>" class="badge" style="background-color:#f60;">Edit</a>
-	                                        <a onclick="return confirm('Yakin akan menghapus data?');" href="?page=mapel&action=hapus&id=<?php echo $data_mapel['id']; ?>" class="badge" style="background-color:#f00;">Hapus</a>
+	                                        <a href="?page=mapel&action=edit&id=<?php echo $data_mapel['id']; ?>" class="btn btn-warning btn-xs">Edit</a>
+	                                        <a onclick="return confirm('Yakin akan menghapus data?');" href="?page=mapel&action=hapus&id=<?php echo $data_mapel['id']; ?>" class="btn btn-danger btn-xs">Hapus</a>
 	                                    </td>
 	                                </tr>
 	                            <?php
@@ -47,6 +47,11 @@ if(@$_SESSION[admin]) {
                         	} ?>
                             </tbody>
                         </table>
+                        <script>
+                        $(document).ready(function () {
+                            $('#datamapel').dataTable();
+                        });
+                        </script>
                     </div>
                 </div>
             </div>
@@ -119,8 +124,8 @@ if(@$_SESSION[admin]) {
         </div>
         <?php
     } else if(@$_GET['action'] == 'hapus') {
-        mysqli_query($db, "DELETE FROM tb_mapel WHERE id = '$id'") or die ($db->error);  
-        echo "<script>window.location='?page=mapel';</script>"; 
+        mysqli_query($db, "DELETE FROM tb_mapel WHERE id = '$id'") or die ($db->error);
+        echo "<script>window.location='?page=mapel';</script>";
     }
     echo "</div>";
 
@@ -156,8 +161,8 @@ if(@$_SESSION[admin]) {
 	                                    <td><?php echo $data_mapel_ajar['nama_kelas']; ?></td>
 	                                    <td><?php echo $data_mapel_ajar['keterangan']; ?></td>
 	                                    <td align="center" width="150px">
-	                                        <a href="?page=mapel&action=edit&id=<?php echo $data_mapel_ajar[0]; ?>" class="badge" style="background-color:#f60;">Edit</a>
-	                                        <a onclick="return confirm('Yakin akan menghapus data?');" href="?page=mapel&action=hapus&id=<?php echo $data_mapel_ajar[0]; ?>" class="badge" style="background-color:#f00;">Hapus</a>
+	                                        <a href="?page=mapel&action=edit&id=<?php echo $data_mapel_ajar[0]; ?>" class="btn btn-default btn-xs" style="background-color:#f60;">Edit</a>
+	                                        <a onclick="return confirm('Yakin akan menghapus data?');" href="?page=mapel&action=hapus&id=<?php echo $data_mapel_ajar[0]; ?>" class="btn btn-default btn-xs" style="background-color:#f00;">Hapus</a>
 	                                    </td>
 	                                </tr>
 	                            <?php
@@ -280,8 +285,8 @@ if(@$_SESSION[admin]) {
         </div>
         <?php
     } else if(@$_GET['action'] == 'hapus') {
-        mysqli_query($db, "DELETE FROM tb_mapel_ajar WHERE id = '$id'") or die ($db->error);  
-        echo "<script>window.location='?page=mapel';</script>"; 
+        mysqli_query($db, "DELETE FROM tb_mapel_ajar WHERE id = '$id'") or die ($db->error);
+        echo "<script>window.location='?page=mapel';</script>";
     }
     echo "</div>";
 

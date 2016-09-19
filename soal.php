@@ -62,7 +62,7 @@ function mulai(){
         document.getElementById("kirim").click();
     }
 }
-function selesai(){    
+function selesai(){
     if(jalan==1){
         clearTimeout(t);
     }
@@ -177,7 +177,7 @@ if(@$_SESSION['siswa']) { ?>
                             <div class="panel-body">
                                 <div class="table-responsive">
                                     <?php
-                                    while($data_soal_pilgan = mysqli_fetch_array($sql_soal_pilgan)) { 
+                                    while($data_soal_pilgan = mysqli_fetch_array($sql_soal_pilgan)) {
                                         $choice = array('a','b','c','d','e');
                                         $randomized_choice = array('a','b','c','d','e');
                                         shuffle($randomized_choice);
@@ -194,8 +194,8 @@ if(@$_SESSION['siswa']) { ?>
                                                         <img width="220px" src="admin/img/gambar_soal_pilgan/<?php echo $data_soal_pilgan['gambar']; ?>" />
                                                     </td>
                                                 </tr>
-                                            <?php 
-                                            } 
+                                            <?php
+                                            }
 
                                             foreach ($randomized_choice as $key => $value) { ?>
                                                 <tr>
@@ -203,14 +203,14 @@ if(@$_SESSION['siswa']) { ?>
                                                     <td>
                                                         <div class="radio mrg-del">
                                                             <label>
-                                                                <input type="radio" name="soal_pilgan[<?php echo $data_soal_pilgan['id_pilgan']; ?>]" 
-                                                                value="<?php echo strtoupper($value); ?>" /> 
+                                                                <input type="radio" name="soal_pilgan[<?php echo $data_soal_pilgan['id_pilgan']; ?>]"
+                                                                value="<?php echo strtoupper($value); ?>" />
                                                                 <?php echo strtoupper($choice[$key]).". ".$data_soal_pilgan['pil_'.$value]; ?>
                                                             </label>
                                                         </div>
                                                     </td>
                                                 </tr>
-                                            <?php 
+                                            <?php
                                             } ?>
         								</table>
                                     <?php
@@ -264,7 +264,7 @@ if(@$_SESSION['siswa']) { ?>
                         </div>
                     <?php
                     } ?>
-                    
+
                     <input type="hidden" name="id_tq" value="<?php echo $id_tq; ?>" />
 
                     <div class="panel panel-default">
@@ -274,7 +274,7 @@ if(@$_SESSION['siswa']) { ?>
                                 <input type="reset" value="Reset Jawaban" class="btn btn-danger" />
                             </div>
                             <div id="konfirm" style="display:none; margin-top:15px;">
-                                Apakah Anda yakin sudah selesai mengerjakan soal dan akan mengirim jawaban? &nbsp; <input onClick="selesai();" 
+                                Apakah Anda yakin sudah selesai mengerjakan soal dan akan mengirim jawaban? &nbsp; <input onClick="selesai();"
                                 type="submit" name="simpan" id="kirim" value="Ya" class="btn btn-info btn-sm" />
                             </div>
                             <script type="text/javascript">
@@ -295,7 +295,7 @@ if(@$_SESSION['siswa']) { ?>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                &copy; 2016 E-Learning Tax INSTITUTE | By : Yose Kedavra
+                &copy; 2016 E-Learning Tax INSTITUTE
             </div>
 
         </div>
