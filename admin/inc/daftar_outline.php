@@ -365,7 +365,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 					</div>
 					<div class="col-md-10">
 						<div class="form-group">
-							<input type="text" name="sinopsis" class="form-control" value="<?php echo $data_bukupendukung['edisi']; ?>"></input>
+							<input type="text" name="edisi" class="form-control" value="<?php echo $data_bukupendukung['edisi']; ?>"></input>
 						</div>
 					</div>
 					
