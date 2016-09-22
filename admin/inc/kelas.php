@@ -5,9 +5,9 @@
 </div>
 
 <?php
-$condition = "";
+$pengajar = "";
 if (@$_SESSION['pengajar']) {
-    $condition = "WHERE tb_mapel_ajar.id_pengajar = '$_SESSION[pengajar]'";
+    $pengajar = "WHERE tb_mapel_ajar.id_pengajar = '$_SESSION[pengajar]'";
 }
 $sql_kelas = mysqli_query($db, "
     SELECT
@@ -34,7 +34,7 @@ $sql_kelas = mysqli_query($db, "
     LEFT JOIN tb_pengajar
     ON tb_pengajar.id_pengajar = tb_mapel_ajar.id_pengajar
 
-    ".$condition."
+    ".$pengajar."
 
     ORDER BY tgl_mulai DESC
 ") or die ($db->error);
@@ -386,7 +386,7 @@ if(@$_GET['action'] == '') { ?>
                             <table class="table table-striped table-bordered table-hover" id="datasiswa">
                                 <thead>
                                     <tr>
-                                        <th><center><input type="checkbox" id="selectAll"></center></th>
+                                        <th style="text-align:center;"><input type="checkbox" id="checkAll"></th>
                                         <th>NIS</th>
                                         <th>Nama Lengkap</th>
                                         <th>Jenis Kelamin</th>
@@ -396,9 +396,26 @@ if(@$_GET['action'] == '') { ?>
                                 </thead>
                                 <tbody>
                                 <?php
-                                $sql_siswa = mysqli_query($db, "SELECT * FROM tb_siswa WHERE status LIKE 'aktif'") or die ($db->error);
-    	                        while($data_siswa = mysqli_fetch_array($sql_siswa)) {
+                                $sql_siswa = mysqli_query($db, "
+                                    SELECT
+                                    tb_siswa.id_siswa,
+                                    tb_siswa.nis,
+                                    tb_siswa.nama_lengkap,
+                                    tb_siswa.tempat_lahir,
+                                    tb_siswa.tgl_lahir,
+                                    tb_siswa.jenis_kelamin,
+                                    tb_siswa.alamat,
+                                    COALESCE(tb_jadwal_siswa.id_siswa, 0) as isChecked
 
+                                    FROM tb_siswa
+
+                                    LEFT JOIN tb_jadwal_siswa
+                                    ON tb_siswa.id_siswa = tb_jadwal_siswa.id_siswa
+
+                                    WHERE status LIKE 'aktif'
+                                ") or die ($db->error);
+
+    	                        while($data_siswa = mysqli_fetch_array($sql_siswa)) {
                                     if($data_siswa['jenis_kelamin'] == 'L') {
                                         $gender_persiswa = 'Laki-laki';
                                     } else {
@@ -406,7 +423,7 @@ if(@$_GET['action'] == '') { ?>
                                     }
                                 ?>
     	                            <tr>
-    	                                <td align="center"><input class="checkboxSiswa" type="checkbox"></td>
+    	                                <td align="center"><input <?php if($data_siswa['isChecked'] != 0) echo "checked"; ?> type="checkbox" name="listsiswa[]" value="<?php echo $data_siswa['id_siswa']; ?>"></td>
     	                                <td><?php echo $data_siswa['nis']; ?></td>
     	                                <td><?php echo $data_siswa['nama_lengkap']; ?></td>
     	                                <td><?php echo $gender_persiswa; ?></td>
@@ -420,26 +437,25 @@ if(@$_GET['action'] == '') { ?>
                             <script>
                             $(document).ready(function () {
                                 $('#datasiswa').dataTable();
-                                $('#selectAll').change(function(){
-                                    $('.checkboxSiswa').prop('checked',$('#selectAll').prop('checked'));
+                                $('#checkAll').change(function(){
+                                    $('input[type=checkbox]').prop('checked',$('#checkAll').prop('checked'));
                                 });
                             });
                             </script>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <input type="submit" name="simpan" value="Simpan" class="btn btn-success" />
+                    </div>
                 </form>
                 <?php
                 if(@$_POST['simpan']) {
-                    $id_pengajar = @mysqli_real_escape_string($db, $_POST['pengajar']);
-                    $keterangan = @mysqli_real_escape_string($db, $_POST['keterangan']);
-                    $tgl_mulai = @mysqli_real_escape_string($db, $_POST['tgl_mulai']);
-                    $tgl_selesai = @mysqli_real_escape_string($db, $_POST['tgl_selesai']);
-
-                    $tgl_mulai = $tgl_mulai == '' ? '01-01-0001' : $tgl_mulai;
-                    $tgl_selesai = $tgl_selesai == '' ? '01-01-0001' : $tgl_selesai;
-
-                    $nama_kelas = @mysqli_real_escape_string($db, $_POST['nama_kelas']);
-                    mysqli_query($db, "UPDATE tb_mapel_ajar SET id_pengajar = '$id_pengajar', keterangan = '$keterangan', tgl_mulai = '$tgl_mulai', tgl_selesai = '$tgl_selesai' WHERE id = '$_GET[id]'") or die ($db->error);
+                    mysqli_query($db, "DELETE FROM tb_jadwal_siswa WHERE id_mapel_ajar = '$_GET[id]'");
+                    if(!empty($_POST['listsiswa'])) {
+                        foreach($_POST['listsiswa'] as $idsiswa) {
+                            mysqli_query($db, "INSERT INTO tb_jadwal_siswa (id_mapel_ajar, id_siswa) VALUES ('$_GET[id]', '$idsiswa')");
+                        }
+                    }
                     echo "<script>window.location='?page=kelas';</script>";
                 }
                 ?>

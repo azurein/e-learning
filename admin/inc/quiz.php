@@ -9,10 +9,70 @@ $id = @$_GET['id'];
 $id_tq = @$_GET['id_tq'];
 $no = 1;
 if(@$_SESSION[admin]) {
-    $sql_topik = mysqli_query($db, "SELECT * FROM tb_topik_quiz JOIN tb_kelas ON tb_topik_quiz.id_kelas = tb_kelas.id_kelas JOIN tb_mapel ON tb_topik_quiz.id_mapel = tb_mapel.id ORDER BY tgl_buat ASC") or die ($db->error);
+    $sql_topik = mysqli_query($db, "
+        SELECT
+        tb_topik_quiz.id_tq,
+        tb_topik_quiz.judul,
+        tb_topik_quiz.id_kelas,
+        tb_topik_quiz.id_mapel,
+        tb_topik_quiz.tgl_buat,
+        tb_topik_quiz.pembuat,
+        tb_topik_quiz.waktu_soal,
+        tb_topik_quiz.info,
+        tb_topik_quiz.status,
+        tb_kelas.nama_kelas,
+        tb_mapel.kode_mapel,
+        tb_mapel.mapel,
+        tb_mapel_ajar.id as id_mapel_ajar
+
+        FROM tb_topik_quiz
+
+        JOIN tb_kelas
+        ON tb_topik_quiz.id_kelas = tb_kelas.id_kelas
+
+        JOIN tb_mapel
+        ON tb_topik_quiz.id_mapel = tb_mapel.id
+
+        JOIN tb_mapel_ajar
+        ON tb_topik_quiz.id_kelas = tb_mapel_ajar.id_kelas
+        AND tb_topik_quiz.id_mapel = tb_mapel_ajar.id_mapel
+
+        ORDER BY tgl_buat ASC
+    ") or die ($db->error);
     $pembuat = "admin";
 } else if(@$_SESSION[pengajar]) {
-    $sql_topik = mysqli_query($db, "SELECT * FROM tb_topik_quiz JOIN tb_kelas ON tb_topik_quiz.id_kelas = tb_kelas.id_kelas JOIN tb_mapel ON tb_topik_quiz.id_mapel = tb_mapel.id JOIN tb_mapel_ajar ON tb_topik_quiz.id_kelas = tb_mapel_ajar.id_kelas AND tb_topik_quiz.id_mapel = tb_mapel_ajar.id_mapel WHERE tb_mapel_ajar.id_pengajar = '$_SESSION[pengajar]' ORDER BY tgl_buat ASC") or die ($db->error);
+    $sql_topik = mysqli_query($db, "
+        SELECT
+        tb_topik_quiz.id_tq,
+        tb_topik_quiz.judul,
+        tb_topik_quiz.id_kelas,
+        tb_topik_quiz.id_mapel,
+        tb_topik_quiz.tgl_buat,
+        tb_topik_quiz.pembuat,
+        tb_topik_quiz.waktu_soal,
+        tb_topik_quiz.info,
+        tb_topik_quiz.status,
+        tb_kelas.nama_kelas,
+        tb_mapel.kode_mapel,
+        tb_mapel.mapel,
+        tb_mapel_ajar.id as id_mapel_ajar
+
+        FROM tb_topik_quiz
+
+        JOIN tb_kelas
+        ON tb_topik_quiz.id_kelas = tb_kelas.id_kelas
+
+        JOIN tb_mapel
+        ON tb_topik_quiz.id_mapel = tb_mapel.id
+
+        JOIN tb_mapel_ajar
+        ON tb_topik_quiz.id_kelas = tb_mapel_ajar.id_kelas
+        AND tb_topik_quiz.id_mapel = tb_mapel_ajar.id_mapel
+
+        WHERE tb_mapel_ajar.id_pengajar = '$_SESSION[pengajar]'
+
+        ORDER BY tgl_buat ASC
+    ") or die ($db->error);
     $pembuat = @$_SESSION['pengajar'];
 }
 
@@ -65,6 +125,7 @@ if(@$_GET['action'] == '') { ?>
                                     <td align="center"><?php echo ucfirst($data_topik['status']); ?></td>
                                     <td align="center">
                                         <a href="?page=quiz&action=edit&id=<?php echo $data_topik['id_tq']; ?>" class="btn btn-warning btn-xs">Edit</a>
+                                        <a href="?page=quiz&action=relatedmateri&id_tq=<?php echo $data_topik['id_tq']; ?>&id_ma=<?php echo $data_topik['id_mapel_ajar']; ?>" class="btn btn-success btn-xs">Materi Terkait</a>
                                         <a onclick="return confirm('Hati-hati saat menghapus topik quiz karena Anda akan menghapus semua data yang berhubungan dengan topik ini, termasuk data soal dan nilai. Apakah Anda tetap yakin akan menghapus topik ini?');" href="?page=quiz&action=hapus&id_tq=<?php echo $data_topik['id_tq']; ?>" class="btn btn-danger btn-xs">Hapus</a>
                                         <br /><a href="?page=quiz&action=buatsoal&id=<?php echo $data_topik['id_tq']; ?>" class="btn btn-default btn-xs">Buat Soal</a>
                                         <a href="?page=quiz&action=daftarsoal&id=<?php echo $data_topik['id_tq']; ?>" class="btn btn-default btn-xs">Daftar Soal</a>
@@ -246,7 +307,113 @@ if(@$_GET['action'] == '') { ?>
             </div>
         </div>
     </div>
-    <?php
+<?php
+} else if(@$_GET['action'] == 'relatedmateri') { ?>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Materi Terkait &nbsp; <a href="?page=quiz" class="btn btn-warning btn-sm">Kembali</a></div>
+                <div class="panel-body">
+                    <form method="post">
+                        <div class="table-responsive">
+    	                    <table class="table table-striped table-bordered table-hover" id="datamateri">
+    	                        <thead>
+    	                            <tr>
+    	                                <th style="text-align:center;"><input type="checkbox" id="checkAll" /></th>
+    	                                <th>Judul</th>
+    	                                <th>Kelas</th>
+    	                                <th>Mapel</th>
+    	                                <th>Nama File</th>
+    	                                <th>Tanggal Posting</th>
+    	                                <th>Pembuat</th>
+    	                            </tr>
+    	                        </thead>
+    	                        <tbody>
+    	                        <?php
+	                        	$sql_materi = mysqli_query($db, "
+                                    SELECT
+                                    tb_file_materi.id_materi,
+                                    tb_file_materi.id_kelas,
+                                    tb_file_materi.id_mapel,
+                                    tb_file_materi.judul,
+                                    tb_file_materi.nama_file,
+                                    tb_file_materi.tgl_posting,
+                                    tb_file_materi.pembuat,
+                                    tb_file_materi.hits,
+                                    tb_kelas.nama_kelas,
+                                    tb_mapel.kode_mapel,
+                                    tb_mapel.mapel,
+                                    COALESCE(tb_quiz_materi.id_materi, 0) as isChecked
+
+                                    FROM tb_file_materi
+
+                                    JOIN tb_kelas
+                                    ON tb_file_materi.id_kelas = tb_kelas.id_kelas
+
+                                    JOIN tb_mapel
+                                    ON tb_file_materi.id_mapel = tb_mapel.id
+
+                                    JOIN tb_mapel_ajar
+                                    ON tb_file_materi.id_kelas = tb_mapel_ajar.id_kelas
+                                    AND tb_file_materi.id_mapel = tb_mapel_ajar.id_mapel
+
+                                    LEFT JOIN tb_quiz_materi
+                                    ON tb_file_materi.id_materi = tb_quiz_materi.id_materi
+
+                                    WHERE tb_mapel_ajar.id = '$_GET[id_ma]'
+
+                                    ORDER BY tb_file_materi.judul
+                                ") or die($db->error);
+
+                            	while($data_materi = mysqli_fetch_array($sql_materi)) { ?>
+    								<tr>
+    									<td align="center"><input <?php if($data_materi['isChecked'] != 0) echo "checked"; ?> type="checkbox" value="<?=$data_materi['id_materi'];?>" name="listmateri[]" /></td>
+    									<td><?php echo $data_materi['judul']; ?></td>
+    									<td><?php echo $data_materi['nama_kelas']; ?></td>
+    									<td><?php echo $data_materi['mapel']; ?></td>
+    									<td><a href="./file_materi/<?php echo $data_materi['nama_file']; ?>" target="_blank"><?php echo $data_materi['nama_file']; ?></a></td>
+    									<td><?php echo tgl_indo($data_materi['tgl_posting']); ?></td>
+    									<td>
+    										<?php
+    										if($data_materi['pembuat'] == 'admin') {
+    											echo "Admin";
+    										} else {
+    											$sql_pengajar = mysqli_query($db, "SELECT * FROM tb_pengajar WHERE id_pengajar = '$data_materi[pembuat]'") or die($db->error);
+    											$data_pengajar = mysqli_fetch_array($sql_pengajar);
+    											echo $data_pengajar['nama_lengkap'];
+    										} ?>
+    									</td>
+    								</tr>
+    							<?php
+                            	} ?>
+    	                        </tbody>
+    	                    </table>
+    	                    <script>
+                            $(document).ready(function () {
+                                $('#datamateri').dataTable();
+                            });
+                            </script>
+    	                </div>
+                        <div class="form-group">
+                            <input type="submit" name="simpan" value="Simpan" class="btn btn-success" />
+                        </div>
+                    </form>
+                    <?php
+                    if(@$_POST['simpan']) {
+                        mysqli_query($db, "DELETE FROM tb_quiz_materi WHERE id_tq = '$_GET[id_tq]'");
+                        if(!empty($_POST['listmateri'])) {
+                            foreach($_POST['listmateri'] as $idmateri) {
+                                mysqli_query($db, "INSERT INTO tb_quiz_materi (id_tq, id_materi) VALUES ('$_GET[id_tq]', '$idmateri')");
+                            }
+                        }
+                        echo "<script>window.location='?page=quiz';</script>";
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php
 } else if(@$_GET['action'] == 'hapus') {
     mysqli_query($db, "DELETE FROM tb_topik_quiz WHERE id_tq = '$_GET[id_tq]'") or die ($db->error);
     mysqli_query($db, "DELETE FROM tb_soal_pilgan WHERE id_tq = '$_GET[id_tq]'") or die ($db->error);
@@ -276,4 +443,8 @@ if(@$_GET['action'] == '') { ?>
         tanggal = $(".tanggal_date").val();
         window.location="?page=quiz&action=tambah&judul="+$(".judul_text").val()+"&tanggal="+tanggal+"&waktu="+$(".waktu_time").val()+"&info="+$(".info_text").val()+"&status="+$(".status_ddl").val()+"&idmapel="+$(this).val()
     })
+
+    $('#checkAll').change(function(){
+        $('input[type=checkbox]').prop('checked',$('#checkAll').prop('checked'));
+    });
 </script>
