@@ -14,3 +14,7 @@
 textarea {
     resize:vertical ;
 }
+
+.dataTables_empty {
+    text-align: center;
+}

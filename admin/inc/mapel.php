@@ -14,7 +14,7 @@ if(@$_SESSION[admin]) {
     if(@$_GET['action'] == '') { ?>
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading"><a href="?page=mapel&action=tambah" class="btn btn-primary btn-sm">Tambah Data</a> &nbsp; <a href="./laporan/cetak.php?data=mapel" target="_blank" class="btn btn-default btn-sm">Cetak</a></div>
+                <div class="panel-heading">Data Mata Pelajaran &nbsp;<a href="?page=mapel&action=tambah" class="btn btn-primary btn-sm">Tambah Data</a> &nbsp; <a href="./laporan/cetak.php?data=mapel" target="_blank" class="btn btn-default btn-sm">Cetak</a></div>
                 <div class="panel-body">
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover" id="datamapel">
@@ -22,29 +22,25 @@ if(@$_SESSION[admin]) {
                                 <tr>
                                     <th>#</th>
                                     <th>Kode Mapel</th>
-                                    <th>Mapel</th>
+                                    <th>Mata Pelajaran</th>
                                     <th>Opsi</th>
                                 </tr>
                             </thead>
                             <tbody>
                             <?php
                             $sql_mapel = mysqli_query($db, "SELECT * FROM tb_mapel") or die ($db->error);
-                            if(mysqli_num_rows($sql_mapel) > 0) {
-	                            while($data_mapel = mysqli_fetch_array($sql_mapel)) { ?>
-	                                <tr>
-	                                    <td><?php echo $no++; ?></td>
-	                                    <td><?php echo $data_mapel['kode_mapel']; ?></td>
-	                                    <td><?php echo $data_mapel['mapel']; ?></td>
-	                                    <td align="center" width="150px">
-	                                        <a href="?page=mapel&action=edit&id=<?php echo $data_mapel['id']; ?>" class="btn btn-warning btn-xs">Edit</a>
-	                                        <a onclick="return confirm('Yakin akan menghapus data?');" href="?page=mapel&action=hapus&id=<?php echo $data_mapel['id']; ?>" class="btn btn-danger btn-xs">Hapus</a>
-	                                    </td>
-	                                </tr>
-	                            <?php
-	                            }
-                            } else {
-                            	echo '<td colspan="4" align="center">Tidak ada data</td>';
-                        	} ?>
+                            while($data_mapel = mysqli_fetch_array($sql_mapel)) { ?>
+                                <tr>
+                                    <td><?php echo $no++; ?></td>
+                                    <td><?php echo $data_mapel['kode_mapel']; ?></td>
+                                    <td><?php echo $data_mapel['mapel']; ?></td>
+                                    <td align="center" width="150px">
+                                        <a href="?page=mapel&action=edit&id=<?php echo $data_mapel['id']; ?>" class="btn btn-warning btn-xs">Edit</a>
+                                        <a onclick="return confirm('Yakin akan menghapus data?');" href="?page=mapel&action=hapus&id=<?php echo $data_mapel['id']; ?>" class="btn btn-danger btn-xs">Hapus</a>
+                                    </td>
+                                </tr>
+                            <?php
+                            } ?>
                             </tbody>
                         </table>
                         <script>
@@ -68,7 +64,7 @@ if(@$_SESSION[admin]) {
                             <input type="text" name="kode_mapel" class="form-control" placeholder="Ex: A1" required />
                         </div>
                         <div class="form-group">
-                            <label>Mapel *</label>
+                            <label>Mata Pelajaran *</label>
                             <input type="text" name="mapel" class="form-control" placeholder="Ex: Bahasa Indonesia" required />
                         </div>
                         <div class="form-group">
@@ -103,7 +99,7 @@ if(@$_SESSION[admin]) {
                             <input type="text" name="kode_mapel" value="<?php echo $data_mapel_id['kode_mapel']; ?>" class="form-control" placeholder="Ex: A1" required />
                         </div>
                         <div class="form-group">
-                            <label>Mapel *</label>
+                            <label>Mata Pelajaran *</label>
                             <input type="text" name="mapel" value="<?php echo $data_mapel_id['mapel']; ?>" class="form-control" placeholder="Ex: Bahasa Indonesia" required />
                         </div>
                         <div class="form-group">
@@ -143,7 +139,7 @@ if(@$_SESSION[admin]) {
                                 <tr>
                                     <th>#</th>
                                     <th>Kode Mapel</th>
-                                    <th>Mapel</th>
+                                    <th>Mata Pelajaran</th>
                                     <th>Kelas</th>
                                     <th>Keterangan</th>
                                     <th>Opsi</th>
@@ -152,24 +148,20 @@ if(@$_SESSION[admin]) {
                             <tbody>
                             <?php
                             $sql_mapel_ajar = mysqli_query($db, "SELECT * FROM tb_mapel_ajar JOIN tb_mapel ON tb_mapel_ajar.id_mapel = tb_mapel.id JOIN tb_kelas ON tb_mapel_ajar.id_kelas = tb_kelas.id_kelas WHERE tb_mapel_ajar.id_pengajar = '$_SESSION[pengajar]'") or die ($db->error);
-                            if(mysqli_num_rows($sql_mapel_ajar) > 0) {
-	                            while($data_mapel_ajar = mysqli_fetch_array($sql_mapel_ajar)) { ?>
-	                                <tr>
-	                                    <td><?php echo $no++; ?></td>
-	                                    <td><?php echo $data_mapel_ajar['kode_mapel']; ?></td>
-	                                    <td><?php echo $data_mapel_ajar['mapel']; ?></td>
-	                                    <td><?php echo $data_mapel_ajar['nama_kelas']; ?></td>
-	                                    <td><?php echo $data_mapel_ajar['keterangan']; ?></td>
-	                                    <td align="center" width="150px">
-	                                        <a href="?page=mapel&action=edit&id=<?php echo $data_mapel_ajar[0]; ?>" class="btn btn-default btn-xs" style="background-color:#f60;">Edit</a>
-	                                        <a onclick="return confirm('Yakin akan menghapus data?');" href="?page=mapel&action=hapus&id=<?php echo $data_mapel_ajar[0]; ?>" class="btn btn-default btn-xs" style="background-color:#f00;">Hapus</a>
-	                                    </td>
-	                                </tr>
-	                            <?php
-	                            }
-                            } else {
-                            	echo '<td colspan="6" align="center">Tidak ada data</td>';
-                        	} ?>
+                            while($data_mapel_ajar = mysqli_fetch_array($sql_mapel_ajar)) { ?>
+                                <tr>
+                                    <td><?php echo $no++; ?></td>
+                                    <td><?php echo $data_mapel_ajar['kode_mapel']; ?></td>
+                                    <td><?php echo $data_mapel_ajar['mapel']; ?></td>
+                                    <td><?php echo $data_mapel_ajar['nama_kelas']; ?></td>
+                                    <td><?php echo $data_mapel_ajar['keterangan']; ?></td>
+                                    <td align="center" width="150px">
+                                        <a href="?page=mapel&action=edit&id=<?php echo $data_mapel_ajar[0]; ?>" class="btn btn-default btn-xs" style="background-color:#f60;">Edit</a>
+                                        <a onclick="return confirm('Yakin akan menghapus data?');" href="?page=mapel&action=hapus&id=<?php echo $data_mapel_ajar[0]; ?>" class="btn btn-default btn-xs" style="background-color:#f00;">Hapus</a>
+                                    </td>
+                                </tr>
+                            <?php
+                            } ?>
                             </tbody>
                         </table>
                     </div>
@@ -184,7 +176,7 @@ if(@$_SESSION[admin]) {
                 <div class="panel-body">
                     <form method="post">
                         <div class="form-group">
-                            <label>Mapel *</label>
+                            <label>Mata Pelajaran *</label>
                             <select name="mapel" class="form-control" required>
                             	<option value="">- Pilih -</option>
                             	<?php
@@ -239,7 +231,7 @@ if(@$_SESSION[admin]) {
 	                    $data_mapel_ajar_id = mysqli_fetch_array($sql_mapel_ajar_id);
 	                    ?>
                         <div class="form-group">
-                            <label>Mapel *</label>
+                            <label>Mata Pelajaran *</label>
                             <select name="mapel" class="form-control" required>
                             	<option value="<?php echo $data_mapel_ajar_id['id']; ?>"><?php echo $data_mapel_ajar_id['mapel']; ?></option>
                             	<option value="">- Pilih -</option>

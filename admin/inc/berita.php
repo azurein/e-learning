@@ -9,7 +9,7 @@ if(@$_GET['action'] == '') { ?>
 	<div class="row">
 		<div class="col-md-12">
 	        <div class="panel panel-default">
-	            <div class="panel-heading">Data Berita &nbsp; <a href="?page=berita&action=tambah" class="btn btn-primary btn-xs">Tambah Data</a> &nbsp; <a href="./laporan/cetak.php?data=berita" target="_blank" class="btn btn-default btn-xs">Cetak</a></div>
+	            <div class="panel-heading">Data Berita &nbsp; <a href="?page=berita&action=tambah" class="btn btn-primary btn-sm">Tambah Data</a> &nbsp; <a href="./laporan/cetak.php?data=berita" target="_blank" class="btn btn-default btn-sm">Cetak</a></div>
 	            <div class="panel-body">
 	                <div class="table-responsive">
 	                    <table class="table table-striped table-bordered table-hover" id="databerita">
@@ -33,34 +33,30 @@ if(@$_GET['action'] == '') { ?>
 	                        	$sql_berita = mysqli_query($db, "SELECT * FROM tb_berita WHERE penerbit = '$_SESSION[pengajar]'") or die($db->error);
 	                        }
 
-	                        if(mysqli_num_rows($sql_berita) > 0) {
-	                        	while($data_berita = mysqli_fetch_array($sql_berita)) { ?>
-									<tr>
-										<td align="center"><?php echo $no++; ?></td>
-										<td><?php echo $data_berita['judul']; ?></td>
-										<td><?php echo substr($data_berita['isi'], 0, 50)." ..."; ?></td>
-										<td><?php echo tgl_indo($data_berita['tgl_posting']); ?></td>
-										<td>
-											<?php
-											if($data_berita['penerbit'] == 'admin') {
-												echo "Admin";
-											} else {
-												$sql_pengajar = mysqli_query($db, "SELECT * FROM tb_pengajar WHERE id_pengajar = '$data_berita[penerbit]'") or die($db->error);
-												$data_pengajar = mysqli_fetch_array($sql_pengajar);
-												echo $data_pengajar['nama_lengkap'];
-											} ?>
-										</td>
-										<td><?php echo ucfirst($data_berita['status']); ?></td>
-										<td align="center" width="90px">
-											<a href="?page=berita&action=edit&id=<?php echo $data_berita['id_berita']; ?>" class="btn btn-warning btn-xs">Edit</a>
-	                                        <a onclick="return confirm('Yakin akan menghapus data?');" href="?page=berita&action=hapus&id=<?php echo $data_berita['id_berita']; ?>" class="btn btn-danger btn-xs">Hapus</a>
-                                        </td>
-									</tr>
-								<?php
-	                        	}
-	                        } else {
-	                        	echo '<tr><td colspan="7" align="center">Data tidak ditemukan</td></tr>';
-	                        } ?>
+                        	while($data_berita = mysqli_fetch_array($sql_berita)) { ?>
+								<tr>
+									<td align="center"><?php echo $no++; ?></td>
+									<td><?php echo $data_berita['judul']; ?></td>
+									<td><?php echo substr($data_berita['isi'], 0, 50)." ..."; ?></td>
+									<td><?php echo tgl_indo($data_berita['tgl_posting']); ?></td>
+									<td>
+										<?php
+										if($data_berita['penerbit'] == 'admin') {
+											echo "Admin";
+										} else {
+											$sql_pengajar = mysqli_query($db, "SELECT * FROM tb_pengajar WHERE id_pengajar = '$data_berita[penerbit]'") or die($db->error);
+											$data_pengajar = mysqli_fetch_array($sql_pengajar);
+											echo $data_pengajar['nama_lengkap'];
+										} ?>
+									</td>
+									<td><?php echo ucfirst($data_berita['status']); ?></td>
+									<td align="center" width="90px">
+										<a href="?page=berita&action=edit&id=<?php echo $data_berita['id_berita']; ?>" class="btn btn-warning btn-xs">Edit</a>
+                                        <a onclick="return confirm('Yakin akan menghapus data?');" href="?page=berita&action=hapus&id=<?php echo $data_berita['id_berita']; ?>" class="btn btn-danger btn-xs">Hapus</a>
+                                    </td>
+								</tr>
+							<?php
+                        	} ?>
 	                        </tbody>
 	                    </table>
 	                    <script>

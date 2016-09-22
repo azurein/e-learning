@@ -17,7 +17,7 @@ if(@$_SESSION['admin']) { ?>
 
     <div class="col-md-12">
         <div class="panel panel-default">
-            <div class="panel-heading"><a href="?page=pengajar&action=tambah" class="btn btn-primary btn-sm">Tambah Data</a> <a href="./laporan/cetak.php?data=pengajar" target="_blank" class="btn btn-default btn-sm">Cetak Data Pengajar</a></div>
+            <div class="panel-heading">Data Pengajar &nbsp;<a href="?page=pengajar&action=tambah" class="btn btn-primary btn-sm">Tambah Data</a> <a href="./laporan/cetak.php?data=pengajar" target="_blank" class="btn btn-default btn-sm">Cetak</a></div>
             <div class="panel-body">
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-hover" id="datapengajar">
@@ -35,30 +35,22 @@ if(@$_SESSION['admin']) { ?>
                         <?php
                         $no = 1;
                         $sql_pengajar = mysqli_query($db, "SELECT * FROM tb_pengajar") or die ($db->error);
-                        if(mysqli_num_rows($sql_pengajar) > 0) {
-	                        while($data_pengajar = mysqli_fetch_array($sql_pengajar)) {
-	                        ?>
-	                            <tr>
-	                                <td><?php echo $no++; ?></td>
-	                                <td><?php echo $data_pengajar['nip']; ?></td>
-	                                <td><?php echo $data_pengajar['nama_lengkap']; ?></td>
-	                                <td><?php echo $data_pengajar['jenis_kelamin']; ?></td>
-	                                <td><?php echo ucfirst($data_pengajar['status']); ?></td>
-	                                <td align="center" width="170px">
-	                                    <a href="?page=pengajar&action=edit&id=<?php echo $data_pengajar['id_pengajar']; ?>" class="btn btn-warning btn-xs">Edit</a>
-	                                    <a onclick="return confirm('Yakin akan menghapus data?');" href="?page=pengajar&action=hapus&id=<?php echo $data_pengajar['id_pengajar']; ?>" class="btn btn-danger btn-xs">Hapus</a>
-	                                    <a href="?page=pengajar&action=detail&id=<?php echo $data_pengajar['id_pengajar']; ?>" class="btn btn-default btn-xs">Detail</a>
-	                                </td>
-	                            </tr>
-	                        <?php
-		                    }
-		                } else {
-		                	?>
-							<tr>
-                                <td colspan="6" align="center">Data tidak ditemukan</td>
-							</tr>
-		                	<?php
-		                }
+                        while($data_pengajar = mysqli_fetch_array($sql_pengajar)) {
+                        ?>
+                            <tr>
+                                <td><?php echo $no++; ?></td>
+                                <td><?php echo $data_pengajar['nip']; ?></td>
+                                <td><?php echo $data_pengajar['nama_lengkap']; ?></td>
+                                <td><?php echo $data_pengajar['jenis_kelamin']; ?></td>
+                                <td><?php echo ucfirst($data_pengajar['status']); ?></td>
+                                <td align="center" width="170px">
+                                    <a href="?page=pengajar&action=edit&id=<?php echo $data_pengajar['id_pengajar']; ?>" class="btn btn-warning btn-xs">Edit</a>
+                                    <a onclick="return confirm('Yakin akan menghapus data?');" href="?page=pengajar&action=hapus&id=<?php echo $data_pengajar['id_pengajar']; ?>" class="btn btn-danger btn-xs">Hapus</a>
+                                    <a href="?page=pengajar&action=detail&id=<?php echo $data_pengajar['id_pengajar']; ?>" class="btn btn-default btn-xs">Detail</a>
+                                </td>
+                            </tr>
+                        <?php
+	                    }
 	                    ?>
                         </tbody>
                     </table>

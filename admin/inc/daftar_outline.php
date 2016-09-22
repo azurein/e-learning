@@ -4,7 +4,6 @@ $id = @$_GET['id'];
 $sql_tujuanAjar = mysqli_query($db, "SELECT * FROM tb_tujuan_ajar WHERE id_mapel_ajar = '$id'") or die ($db->error);
 $sql_sertifikasi = mysqli_query($db, "SELECT * FROM tb_sertifikasi WHERE id_mapel_ajar = '$id'") or die ($db->error);
 $sql_buku = mysqli_query($db, "SELECT * FROM tb_buku WHERE id_mapel_ajar = '$id'") or die ($db->error);
-$sql_materi = mysqli_query($db, "SELECT * FROM tb_file_materi WHERE id_mapel_ajar = '$id'") or die ($db->error);
 ?>
 <div class="row">
 	<div class="panel panel-default">
@@ -13,7 +12,6 @@ $sql_materi = mysqli_query($db, "SELECT * FROM tb_file_materi WHERE id_mapel_aja
 			Daftar Outline :
 			<a href="?page=kelas&action=daftaroutline&hal=tujuanajar&id=<?php echo $id; ?>" class="btn btn-primary btn-sm">Tujuan Pembelajaran (<?php echo mysqli_num_rows($sql_tujuanAjar); ?>)</a>
 			<a href="?page=kelas&action=daftaroutline&hal=sertifikasi&id=<?php echo $id; ?>" class="btn btn-primary btn-sm">Sertifikasi (<?php echo mysqli_num_rows($sql_sertifikasi); ?>)</a>
-			<a href="?page=materi" class="btn btn-primary btn-sm">Materi (<?php echo mysqli_num_rows($sql_materi); ?>)</a>
 			<a href="?page=kelas&action=daftaroutline&hal=bukupendukung&id=<?php echo $id; ?>" class="btn btn-primary btn-sm">Buku Pendukung (<?php echo mysqli_num_rows($sql_buku); ?>)</a>
 		</div>
 	</div>
@@ -79,57 +77,6 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 	<div class="row">
 		<div class="panel panel-default">
 			<div class="panel-heading">Sertifikasi &nbsp; <a href="?page=kelas&action=buatoutline&hal=sertifikasi&id=<?php echo $id; ?>" class="btn btn-primary btn-sm">Tambah Sertifikasi</a></div>
-			<div class="panel-body">
-				<div class="table-responsive">
-					<table width="100%">
-				<?php
-				if(mysqli_num_rows($sql_sertifikasi) > 0) {
-					while($data_sertifikasi = mysqli_fetch_array($sql_sertifikasi)) { ?>
-						<tr>
-							<td valign="top">No. ( <?php echo $no++; ?> )</td>
-							<td>
-								<table class="table">
-									<thead>
-										<tr>
-											<td width="20%"><b>Nama Sertifikasi</b></td>
-											<td>:</td>
-											<td width="65%"><?php echo $data_sertifikasi['nama_sertifikasi']; ?></td>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>Deskripsi Sertifikasi</td>
-											<td>:</td>
-											<td><?php echo $data_sertifikasi['deskripsi_sertifikasi']; ?></td>
-										</tr><tr>
-											<td>Opsi</td>
-											<td>:</td>
-											<td>
-												<a href="?page=kelas&action=daftaroutline&hal=editsertifikasi&id=<?php echo $id; ?>&subid=<?php echo $data_sertifikasi['id_sertifikasi']; ?>" class="badge" style="background-color:#f60;">Edit</a>
-												<a onclick="return confirm('Yakin akan menghapus data?');" href="?page=kelas&action=daftaroutline&hal=hapussertifikasi&id=<?php echo $id; ?>&subid=<?php echo $data_sertifikasi['id_sertifikasi']; ?>" class="badge" style="background-color:#f00;">Hapus</a>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</td>
-						</tr>
-
-					<?php
-					}
-				} else { ?>
-					<div class="alert alert-danger">Data sertifikasi tidak ditemukan</div>
-					<?php
-				} ?>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
-<?php
-} else if(@$_GET['hal'] == "materi") { ?>
-	<div class="row">
-		<div class="panel panel-default">
-			<div class="panel-heading">Materi &nbsp; <a href="?page=kelas&action=buatoutline&hal=sertifikasi&id=<?php echo $id; ?>" class="btn btn-primary btn-sm">Tambah Sertifikasi</a></div>
 			<div class="panel-body">
 				<div class="table-responsive">
 					<table width="100%">

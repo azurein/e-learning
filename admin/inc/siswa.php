@@ -21,7 +21,7 @@ if(@$_GET['action'] == '') {
                 <div class="panel-heading">
                 <?php
                 if(@$_GET['IDkelas'] == '') {
-                    echo 'Data Siswa yang Aktif &nbsp; <a href="./laporan/cetak.php?data=siswa" target="_blank" class="btn btn-default btn-xs">Cetak Data Siswa</a>';
+                    echo 'Data Siswa yang Aktif &nbsp; <a href="./laporan/cetak.php?data=siswa" target="_blank" class="btn btn-default btn-sm">Cetak</a>';
                 } else if(@$_GET['IDkelas'] != '') {
                     echo "Data Siswa Per Kelas ".@$_GET['kelas']." yang Aktif &nbsp; <a href='?page=kelas' class='btn btn-warning btn-sm'>Kembali</a>";
                 } ?>
@@ -53,42 +53,35 @@ if(@$_GET['action'] == '') {
                                 $sql_siswa = mysqli_query($db, "SELECT * FROM tb_siswa JOIN tb_kelas ON tb_siswa.id_kelas = tb_kelas.id_kelas WHERE tb_siswa.status = 'aktif' AND tb_siswa.id_kelas = '$_GET[IDkelas]'") or die ($db->error);
                             }
 
-                            if(mysqli_num_rows($sql_siswa) > 0) {
-    	                        while($data_siswa = mysqli_fetch_array($sql_siswa)) {
+	                        while($data_siswa = mysqli_fetch_array($sql_siswa)) {
 
-                                    if($data_siswa['jenis_kelamin'] == 'L') {
-                                        $gender_persiswa = 'Laki-laki';
-                                    } else {
-                                        $gender_persiswa = 'Perempuan';
-                                    }
-                                ?>
-    	                            <tr>
-    	                                <td align="center"><?php echo $no++; ?></td>
-    	                                <td><?php echo $data_siswa['nis']; ?></td>
-    	                                <td><?php echo $data_siswa['nama_lengkap']; ?></td>
-    	                                <td><?php echo $gender_persiswa; ?></td>
-                                        <td><?php echo $data_siswa['tempat_lahir'].", ".tgl_indo($data_siswa['tgl_lahir']); ?></td>
-    	                                <td><?php echo $data_siswa['alamat']; ?></td>
+                                if($data_siswa['jenis_kelamin'] == 'L') {
+                                    $gender_persiswa = 'Laki-laki';
+                                } else {
+                                    $gender_persiswa = 'Perempuan';
+                                }
+                            ?>
+	                            <tr>
+	                                <td align="center"><?php echo $no++; ?></td>
+	                                <td><?php echo $data_siswa['nis']; ?></td>
+	                                <td><?php echo $data_siswa['nama_lengkap']; ?></td>
+	                                <td><?php echo $gender_persiswa; ?></td>
+                                    <td><?php echo $data_siswa['tempat_lahir'].", ".tgl_indo($data_siswa['tgl_lahir']); ?></td>
+	                                <td><?php echo $data_siswa['alamat']; ?></td>
+                                    <?php if(@$_SESSION[admin]) { ?>
+    	                                <td><?php echo ucfirst($data_siswa['status']); ?></td>
+                                    <?php } ?>
+	                                <td align="center">
                                         <?php if(@$_SESSION[admin]) { ?>
-        	                                <td><?php echo ucfirst($data_siswa['status']); ?></td>
+    	                                    <a href="?page=siswa&action=nonaktifkan&id=<?php echo $data_siswa['id_siswa']; ?>" class="btn btn-primary btn-xs">Non Aktifkan</a>
+                                            <a href="?page=siswa&action=editprofil&IDsiswa=<?php echo $data_siswa['id_siswa']; ?>" class="btn btn-warning btn-xs">Edit</a>
+                                            <a onclick="return confirm('Yakin akan menghapus data ?');" href="?page=siswa&action=hapus&id=<?php echo $data_siswa['id_siswa']; ?>" class="btn btn-danger btn-xs">Hapus</a>
                                         <?php } ?>
-    	                                <td align="center">
-                                            <?php if(@$_SESSION[admin]) { ?>
-        	                                    <a href="?page=siswa&action=nonaktifkan&id=<?php echo $data_siswa['id_siswa']; ?>" class="btn btn-primary btn-xs">Non Aktifkan</a>
-                                                <a href="?page=siswa&action=editprofil&IDsiswa=<?php echo $data_siswa['id_siswa']; ?>" class="btn btn-warning btn-xs">Edit</a>
-                                                <a onclick="return confirm('Yakin akan menghapus data ?');" href="?page=siswa&action=hapus&id=<?php echo $data_siswa['id_siswa']; ?>" class="btn btn-danger btn-xs">Hapus</a>
-                                            <?php } ?>
-                                            <a href="?page=siswa&action=detail&IDsiswa=<?php echo $data_siswa['id_siswa']; ?>" class="btn btn-default btn-xs">Detail</a>
-    	                                </td>
-    	                            </tr>
-    	                        <?php
-    		                    }
-    		                } else { ?>
-    							<tr>
-                                    <td colspan="8" align="center">Data tidak ditemukan</td>
-    							</tr>
-    		                	<?php
-    		                } ?>
+                                        <a href="?page=siswa&action=detail&IDsiswa=<?php echo $data_siswa['id_siswa']; ?>" class="btn btn-default btn-xs">Detail</a>
+	                                </td>
+	                            </tr>
+	                        <?php
+		                    } ?>
                             </tbody>
                         </table>
                         <script>

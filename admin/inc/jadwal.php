@@ -24,7 +24,7 @@ if(@$_GET['action'] == '') { ?>
                         <thead>
                             <tr>
                                 <th>Tanggal</th>
-                                <th>Mapel</th>
+                                <th>Mata Pelajaran</th>
                                 <th>Kelas</th>
                                 <th>Jam</th>
                                 <th>Ruang</th>
@@ -37,6 +37,10 @@ if(@$_GET['action'] == '') { ?>
                         </thead>
                         <tbody>
                         <?php
+                        $condition = "";
+                        if (@$_SESSION['pengajar']) {
+                            $condition = "WHERE tb_mapel_ajar.id_pengajar = '$_SESSION[pengajar]'";
+                        }
                         $sql_jadwal = mysqli_query($db, "
                             SELECT
                             id_jadwal,
@@ -59,32 +63,31 @@ if(@$_GET['action'] == '') { ?>
                             JOIN tb_kelas
                             ON tb_mapel_ajar.id_kelas = tb_kelas.id_kelas
 
-                            ORDER BY tanggal, jam_mulai, jam_selesai, mapel
+                            ".$condition."
+
+                            ORDER BY tanggal, jam_mulai, jam_selesai, mapel DESC
                         ") or die ($db->error);
-                        if(mysqli_num_rows($sql_jadwal) > 0) {
-                            while($data_jadwal = mysqli_fetch_array($sql_jadwal)) { ?>
-                                <tr>
-                                    <td><?php echo tgl_indo($data_jadwal['tanggal']); ?></td>
-                                    <td><?php echo $data_jadwal['kode_mapel']; ?> - <?php echo $data_jadwal['mapel']; ?></td>
-                                    <td><?php echo $data_jadwal['nama_kelas']; ?></td>
-                                    <td><?php echo substr($data_jadwal['jam_mulai'],0,5); ?> - <?php echo substr($data_jadwal['jam_selesai'],0,5); ?></td>
-                                    <td><?php echo $data_jadwal['ruang']; ?></td>
-                                    <?php
-                                    if(@$_SESSION['admin']) {
-                                    ?>
-                                        <td align="center" width="150px">
-	                                        <a href="?page=jadwal&action=edit&id=<?php echo $data_jadwal['id_jadwal']; ?>" class="btn btn-warning btn-xs">Edit</a>
-	                                        <a onclick="return confirm('Yakin akan menghapus data?');" href="?page=jadwal&action=hapus&id=<?php echo $data_jadwal['id_jadwal']; ?>" class="btn btn-danger btn-xs">Hapus</a>
-	                                    </td>
-                                    <?php
-                                    }
-                                    ?>
-                                </tr>
-                            <?php
-                            }
-                        } else {
-                        	echo '<td colspan="4" align="center">Tidak ada data</td>';
-                    	} ?>
+
+                        while($data_jadwal = mysqli_fetch_array($sql_jadwal)) { ?>
+                            <tr>
+                                <td><?php echo tgl_indo($data_jadwal['tanggal']); ?></td>
+                                <td><?php echo $data_jadwal['kode_mapel']; ?> - <?php echo $data_jadwal['mapel']; ?></td>
+                                <td><?php echo $data_jadwal['nama_kelas']; ?></td>
+                                <td><?php echo substr($data_jadwal['jam_mulai'],0,5); ?> - <?php echo substr($data_jadwal['jam_selesai'],0,5); ?></td>
+                                <td><?php echo $data_jadwal['ruang']; ?></td>
+                                <?php
+                                if(@$_SESSION['admin']) {
+                                ?>
+                                    <td align="center" width="150px">
+                                        <a href="?page=jadwal&action=edit&id=<?php echo $data_jadwal['id_jadwal']; ?>" class="btn btn-warning btn-xs">Edit</a>
+                                        <a onclick="return confirm('Yakin akan menghapus data?');" href="?page=jadwal&action=hapus&id=<?php echo $data_jadwal['id_jadwal']; ?>" class="btn btn-danger btn-xs">Hapus</a>
+                                    </td>
+                                <?php
+                                }
+                                ?>
+                            </tr>
+                        <?php
+                        } ?>
                         </tbody>
                     </table>
                     <script>

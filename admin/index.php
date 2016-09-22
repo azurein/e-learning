@@ -109,6 +109,9 @@ if(@$_SESSION['admin'] || @$_SESSION['pengajar']) {
                         <a class="<?php if(@$_GET['page'] == 'jadwal') { echo 'active-menu'; } ?>" href="?page=jadwal"><i class="fa fa-table"></i><?php if(@$_SESSION['admin']) echo " Manajemen";?> Jadwal</a>
                     </li>
                     <li>
+                        <a class="<?php if(@$_GET['page'] == 'materi') { echo 'active-menu'; } ?>" href="?page=materi"><i class="fa fa-file-text"></i> Manajemen Materi</a>
+                    </li>
+                    <li>
                         <a class="<?php if(@$_GET['page'] == 'quiz') { echo 'active-menu'; } ?>" href="?page=quiz"><i class="fa fa-file"></i> Manajemen Tugas / Quiz</a>
                     </li>
                     <li>

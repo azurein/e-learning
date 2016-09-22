@@ -152,7 +152,7 @@ if(@$_SESSION['siswa']) { ?>
     <div class="container">
 		<div class="row">
 		    <div class="col-md-12">
-		        <h4 class="page-head-line">Test : <u><?php echo $data_tq['judul']; ?></u><br />Mapel : <u><?php echo $data_tq['mapel']; ?></u></h4>
+		        <h4 class="page-head-line">Test : <u><?php echo $data_tq['judul']; ?></u><br />Mata Pelajaran : <u><?php echo $data_tq['mapel']; ?></u></h4>
 		    </div>
 		</div>
 

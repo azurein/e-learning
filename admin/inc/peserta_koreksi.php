@@ -44,60 +44,56 @@
                         AND tb_topik_quiz.id_tq = '$id_tq'
 
                     ") or die ($db->error);
-                    if(mysqli_num_rows($sql_siswa_mengikuti_tes) > 0) {
-    					while($data_siswa_mengikuti_tes = mysqli_fetch_array($sql_siswa_mengikuti_tes)) {
-    						?>
-                            <tr>
-                                <td align="center" width="40px"><?php echo $no++; ?></td>
-                                <td><?php echo $data_siswa_mengikuti_tes['nama_lengkap']; ?></td>
-                                <td><?php echo $data_siswa_mengikuti_tes['nama_kelas']; ?></td>
-                            	<?php
-                            	$sql_pilgan = mysqli_query($db, "SELECT * FROM tb_nilai_pilgan WHERE id_siswa = '$data_siswa_mengikuti_tes[id_siswa]' AND id_tq = '$id_tq'") or die ($db->error);
-                            	$data_pilgan = mysqli_fetch_array($sql_pilgan);
-                                $sql_jwb = mysqli_query($db, "SELECT * FROM tb_jawaban WHERE id_siswa = '$data_siswa_mengikuti_tes[id_siswa]' AND id_tq = '$id_tq'") or die ($db->error);
-                            	$sql_essay = mysqli_query($db, "SELECT * FROM tb_nilai_essay WHERE id_siswa = '$data_siswa_mengikuti_tes[id_siswa]' AND id_tq = '$id_tq'") or die ($db->error);
-                            	$data_essay = mysqli_fetch_array($sql_essay);
-                            	?>
-                            	<td>
-                            		Nilai soal pilihan ganda :
+					while($data_siswa_mengikuti_tes = mysqli_fetch_array($sql_siswa_mengikuti_tes)) {
+						?>
+                        <tr>
+                            <td align="center" width="40px"><?php echo $no++; ?></td>
+                            <td><?php echo $data_siswa_mengikuti_tes['nama_lengkap']; ?></td>
+                            <td><?php echo $data_siswa_mengikuti_tes['nama_kelas']; ?></td>
+                        	<?php
+                        	$sql_pilgan = mysqli_query($db, "SELECT * FROM tb_nilai_pilgan WHERE id_siswa = '$data_siswa_mengikuti_tes[id_siswa]' AND id_tq = '$id_tq'") or die ($db->error);
+                        	$data_pilgan = mysqli_fetch_array($sql_pilgan);
+                            $sql_jwb = mysqli_query($db, "SELECT * FROM tb_jawaban WHERE id_siswa = '$data_siswa_mengikuti_tes[id_siswa]' AND id_tq = '$id_tq'") or die ($db->error);
+                        	$sql_essay = mysqli_query($db, "SELECT * FROM tb_nilai_essay WHERE id_siswa = '$data_siswa_mengikuti_tes[id_siswa]' AND id_tq = '$id_tq'") or die ($db->error);
+                        	$data_essay = mysqli_fetch_array($sql_essay);
+                        	?>
+                        	<td>
+                        		Nilai soal pilihan ganda :
+                                <?php
+                                if(mysqli_num_rows($sql_pilgan) > 0) {
+                                    echo round($data_pilgan['presentase']);
+                                } else {
+                                    echo "Ujian ini tidak ada soal pilihan ganda";
+                                } ?>
+                                <br />
+                        		Nilai soal essay :
+                        		<?php
+                                if(mysqli_num_rows($sql_jwb) > 0) {
+                            		if(mysqli_num_rows($sql_essay) > 0) {
+                            			echo round($data_essay['nilai']);
+                            		} else {
+                            			echo "(belum dikoreksi)";
+                            		}
+                                } else {
+                                    echo "Ujian ini tidak ada soal essay";
+                                } ?>
+                        	</td>
+                            <td align="center" width="220px">
+                                <?php
+                                if(mysqli_num_rows($sql_jwb) > 0) {
+                                    if(mysqli_num_rows($sql_essay) > 0) { ?>
+                                        <a href="?page=quiz&action=koreksi&hal=editessay&id_tq=<?php echo $id_tq; ?>&id_siswa=<?php echo $data_siswa_mengikuti_tes['id_siswa']; ?>&id_nilai=<?php echo $data_essay['id']; ?>" class="btn btn-default btn-xs">Edit Koreksi Essay</a>
                                     <?php
-                                    if(mysqli_num_rows($sql_pilgan) > 0) {
-                                        echo round($data_pilgan['presentase']);
-                                    } else {
-                                        echo "Ujian ini tidak ada soal pilihan ganda";
-                                    } ?>
-                                    <br />
-                            		Nilai soal essay :
-                            		<?php
-                                    if(mysqli_num_rows($sql_jwb) > 0) {
-                                		if(mysqli_num_rows($sql_essay) > 0) {
-                                			echo round($data_essay['nilai']);
-                                		} else {
-                                			echo "(belum dikoreksi)";
-                                		}
-                                    } else {
-                                        echo "Ujian ini tidak ada soal essay";
-                                    } ?>
-                            	</td>
-                                <td align="center" width="220px">
+                                    } else { ?>
+                                        <a href="?page=quiz&action=koreksi&hal=essay&id_tq=<?php echo $id_tq; ?>&id_siswa=<?php echo $data_siswa_mengikuti_tes['id_siswa']; ?>" class="btn btn-default btn-xs">Koreksi Jawaban Essay</a>
                                     <?php
-                                    if(mysqli_num_rows($sql_jwb) > 0) {
-                                        if(mysqli_num_rows($sql_essay) > 0) { ?>
-                                            <a href="?page=quiz&action=koreksi&hal=editessay&id_tq=<?php echo $id_tq; ?>&id_siswa=<?php echo $data_siswa_mengikuti_tes['id_siswa']; ?>&id_nilai=<?php echo $data_essay['id']; ?>" class="btn btn-default btn-xs">Edit Koreksi Essay</a>
-                                        <?php
-                                        } else { ?>
-                                            <a href="?page=quiz&action=koreksi&hal=essay&id_tq=<?php echo $id_tq; ?>&id_siswa=<?php echo $data_siswa_mengikuti_tes['id_siswa']; ?>" class="btn btn-default btn-xs">Koreksi Jawaban Essay</a>
-                                        <?php
-                                        }
-                                    } ?>
-                                    <a onclick="return confirm('Yakin akan menghapus siswa ini dari daftar peserta ujian?');" href="?page=quiz&action=hapuspeserta&id_tq=<?php echo $id_tq; ?>&id_siswa=<?php echo $data_siswa_mengikuti_tes['id_siswa']; ?>" class="btn btn-default btn-xs">Hapus Siswa dari Peserta Ujian</a>
-                                </td>
-                            </tr>
-    					<?php
-    					}
-                    } else {
-                        echo '<tr><td colspan="5" align="center">Data tidak ditemukan</td></tr>';
-                    } ?>
+                                    }
+                                } ?>
+                                <a onclick="return confirm('Yakin akan menghapus siswa ini dari daftar peserta ujian?');" href="?page=quiz&action=hapuspeserta&id_tq=<?php echo $id_tq; ?>&id_siswa=<?php echo $data_siswa_mengikuti_tes['id_siswa']; ?>" class="btn btn-default btn-xs">Hapus Siswa dari Peserta Ujian</a>
+                            </td>
+                        </tr>
+					<?php
+					}
                     </tbody>
                 </table>
                 <?php if(mysqli_num_rows($sql_siswa_mengikuti_tes) > 0) { ?>

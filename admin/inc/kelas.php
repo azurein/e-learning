@@ -5,6 +5,10 @@
 </div>
 
 <?php
+$condition = "";
+if (@$_SESSION['pengajar']) {
+    $condition = "WHERE tb_mapel_ajar.id_pengajar = '$_SESSION[pengajar]'";
+}
 $sql_kelas = mysqli_query($db, "
     SELECT
     tb_mapel_ajar.id,
@@ -29,7 +33,12 @@ $sql_kelas = mysqli_query($db, "
 
     LEFT JOIN tb_pengajar
     ON tb_pengajar.id_pengajar = tb_mapel_ajar.id_pengajar
+
+    ".$condition."
+
+    ORDER BY tgl_mulai DESC
 ") or die ($db->error);
+
 $no = 1;
 
 echo '<div class="row">';
@@ -52,7 +61,11 @@ if(@$_GET['action'] == '') { ?>
                                 <th>#</th>
                                 <th>Nama Kelas</th>
                                 <th>Mata Pelajaran</th>
-                                <th>Pengajar</th>
+                                <?php
+                                if(@$_SESSION['admin']) {
+                                    echo "<th>Pengajar</th>";
+                                }
+                                ?>
                                 <th>Periode</th>
                                 <th>Opsi</th>
                                 <?php
@@ -70,12 +83,23 @@ if(@$_GET['action'] == '') { ?>
                                 <td><?php echo $data_kelas['nama_kelas']; ?></td>
                                 <td><?php echo $data_kelas['kode_mapel']." - ".$data_kelas['mapel']; ?></td>
                                 <?php
-                                if($data_kelas['id_pengajar'] != 0) {
-                                    echo "<td>".$data_kelas['nama_lengkap']."</td>";
-                                } else {
-                                    echo "<td><i>Belum diatur</i></td>";
-                                } ?>
-                                <td><?php echo tgl_indo($data_kelas['tgl_mulai'])."<br>s/d<br>".tgl_indo($data_kelas['tgl_mulai']); ?></td>;
+                                if(@$_SESSION['admin']) {
+                                    if($data_kelas['id_pengajar'] != 0) {
+                                        echo "<td>".$data_kelas['nama_lengkap']."</td>";
+                                    } else {
+                                        echo "<td><i>Belum diatur</i></td>";
+                                    }
+                                }
+                                ?>
+                                <td>
+                                <?php
+                                if(@$_SESSION['admin']) {
+                                    echo tgl_indo($data_kelas['tgl_mulai'])."<br>s/d<br>".tgl_indo($data_kelas['tgl_mulai']);
+                                } elseif(@$_SESSION['pengajar']) {
+                                    echo tgl_indo($data_kelas['tgl_mulai'])." s/d ".tgl_indo($data_kelas['tgl_mulai']);
+                                }
+                                ?>
+                                </td>;
                                 <td align="center" width="200px">
                                     <?php
                                     if(@$_SESSION['admin']) {
@@ -104,10 +128,8 @@ if(@$_GET['action'] == '') { ?>
                                     </td>
                                 <?php
                                 }
-                                ?>
+                            } ?>
                             </tr>
-                        <?php
-                        } ?>
                         </tbody>
                     </table>
                     <script>
@@ -322,11 +344,11 @@ if(@$_GET['action'] == '') { ?>
                     </div>
                     <div class="form-group">
                         <label>Mulai</label>
-                        <input type="date" id="tgl_mulai" name="tgl_mulai" class="form-control" value="<?php if(isset($_POST['tgl_mulai'])) echo $_POST['tgl_mulai'];  ?>" />
+                        <input type="date" id="tgl_mulai" name="tgl_mulai" class="form-control" value="<?php if(isset($_POST['tgl_mulai'])) echo $_POST['tgl_mulai']; ?>" />
                     </div>
                     <div class="form-group">
                         <label>Selesai</label>
-                        <input type="date" id="tgl_selesai" name="tgl_selesai" class="form-control" value="<?php if(isset($_POST['tgl_selesai'])) echo $_POST['tgl_selesai'];  ?>" />
+                        <input type="date" id="tgl_selesai" name="tgl_selesai" class="form-control" value="<?php if(isset($_POST['tgl_selesai'])) echo $_POST['tgl_selesai']; ?>" />
                     </div>
                     <div class="form-group">
                         <input type="submit" name="simpan" value="Simpan" class="btn btn-success" />
@@ -356,7 +378,7 @@ if(@$_GET['action'] == '') { ?>
 } else if(@$_GET['action'] == 'daftar_siswa') { ?>
     <div class="col-md-12">
         <div class="panel panel-default">
-            <div class="panel-heading">Daftar Siswa &nbsp; <a href="?page=kelas" class="btn btn-warning btn-sm">Kembali</a></div>
+            <div class="panel-heading">Data Siswa &nbsp; <a href="?page=kelas" class="btn btn-warning btn-sm">Kembali</a></div>
             <div class="panel-body">
                 <form method="post">
                     <div class="form-group">
@@ -375,31 +397,24 @@ if(@$_GET['action'] == '') { ?>
                                 <tbody>
                                 <?php
                                 $sql_siswa = mysqli_query($db, "SELECT * FROM tb_siswa WHERE status LIKE 'aktif'") or die ($db->error);
-                                if(mysqli_num_rows($sql_siswa) > 0) {
-        	                        while($data_siswa = mysqli_fetch_array($sql_siswa)) {
+    	                        while($data_siswa = mysqli_fetch_array($sql_siswa)) {
 
-                                        if($data_siswa['jenis_kelamin'] == 'L') {
-                                            $gender_persiswa = 'Laki-laki';
-                                        } else {
-                                            $gender_persiswa = 'Perempuan';
-                                        }
-                                    ?>
-        	                            <tr>
-        	                                <td align="center"><input class="checkboxSiswa" type="checkbox"></td>
-        	                                <td><?php echo $data_siswa['nis']; ?></td>
-        	                                <td><?php echo $data_siswa['nama_lengkap']; ?></td>
-        	                                <td><?php echo $gender_persiswa; ?></td>
-                                            <td><?php echo $data_siswa['tempat_lahir'].", ".tgl_indo($data_siswa['tgl_lahir']); ?></td>
-        	                                <td><?php echo $data_siswa['alamat']; ?></td>
-        	                            </tr>
-        	                        <?php
-        		                    }
-        		                } else { ?>
-        							<tr>
-                                        <td colspan="8" align="center">Data tidak ditemukan</td>
-        							</tr>
-        		                	<?php
-        		                } ?>
+                                    if($data_siswa['jenis_kelamin'] == 'L') {
+                                        $gender_persiswa = 'Laki-laki';
+                                    } else {
+                                        $gender_persiswa = 'Perempuan';
+                                    }
+                                ?>
+    	                            <tr>
+    	                                <td align="center"><input class="checkboxSiswa" type="checkbox"></td>
+    	                                <td><?php echo $data_siswa['nis']; ?></td>
+    	                                <td><?php echo $data_siswa['nama_lengkap']; ?></td>
+    	                                <td><?php echo $gender_persiswa; ?></td>
+                                        <td><?php echo $data_siswa['tempat_lahir'].", ".tgl_indo($data_siswa['tgl_lahir']); ?></td>
+    	                                <td><?php echo $data_siswa['alamat']; ?></td>
+    	                            </tr>
+    	                        <?php
+    		                    } ?>
                                 </tbody>
                             </table>
                             <script>
