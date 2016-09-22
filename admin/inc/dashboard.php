@@ -5,17 +5,17 @@
         </h1>
     </div>
 </div>
-                
+
 <div class="row">
     <div class="col-md-12">
         <div class="alert alert-success">
-            <strong>Assalamu'alaikum wr. wb. !!</strong> Selamat datang <?php echo "<u>".$data_terlogin['nama_lengkap']."</u> di halaman "; cek_session("<b><i>administrator</i></b>", "<b><i>pengajar (guru)</i></b>"); ?>
+            Selamat datang <?php echo "<u>".$data_terlogin['nama_lengkap']."</u> di halaman "; cek_session("<b><i>administrator</i></b>", "<b><i>pengajar (guru)</i></b>"); ?>
         </div>
     </div>
 </div>
 <?php
 if(@$_SESSION['admin']) {
-    
+
     if(@$_GET['hal'] == '') { ?>
     <div class="row">
         <div class="col-md-3 col-sm-12 col-xs-12">
@@ -124,7 +124,7 @@ if(@$_SESSION['admin']) {
                             $username = @mysqli_real_escape_string($db, $_POST['username']);
                             $password = @mysqli_real_escape_string($db, $_POST['password']);
 
-                            mysqli_query($db, "UPDATE tb_admin SET nama_lengkap = '$nama_lengkap', alamat = '$alamat', no_telp = '$no_telp', email = '$email', username = '$username', password = md5('$password'), pass = '$password' WHERE id_admin = '$_SESSION[admin]'") or die ($db->error);          
+                            mysqli_query($db, "UPDATE tb_admin SET nama_lengkap = '$nama_lengkap', alamat = '$alamat', no_telp = '$no_telp', email = '$email', username = '$username', password = md5('$password'), pass = '$password' WHERE id_admin = '$_SESSION[admin]'") or die ($db->error);
                             echo '<script>window.location="./";</script>';
                         } ?>
                     </div>
@@ -138,83 +138,87 @@ if(@$_SESSION['admin']) {
 
     $sql_pengajar = mysqli_query($db, "SELECT * FROM tb_pengajar WHERE id_pengajar = '$_SESSION[pengajar]'") or die ($db->error);
     $data = mysqli_fetch_array($sql_pengajar);
-    
+
     if(@$_GET['hal'] == '') { ?>
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">Detail Profil Anda &nbsp; <a href="?hal=editprofil" class="btn btn-warning btn-sm">Edit Profil</a></div>
                     <div class="panel-body">
-                        <div class="table-responsive">
-                            <table width="100%">
-                                <tr>
-                                    <td align="right" width="46%"><b>NIP</b></td>
-                                    <td align="center">:</td>
-                                    <td width="46%"><?php echo $data['nip']; ?></td>
-                                </tr>
-                                <tr>
-                                    <td align="right"><b>Nama Lengkap</b></td>
-                                    <td align="center">:</td>
-                                    <td><?php echo $data['nama_lengkap']; ?></td>
-                                </tr>
-                                <tr>
-                                    <td align="right"><b>Tempat Tanggal Lahir</b></td>
-                                    <td align="center">:</td>
-                                    <td><?php echo $data['tempat_lahir'].", ".tgl_indo($data['tgl_lahir']); ?></td>
-                                </tr>
-                                <tr>
-                                    <td align="right"><b>Jenis Kelamin</b></td>
-                                    <td align="center">:</td>
-                                    <td><?php if($data['jenis_kelamin'] == 'L') { echo "Laki-laki"; } else { echo "Perempuan"; } ?></td>
-                                </tr>
-                                <tr>
-                                    <td align="right"><b>Agama</b></td>
-                                    <td align="center">:</td>
-                                    <td><?php echo $data['agama']; ?></td>
-                                </tr>
-                                <tr>
-                                    <td align="right"><b>Nomor Telepon</b></td>
-                                    <td align="center">:</td>
-                                    <td><?php echo $data['no_telp']; ?></td>
-                                </tr>
-                                <tr>
-                                    <td align="right"><b>Email</b></td>
-                                    <td align="center">:</td>
-                                    <td><?php echo $data['email']; ?></td>
-                                </tr>
-                                <tr>
-                                    <td align="right"><b>Alamat</b></td>
-                                    <td align="center">:</td>
-                                    <td><?php echo $data['alamat']; ?></td>
-                                </tr>
-                                <tr>
-                                    <td align="right"><b>Jabatan</b></td>
-                                    <td align="center">:</td>
-                                    <td><?php echo $data['jabatan']; ?></td>
-                                </tr>
-                                <tr>
-                                    <td align="right" valign="top"><b>Foto</b></td>
-                                    <td align="center" valign="top">:</td>
-                                    <td>
-                                        <div style="padding:10px 0;"><img width="250px" src="../admin/img/foto_pengajar/<?php echo $data['foto']; ?>" /></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="right"><b>Website</b></td>
-                                    <td align="center">:</td>
-                                    <td><?php echo $data['web']; ?></td>
-                                </tr>
-                                <tr>
-                                    <td align="right"><b>Username</b></td>
-                                    <td align="center">:</td>
-                                    <td><?php echo $data['username']; ?></td>
-                                </tr>
-                                <tr>
-                                    <td align="right"><b>Password</b></td>
-                                    <td align="center">:</td>
-                                    <td><?php echo $data['pass']; ?></td>
-                                </tr>
-                            </table>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tr>
+                                            <td><b>NIP</b></td>
+                                            <td>:</td>
+                                            <td><?php echo $data['nip']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Nama Lengkap</b></td>
+                                            <td>:</td>
+                                            <td><?php echo $data['nama_lengkap']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Tempat Tanggal Lahir</b></td>
+                                            <td>:</td>
+                                            <td><?php echo $data['tempat_lahir'].", ".tgl_indo($data['tgl_lahir']); ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Jenis Kelamin</b></td>
+                                            <td>:</td>
+                                            <td><?php if($data['jenis_kelamin'] == 'L') { echo "Laki-laki"; } else { echo "Perempuan"; } ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Agama</b></td>
+                                            <td>:</td>
+                                            <td><?php echo $data['agama']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Nomor Telepon</b></td>
+                                            <td>:</td>
+                                            <td><?php echo $data['no_telp']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Email</b></td>
+                                            <td>:</td>
+                                            <td><?php echo $data['email']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Alamat</b></td>
+                                            <td>:</td>
+                                            <td><?php echo $data['alamat']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Jabatan</b></td>
+                                            <td>:</td>
+                                            <td><?php echo $data['jabatan']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td valign="top"><b>Foto</b></td>
+                                            <td valign="top">:</td>
+                                            <td>
+                                                <div style="padding:10px 0;"><img width="250px" src="../admin/img/foto_pengajar/<?php echo $data['foto']; ?>" /></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Website</b></td>
+                                            <td>:</td>
+                                            <td><?php echo $data['web']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Username</b></td>
+                                            <td>:</td>
+                                            <td><?php echo $data['username']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Password</b></td>
+                                            <td>:</td>
+                                            <td><?php echo $data['pass']; ?></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -316,11 +320,11 @@ if(@$_SESSION['admin']) {
                             $nama_gambar = @$_FILES['gambar']['name'];
 
                             if($nama_gambar == '') {
-                                mysqli_query($db, "UPDATE tb_pengajar SET nip = '$nip', nama_lengkap = '$nama_lengkap', tempat_lahir = '$tempat_lahir', tgl_lahir = '$tgl_lahir', jenis_kelamin = '$jenis_kelamin', agama = '$agama', no_telp = '$no_telp', email = '$email', alamat = '$alamat', web = '$web', username = '$username', password = md5('$password'), pass = '$password' WHERE id_pengajar = '$_SESSION[pengajar]'") or die ($db->error);          
+                                mysqli_query($db, "UPDATE tb_pengajar SET nip = '$nip', nama_lengkap = '$nama_lengkap', tempat_lahir = '$tempat_lahir', tgl_lahir = '$tgl_lahir', jenis_kelamin = '$jenis_kelamin', agama = '$agama', no_telp = '$no_telp', email = '$email', alamat = '$alamat', web = '$web', username = '$username', password = md5('$password'), pass = '$password' WHERE id_pengajar = '$_SESSION[pengajar]'") or die ($db->error);
                                 echo '<script>window.location="./";</script>';
                             } else {
                                 if(move_uploaded_file($sumber, $target.$nama_gambar)) {
-                                    mysqli_query($db, "UPDATE tb_pengajar SET nip = '$nip', nama_lengkap = '$nama_lengkap', tempat_lahir = '$tempat_lahir', tgl_lahir = '$tgl_lahir', jenis_kelamin = '$jenis_kelamin', agama = '$agama', no_telp = '$no_telp', email = '$email', alamat = '$alamat', foto = '$nama_gambar', web = '$web', username = '$username', password = md5('$password'), pass = '$password' WHERE id_pengajar = '$_SESSION[pengajar]'") or die ($db->error);           
+                                    mysqli_query($db, "UPDATE tb_pengajar SET nip = '$nip', nama_lengkap = '$nama_lengkap', tempat_lahir = '$tempat_lahir', tgl_lahir = '$tgl_lahir', jenis_kelamin = '$jenis_kelamin', agama = '$agama', no_telp = '$no_telp', email = '$email', alamat = '$alamat', foto = '$nama_gambar', web = '$web', username = '$username', password = md5('$password'), pass = '$password' WHERE id_pengajar = '$_SESSION[pengajar]'") or die ($db->error);
                                     echo '<script>window.location="./";</script>';
                                 } else {
                                     echo '<script>alert("Gagal mengedit info profil, foto gagal diupload, coba lagi!");</script>';

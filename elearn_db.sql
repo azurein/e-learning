@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 16, 2016 at 01:15 PM
+-- Generation Time: Sep 21, 2016 at 05:37 AM
 -- Server version: 5.7.13
 -- PHP Version: 5.5.36
 
@@ -124,10 +124,18 @@ INSERT INTO `tb_file_materi` (`id_materi`, `id_mapel_ajar`, `judul`, `nama_file`
 CREATE TABLE `tb_jadwal_ajar` (
   `id_jadwal` int(11) NOT NULL,
   `id_mapel_ajar` int(11) NOT NULL,
-  `jadwal_mulai` datetime DEFAULT NULL,
-  `jadwal_selesai` datetime DEFAULT NULL,
+  `tanggal` date DEFAULT NULL,
+  `jam_mulai` time DEFAULT NULL,
+  `jam_selesai` time DEFAULT NULL,
   `ruang` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tb_jadwal_ajar`
+--
+
+INSERT INTO `tb_jadwal_ajar` (`id_jadwal`, `id_mapel_ajar`, `tanggal`, `jam_mulai`, `jam_selesai`, `ruang`) VALUES
+(1, 8, '2010-10-10', '10:00:00', '10:10:00', 'Hall A10');
 
 -- --------------------------------------------------------
 
@@ -227,8 +235,8 @@ CREATE TABLE `tb_mapel_ajar` (
 --
 
 INSERT INTO `tb_mapel_ajar` (`id`, `id_mapel`, `id_kelas`, `id_pengajar`, `keterangan`, `tgl_mulai`, `tgl_selesai`, `status_aktif`) VALUES
-(8, 5, 2, 0, '', '2001-01-01 00:00:00', '2001-01-01 00:00:00', 1),
-(10, 3, 17, 10, 'kelas baru', '2010-01-01 00:00:00', '2011-02-02 00:00:00', 0),
+(8, 5, 2, 1, '', '2001-01-01 00:00:00', '2001-01-01 00:00:00', 0),
+(10, 3, 17, 10, 'kelas baru', '2010-01-01 00:00:00', '2011-02-02 00:00:00', 1),
 (11, 4, 2, 1, 'kelas udah ada sblmnnya', '2016-01-01 00:00:00', '2016-12-12 00:00:00', 1),
 (12, 2, 2, 12, 'asd', '2017-01-01 00:00:00', '2017-02-02 00:00:00', 0),
 (13, 1, 0, 1, '', '2015-11-11 00:00:00', '2016-02-02 00:00:00', 0),
@@ -471,6 +479,14 @@ CREATE TABLE `tb_tujuan_ajar` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
+-- Dumping data for table `tb_tujuan_ajar`
+--
+
+INSERT INTO `tb_tujuan_ajar` (`id_tujuan_ajar`, `id_mapel_ajar`, `tujuan_ajar`, `prioritas`) VALUES
+(4, 8, '2', 2),
+(5, 8, '1', 1);
+
+--
 -- Indexes for dumped tables
 --
 
@@ -613,6 +629,11 @@ ALTER TABLE `tb_buku`
 ALTER TABLE `tb_file_materi`
   MODIFY `id_materi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
+-- AUTO_INCREMENT for table `tb_jadwal_ajar`
+--
+ALTER TABLE `tb_jadwal_ajar`
+  MODIFY `id_jadwal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
 -- AUTO_INCREMENT for table `tb_jawaban`
 --
 ALTER TABLE `tb_jawaban`
@@ -676,7 +697,7 @@ ALTER TABLE `tb_topik_quiz`
 -- AUTO_INCREMENT for table `tb_tujuan_ajar`
 --
 ALTER TABLE `tb_tujuan_ajar`
-  MODIFY `id_tujuan_ajar` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_tujuan_ajar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

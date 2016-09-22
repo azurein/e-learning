@@ -2,21 +2,21 @@
 $id = @$_GET['id'];
 $pembuat = '';
 
-if(@$_SESSION[admin]) {
-    $pembuat = "admin";
-} else if(@$_SESSION[pengajar]) {
+if(@$_SESSION['admin']) {
+    $pembuat = @$_SESSION['admin'];
+} else if(@$_SESSION['pengajar']) {
     $pembuat = @$_SESSION['pengajar'];
-} 
+}
 ?>
 <div class="row">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<a onclick="self.history.back();" class="btn btn-danger btn-sm">Kembali</a> &nbsp; 
-			Buat Outline : 
+			<a onclick="self.history.back();" class="btn btn-danger btn-sm">Kembali</a> &nbsp;
+			Buat Outline :
 			<a href="?page=kelas&action=buatoutline&hal=tujuanajar&id=<?php echo $id; ?>" class="btn btn-primary btn-sm">Tujuan Pembelajaran</a>
-			<a href="?page=kelas&action=buatoutline&hal=sertifikasi&id=<?php echo $id; ?>"" class="btn btn-primary btn-sm">Sertifikasi</a> 
+			<a href="?page=kelas&action=buatoutline&hal=sertifikasi&id=<?php echo $id; ?>"" class="btn btn-primary btn-sm">Sertifikasi</a>
 			<a href="?page=materi" class="btn btn-primary btn-sm">Materi</a>
-			<a href="?page=kelas&action=buatoutline&hal=bukupendukung&id=<?php echo $id; ?>"" class="btn btn-primary btn-sm">Buku Pendukung</a>		
+			<a href="?page=kelas&action=buatoutline&hal=bukupendukung&id=<?php echo $id; ?>"" class="btn btn-primary btn-sm">Buku Pendukung</a>
 		</div>
 	</div>
 </div>
@@ -45,7 +45,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 							<textarea name="prioritas" class="form-control" rows="1" required></textarea>
 	                    </div>
 	                </div>
-					
+
 					<div class="col-md-2">
 						<label></label>
 					</div>
@@ -60,8 +60,8 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 	            if(@$_POST['simpan']) {
 	            	$tujuanAjar = @mysqli_real_escape_string($db, $_POST['tujuanAjar']);
 	            	$prioritas = @mysqli_real_escape_string($db, $_POST['prioritas']);
-	            	
-					mysqli_query($db, "INSERT INTO tb_tujuan_ajar VALUES(NULL, '$id', '$tujuanAjar', '$prioritas')") or die ($db->error);          
+
+					mysqli_query($db, "INSERT INTO tb_tujuan_ajar VALUES(NULL, '$id', '$tujuanAjar', '$prioritas')") or die ($db->error);
 					echo '<script>window.location="?page=kelas&action=daftaroutline&hal=tujuanajar&id='.$id.'"</script>';
 	            } ?>
 		    </div>
@@ -91,7 +91,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 							<textarea name="deskripsiSertifikasi" class="form-control" rows="1" required></textarea>
 	                    </div>
 	                </div>
-					
+
 					<div class="col-md-2">
 						<label></label>
 					</div>
@@ -107,7 +107,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 	            	$namaSertifikasi = @mysqli_real_escape_string($db, $_POST['namaSertifikasi']);
 					$deskripsiSertifikasi = @mysqli_real_escape_string($db, $_POST['deskripsiSertifikasi']);
 
-                    mysqli_query($db, "INSERT INTO tb_sertifikasi VALUES(NULL, '$id', '$namaSertifikasi', '$deskripsiSertifikasi')") or die ($db->error);          
+                    mysqli_query($db, "INSERT INTO tb_sertifikasi VALUES(NULL, '$id', '$namaSertifikasi', '$deskripsiSertifikasi')") or die ($db->error);
                     echo '<script>window.location="?page=kelas&action=daftaroutline&hal=sertifikasi&id='.$id.'"</script>';
 	            }
 	            ?>
@@ -129,7 +129,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 							<textarea name="judul" class="form-control" rows="2" required></textarea>
 						</div>
 					</div>
-					
+
 					<div class="col-md-2">
 						<label>Nama File</label>
 					</div>
@@ -154,13 +154,13 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 	            	$judul = @mysqli_real_escape_string($db, $_POST['judul']);
 
 					$sumber = @$_FILES['namaFile']['tmp_name'];
-					
+
 					//refer ke file +koneksi.php
 					$target = $file_materi;
 					$namaFile = @$_FILES['namaFile']['name'];
 
 					if(move_uploaded_file($sumber, $target.$namaFile)) {
-						mysqli_query($db, "INSERT INTO tb_file_materi VALUES(NULL, '$id', '$judul', '$namaFile', now(), '$pembuat', '0')") or die ($db->error);          
+						mysqli_query($db, "INSERT INTO tb_file_materi VALUES(NULL, '$id', '$judul', '$namaFile', now(), '$pembuat', '0')") or die ($db->error);
 						echo '<script>window.location="?page=kelas&action=daftaroutline&hal=materi&id='.$id.'"</script>';
 					} else {
 						echo '<script>alert("Gagal menambah materi, file gagal diupload, coba lagi!");</script>';
@@ -257,7 +257,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 							<input type="file" name="namaFile" class="form-control" ></input>
 	                    </div>
 	                </div>
-					
+
 					<div class="col-md-2">
 						<label></label>
 					</div>
@@ -281,7 +281,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 
 					if(empty($_FILES['namaFile']['tmp_name']) || !is_uploaded_file($_FILES['namaFile']['tmp_name']))
 					{
-						mysqli_query($db, "INSERT INTO tb_buku VALUES(NULL, '$id', '$judul', '$sinopsis', '$tahun', '$edisi', '$penulis', '$penerbit', '$isbn', '$kutipHal', '')") or die ($db->error);          
+						mysqli_query($db, "INSERT INTO tb_buku VALUES(NULL, '$id', '$judul', '$sinopsis', '$tahun', '$edisi', '$penulis', '$penerbit', '$isbn', '$kutipHal', '')") or die ($db->error);
 						echo '<script>window.location="?page=kelas&action=daftaroutline&hal=bukupendukung&id='.$id.'"</script>';
 					}
 					else
@@ -291,7 +291,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 						$namaFile = @$_FILES['namaFile']['name'];
 
 						if(move_uploaded_file($sumber, $target.$namaFile)) {
-							mysqli_query($db, "INSERT INTO tb_buku VALUES(NULL, '$id', '$judul', '$sinopsis', '$tahun', '$edisi', '$penulis', '$penerbit', '$isbn', '$kutipHal', '$namaFile')") or die ($db->error);          
+							mysqli_query($db, "INSERT INTO tb_buku VALUES(NULL, '$id', '$judul', '$sinopsis', '$tahun', '$edisi', '$penulis', '$penerbit', '$isbn', '$kutipHal', '$namaFile')") or die ($db->error);
 							echo '<script>window.location="?page=kelas&action=daftaroutline&hal=bukupendukung&id='.$id.'"</script>';
 						} else {
 							echo '<script>alert("Gagal menambah buku pendukung, file gagal diupload, coba lagi!");</script>';

@@ -99,30 +99,21 @@ if(@$_SESSION['admin'] || @$_SESSION['pengajar']) {
                         <li>
                             <a class="<?php if(@$_GET['page'] == 'mapel') { echo 'active-menu'; } ?>" href="?page=mapel"><i class="fa fa-fw fa-th-list"></i> Mata Pelajaran</a>
                         </li>
-                        <li>
-                            <a class="<?php if(@$_GET['page'] == 'kelas') { echo 'active-menu'; } ?>" href="?page=kelas"><i class="fa fa-list-alt"></i> Manajemen Kelas</a>
-                        </li>
-                        <li>
-                            <a class="<?php if(@$_GET['page'] == 'jadwal') { echo 'active-menu'; } ?>" href="?page=jadwal"><i class="fa fa-table"></i> Manajemen Jadwal</a>
-                        </li>
                     <?php
                     }
                     ?>
+                    <li>
+                        <a class="<?php if(@$_GET['page'] == 'kelas') { echo 'active-menu'; } ?>" href="?page=kelas"><i class="fa fa-list-alt"></i><?php if(@$_SESSION['admin']) echo " Manajemen";?> Kelas</a>
+                    </li>
+                    <li>
+                        <a class="<?php if(@$_GET['page'] == 'jadwal') { echo 'active-menu'; } ?>" href="?page=jadwal"><i class="fa fa-table"></i><?php if(@$_SESSION['admin']) echo " Manajemen";?> Jadwal</a>
+                    </li>
                     <li>
                         <a class="<?php if(@$_GET['page'] == 'quiz') { echo 'active-menu'; } ?>" href="?page=quiz"><i class="fa fa-file"></i> Manajemen Tugas / Quiz</a>
                     </li>
                     <li>
-                        <a class="<?php if(@$_GET['page'] == 'materi') { echo 'active-menu'; } ?>" href="?page=materi"><i class="fa fa-file-text"></i> Materi</a>
+                        <a class="<?php if(@$_GET['page'] == 'berita') { echo 'active-menu'; } ?>" href="?page=berita"><i class="fa fa-newspaper-o"></i> Manajemen Berita</a>
                     </li>
-                    <?php
-                    if(@$_SESSION['admin']) {
-                    ?>
-                        <li>
-                            <a class="<?php if(@$_GET['page'] == 'berita') { echo 'active-menu'; } ?>" href="?page=berita"><i class="fa fa-newspaper-o"></i> Berita</a>
-                        </li>
-                    <?php
-                    }
-                    ?>
                 </ul>
             </div>
         </nav>

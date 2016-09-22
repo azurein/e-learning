@@ -9,12 +9,12 @@ $sql_materi = mysqli_query($db, "SELECT * FROM tb_file_materi WHERE id_mapel_aja
 <div class="row">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<a href="?page=kelas" class="btn btn-danger btn-sm">Kembali</a> &nbsp; 
-			Daftar Outline : 
+			<a href="?page=kelas" class="btn btn-danger btn-sm">Kembali</a> &nbsp;
+			Daftar Outline :
 			<a href="?page=kelas&action=daftaroutline&hal=tujuanajar&id=<?php echo $id; ?>" class="btn btn-primary btn-sm">Tujuan Pembelajaran (<?php echo mysqli_num_rows($sql_tujuanAjar); ?>)</a>
-			<a href="?page=kelas&action=daftaroutline&hal=sertifikasi&id=<?php echo $id; ?>" class="btn btn-primary btn-sm">Sertifikasi (<?php echo mysqli_num_rows($sql_sertifikasi); ?>)</a> 
+			<a href="?page=kelas&action=daftaroutline&hal=sertifikasi&id=<?php echo $id; ?>" class="btn btn-primary btn-sm">Sertifikasi (<?php echo mysqli_num_rows($sql_sertifikasi); ?>)</a>
 			<a href="?page=materi" class="btn btn-primary btn-sm">Materi (<?php echo mysqli_num_rows($sql_materi); ?>)</a>
-			<a href="?page=kelas&action=daftaroutline&hal=bukupendukung&id=<?php echo $id; ?>" class="btn btn-primary btn-sm">Buku Pendukung (<?php echo mysqli_num_rows($sql_buku); ?>)</a>		
+			<a href="?page=kelas&action=daftaroutline&hal=bukupendukung&id=<?php echo $id; ?>" class="btn btn-primary btn-sm">Buku Pendukung (<?php echo mysqli_num_rows($sql_buku); ?>)</a>
 		</div>
 	</div>
 </div>
@@ -62,7 +62,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 								</table>
 							</td>
 						</tr>
-					
+
 					<?php
 					}
 				} else { ?>
@@ -113,7 +113,58 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 								</table>
 							</td>
 						</tr>
-					
+
+					<?php
+					}
+				} else { ?>
+					<div class="alert alert-danger">Data sertifikasi tidak ditemukan</div>
+					<?php
+				} ?>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+<?php
+} else if(@$_GET['hal'] == "materi") { ?>
+	<div class="row">
+		<div class="panel panel-default">
+			<div class="panel-heading">Materi &nbsp; <a href="?page=kelas&action=buatoutline&hal=sertifikasi&id=<?php echo $id; ?>" class="btn btn-primary btn-sm">Tambah Sertifikasi</a></div>
+			<div class="panel-body">
+				<div class="table-responsive">
+					<table width="100%">
+				<?php
+				if(mysqli_num_rows($sql_sertifikasi) > 0) {
+					while($data_sertifikasi = mysqli_fetch_array($sql_sertifikasi)) { ?>
+						<tr>
+							<td valign="top">No. ( <?php echo $no++; ?> )</td>
+							<td>
+								<table class="table">
+									<thead>
+										<tr>
+											<td width="20%"><b>Nama Sertifikasi</b></td>
+											<td>:</td>
+											<td width="65%"><?php echo $data_sertifikasi['nama_sertifikasi']; ?></td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>Deskripsi Sertifikasi</td>
+											<td>:</td>
+											<td><?php echo $data_sertifikasi['deskripsi_sertifikasi']; ?></td>
+										</tr><tr>
+											<td>Opsi</td>
+											<td>:</td>
+											<td>
+												<a href="?page=kelas&action=daftaroutline&hal=editsertifikasi&id=<?php echo $id; ?>&subid=<?php echo $data_sertifikasi['id_sertifikasi']; ?>" class="badge" style="background-color:#f60;">Edit</a>
+												<a onclick="return confirm('Yakin akan menghapus data?');" href="?page=kelas&action=daftaroutline&hal=hapussertifikasi&id=<?php echo $id; ?>&subid=<?php echo $data_sertifikasi['id_sertifikasi']; ?>" class="badge" style="background-color:#f00;">Hapus</a>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</td>
+						</tr>
+
 					<?php
 					}
 				} else { ?>
@@ -200,7 +251,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 								</table>
 							</td>
 						</tr>
-					
+
 					<?php
 					}
 				} else { ?>
@@ -240,7 +291,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 							<textarea name="prioritas" class="form-control" rows="1" required><?php echo $data_tujuan_ajar['prioritas']; ?></textarea>
 						</div>
 					</div>
-					
+
 					<div class="col-md-2">
 						<label></label>
 					</div>
@@ -256,8 +307,8 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 					$tujuanAjar = @mysqli_real_escape_string($db, $_POST['tujuanAjar']);
 					$prioritas = @mysqli_real_escape_string($db, $_POST['prioritas']);
 
-					mysqli_query($db, "UPDATE tb_tujuan_ajar SET tujuan_ajar = '$tujuanAjar', prioritas = '$prioritas' WHERE id_tujuan_ajar = '$subid'") or die ($db->error);          
-					
+					mysqli_query($db, "UPDATE tb_tujuan_ajar SET tujuan_ajar = '$tujuanAjar', prioritas = '$prioritas' WHERE id_tujuan_ajar = '$subid'") or die ($db->error);
+
 					echo "<script>window.location='?page=kelas&action=daftaroutline&hal=tujuanajar&id=".$id."';</script>";
 				} ?>
 
@@ -295,7 +346,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 							<textarea name="deskripsiSertifikasi" class="form-control" rows="1" required><?php echo $data_sertifikasi['deskripsi_sertifikasi']; ?></textarea>
 						</div>
 					</div>
-					
+
 					<div class="col-md-2">
 						<label></label>
 					</div>
@@ -311,8 +362,8 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 					$namaSertifikasi = @mysqli_real_escape_string($db, $_POST['namaSertifikasi']);
 					$deskripsiSertifikasi = @mysqli_real_escape_string($db, $_POST['deskripsiSertifikasi']);
 
-					mysqli_query($db, "UPDATE tb_sertifikasi SET nama_sertifikasi = '$namaSertifikasi', deskripsi_sertifikasi = '$deskripsiSertifikasi' WHERE id_sertifikasi = '$subid'") or die ($db->error);          
-					
+					mysqli_query($db, "UPDATE tb_sertifikasi SET nama_sertifikasi = '$namaSertifikasi', deskripsi_sertifikasi = '$deskripsiSertifikasi' WHERE id_sertifikasi = '$subid'") or die ($db->error);
+
 					echo "<script>window.location='?page=kelas&action=daftaroutline&hal=sertifikasi&id=".$id."';</script>";
 				} ?>
 
@@ -350,7 +401,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 							<textarea name="sinopsis" class="form-control" rows="2"><?php echo $data_bukupendukung['sinopsis']; ?></textarea>
 						</div>
 					</div>
-					
+
 					<div class="col-md-2">
 						<label>Tahun</label>
 					</div>
@@ -359,7 +410,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 							<input type="text" name="tahun" class="form-control" value="<?php echo $data_bukupendukung['tahun']; ?>"></input>
 						</div>
 					</div>
-					
+
 					<div class="col-md-2">
 						<label>Edisi</label>
 					</div>
@@ -368,7 +419,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 							<input type="text" name="edisi" class="form-control" value="<?php echo $data_bukupendukung['edisi']; ?>"></input>
 						</div>
 					</div>
-					
+
 					<div class="col-md-2">
 						<label>Penulis</label>
 					</div>
@@ -377,7 +428,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 							<textarea name="penulis" class="form-control" rows="2"><?php echo $data_bukupendukung['penulis']; ?></textarea>
 						</div>
 					</div>
-					
+
 					<div class="col-md-2">
 						<label>Penerbit</label>
 					</div>
@@ -413,7 +464,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 							<input type="file" name="namaFile" class="form-control" ></input>
 	                    </div>
 	                </div>
-					
+
 					<div class="col-md-2">
 						<label></label>
 					</div>
@@ -437,8 +488,8 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 
 					if(empty($_FILES['namaFile']['tmp_name']) || !is_uploaded_file($_FILES['namaFile']['tmp_name']))
 					{
-						mysqli_query($db, "UPDATE tb_buku SET judul = '$judul', sinopsis = '$sinopsis', tahun = '$tahun', edisi = '$edisi', penulis = '$penulis', penerbit = '$penerbit', isbn = '$isbn', kutip_hal = '$kutipHal' WHERE id_buku = '$subid'") or die ($db->error);          
-						
+						mysqli_query($db, "UPDATE tb_buku SET judul = '$judul', sinopsis = '$sinopsis', tahun = '$tahun', edisi = '$edisi', penulis = '$penulis', penerbit = '$penerbit', isbn = '$isbn', kutip_hal = '$kutipHal' WHERE id_buku = '$subid'") or die ($db->error);
+
 						echo "<script>window.location='?page=kelas&action=daftaroutline&hal=bukupendukung&id=".$id."';</script>";
 					}
 					else
@@ -448,7 +499,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 						$namaFile = @$_FILES['namaFile']['name'];
 
 						if(move_uploaded_file($sumber, $target.$namaFile)) {
-							mysqli_query($db, "UPDATE tb_buku SET judul = '$judul', sinopsis = '$sinopsis', tahun = '$tahun', edisi = '$edisi', penulis = '$penulis', penerbit = '$penerbit', isbn = '$isbn', kutip_hal = '$kutipHal', file_buku = '$namaFile' WHERE id_buku = '$subid'") or die ($db->error);          
+							mysqli_query($db, "UPDATE tb_buku SET judul = '$judul', sinopsis = '$sinopsis', tahun = '$tahun', edisi = '$edisi', penulis = '$penulis', penerbit = '$penerbit', isbn = '$isbn', kutip_hal = '$kutipHal', file_buku = '$namaFile' WHERE id_buku = '$subid'") or die ($db->error);
 							echo '<script>window.location="?page=kelas&action=daftaroutline&hal=bukupendukung&id='.$id.'"</script>';
 						} else {
 							echo '<script>alert("Gagal menambah buku pendukung, file gagal diupload, coba lagi!");</script>';
