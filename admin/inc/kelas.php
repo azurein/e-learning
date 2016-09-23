@@ -99,7 +99,7 @@ if(@$_GET['action'] == '') { ?>
                                     echo tgl_indo($data_kelas['tgl_mulai'])." s/d ".tgl_indo($data_kelas['tgl_mulai']);
                                 }
                                 ?>
-                                </td>;
+                                </td>
                                 <td align="center" width="200px">
                                     <?php
                                     if(@$_SESSION['admin']) {
@@ -459,7 +459,7 @@ if(@$_GET['action'] == '') { ?>
 } else if(@$_GET['action'] == 'buatoutline') {
     include "buat_outline.php";
 } else if(@$_GET['action'] == 'copyoutline') {
-    echo "copy";
+    include "copy_outline.php";
 } else if(@$_GET['action'] == 'daftaroutline') {
     include "daftar_outline.php";
 }

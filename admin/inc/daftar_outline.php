@@ -226,7 +226,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 					</div>
 					<div class="col-md-10">
 						<div class="form-group">
-							<textarea name="tujuanAjar" class="form-control" rows="2" required><?php echo $data_tujuan_ajar['tujuan_ajar']; ?></textarea>
+							<textarea name="tujuanAjar" class="form-control" rows="2" required><?php if(isset($_POST['tujuanAjar'])) echo $_POST['tujuanAjar']; else echo $data_tujuan_ajar['tujuan_ajar']; ?></textarea>
 						</div>
 					</div>
 
@@ -235,7 +235,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 					</div>
 					<div class="col-md-10">
 						<div class="form-group">
-							<textarea name="prioritas" class="form-control" rows="1" required><?php echo $data_tujuan_ajar['prioritas']; ?></textarea>
+							<input type="text" name="prioritas" class="form-control" value="<?php if(isset($_POST['prioritas'])) echo $_POST['prioritas']; else echo $data_tujuan_ajar['prioritas']; ?>" onkeypress="return isNumberKey(event);" required></input>
 						</div>
 					</div>
 
@@ -281,7 +281,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 					</div>
 					<div class="col-md-10">
 						<div class="form-group">
-							<textarea name="namaSertifikasi" class="form-control" rows="2" required><?php echo $data_sertifikasi['nama_sertifikasi']; ?></textarea>
+							<textarea name="namaSertifikasi" class="form-control" rows="2" required><?php if(isset($_POST['namaSertifikasi'])) echo $_POST['namaSertifikasi']; else echo $data_sertifikasi['nama_sertifikasi']; ?></textarea>
 						</div>
 					</div>
 
@@ -290,7 +290,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 					</div>
 					<div class="col-md-10">
 						<div class="form-group">
-							<textarea name="deskripsiSertifikasi" class="form-control" rows="1" required><?php echo $data_sertifikasi['deskripsi_sertifikasi']; ?></textarea>
+							<textarea name="deskripsiSertifikasi" class="form-control" rows="1" required><?php if(isset($_POST['deskripsiSertifikasi'])) echo $_POST['deskripsiSertifikasi']; else echo $data_sertifikasi['deskripsi_sertifikasi']; ?></textarea>
 						</div>
 					</div>
 
@@ -336,7 +336,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 					</div>
 					<div class="col-md-10">
 						<div class="form-group">
-							<textarea name="judul" class="form-control" rows="2" required><?php echo $data_bukupendukung['judul']; ?></textarea>
+							<textarea name="judul" class="form-control" rows="2" required><?php if(isset($_POST['judul'])) echo $_POST['judul']; else echo $data_bukupendukung['judul']; ?></textarea>
 						</div>
 					</div>
 
@@ -345,7 +345,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 					</div>
 					<div class="col-md-10">
 						<div class="form-group">
-							<textarea name="sinopsis" class="form-control" rows="2"><?php echo $data_bukupendukung['sinopsis']; ?></textarea>
+							<textarea name="sinopsis" class="form-control" rows="2"><?php if(isset($_POST['sinopsis'])) echo $_POST['sinopsis']; else echo $data_bukupendukung['sinopsis']; ?></textarea>
 						</div>
 					</div>
 
@@ -354,7 +354,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 					</div>
 					<div class="col-md-10">
 						<div class="form-group">
-							<input type="text" name="tahun" class="form-control" value="<?php echo $data_bukupendukung['tahun']; ?>"></input>
+							<input type="text" name="tahun" class="form-control" value="<?php if(isset($_POST['tahun'])) echo $_POST['tahun']; else echo $data_bukupendukung['tahun']; ?>"></input>
 						</div>
 					</div>
 
@@ -363,7 +363,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 					</div>
 					<div class="col-md-10">
 						<div class="form-group">
-							<input type="text" name="edisi" class="form-control" value="<?php echo $data_bukupendukung['edisi']; ?>"></input>
+							<input type="text" name="edisi" class="form-control" value="<?php if(isset($_POST['edisi'])) echo $_POST['edisi']; else echo $data_bukupendukung['edisi']; ?>"></input>
 						</div>
 					</div>
 
@@ -372,7 +372,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 					</div>
 					<div class="col-md-10">
 						<div class="form-group">
-							<textarea name="penulis" class="form-control" rows="2"><?php echo $data_bukupendukung['penulis']; ?></textarea>
+							<textarea name="penulis" class="form-control" rows="2"><?php if(isset($_POST['penulis'])) echo $_POST['penulis']; else echo $data_bukupendukung['penulis']; ?></textarea>
 						</div>
 					</div>
 
@@ -381,7 +381,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 					</div>
 					<div class="col-md-10">
 						<div class="form-group">
-							<input type="text" name="penerbit" class="form-control" value="<?php echo $data_bukupendukung['penerbit']; ?>"></input>
+							<input type="text" name="penerbit" class="form-control" value="<?php if(isset($_POST['penerbit'])) echo $_POST['penerbit']; else echo $data_bukupendukung['penerbit']; ?>"></input>
 						</div>
 					</div>
 
@@ -390,7 +390,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 					</div>
 					<div class="col-md-10">
 						<div class="form-group">
-							<input type="text" name="isbn" class="form-control" value="<?php echo $data_bukupendukung['ISBN']; ?>"></input>
+							<input type="text" name="isbn" class="form-control" value="<?php if(isset($_POST['isbn'])) echo $_POST['isbn']; else echo $data_bukupendukung['ISBN']; ?>"></input>
 						</div>
 					</div>
 
@@ -399,7 +399,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 					</div>
 					<div class="col-md-10">
 						<div class="form-group">
-							<textarea name="kutipHal" class="form-control" rows="2"><?php echo $data_bukupendukung['kutip_hal']; ?></textarea>
+							<textarea name="kutipHal" class="form-control" rows="2"><?php if(isset($_POST['kutipHal'])) echo $_POST['kutipHal']; else echo $data_bukupendukung['kutip_hal']; ?></textarea>
 						</div>
 					</div>
 
