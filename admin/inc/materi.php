@@ -34,35 +34,31 @@ if(@$_GET['action'] == '') { ?>
 	                        } else if(@$_SESSION[pengajar]) {
 	                        	$sql_materi = mysqli_query($db, "SELECT * FROM tb_file_materi JOIN tb_kelas ON tb_file_materi.id_kelas = tb_kelas.id_kelas JOIN tb_mapel ON tb_file_materi.id_mapel = tb_mapel.id JOIN tb_mapel_ajar ON tb_file_materi.id_kelas = tb_mapel_ajar.id_kelas AND tb_file_materi.id_mapel = tb_mapel_ajar.id_mapel WHERE tb_mapel_ajar.id_pengajar = '$_SESSION[pengajar]'") or die($db->error);
 	                        }
-	                        if(mysqli_num_rows($sql_materi) > 0) {
-	                        	while($data_materi = mysqli_fetch_array($sql_materi)) { ?>
-									<tr>
-										<td align="center"><?php echo $no++; ?></td>
-										<td><?php echo $data_materi['judul']; ?></td>
-										<td><?php echo $data_materi['nama_kelas']; ?></td>
-										<td><?php echo $data_materi['mapel']; ?></td>
-										<td><a href="./file_materi/<?php echo $data_materi['nama_file']; ?>" target="_blank"><?php echo $data_materi['nama_file']; ?></a></td>
-										<td><?php echo tgl_indo($data_materi['tgl_posting']); ?></td>
-										<td>
-											<?php
-											if($data_materi['pembuat'] == 'admin') {
-												echo "Admin";
-											} else {
-												$sql_pengajar = mysqli_query($db, "SELECT * FROM tb_pengajar WHERE id_pengajar = '$data_materi[pembuat]'") or die($db->error);
-												$data_pengajar = mysqli_fetch_array($sql_pengajar);
-												echo $data_pengajar['nama_lengkap'];
-											} ?>
-										</td>
-										<td><?php echo $data_materi['hits']." kali"; ?></td>
-										<td align="center">
-	                                        <a onclick="return confirm('Yakin akan menghapus data?');" href="?page=materi&action=hapus&IDmateri=<?php echo $data_materi['id_materi']; ?>" class="btn btn-danger btn-xs">Hapus</a>
-                                        </td>
-									</tr>
-								<?php
-	                        	}
-	                        } else {
-	                        	echo '<tr><td colspan="9" align="center">Data tidak ditemukan</td></tr>';
-	                        } ?>
+                        	while($data_materi = mysqli_fetch_array($sql_materi)) { ?>
+								<tr>
+									<td align="center"><?php echo $no++; ?></td>
+									<td><?php echo $data_materi['judul']; ?></td>
+									<td><?php echo $data_materi['nama_kelas']; ?></td>
+									<td><?php echo $data_materi['mapel']; ?></td>
+									<td><a href="./file_materi/<?php echo $data_materi['nama_file']; ?>" target="_blank"><?php echo $data_materi['nama_file']; ?></a></td>
+									<td><?php echo tgl_indo($data_materi['tgl_posting']); ?></td>
+									<td>
+										<?php
+										if($data_materi['pembuat'] == 'admin') {
+											echo "Admin";
+										} else {
+											$sql_pengajar = mysqli_query($db, "SELECT * FROM tb_pengajar WHERE id_pengajar = '$data_materi[pembuat]'") or die($db->error);
+											$data_pengajar = mysqli_fetch_array($sql_pengajar);
+											echo $data_pengajar['nama_lengkap'];
+										} ?>
+									</td>
+									<td><?php echo $data_materi['hits']." kali"; ?></td>
+									<td align="center">
+                                        <a onclick="return confirm('Yakin akan menghapus data?');" href="?page=materi&action=hapus&IDmateri=<?php echo $data_materi['id_materi']; ?>" class="btn btn-danger btn-xs">Hapus</a>
+                                    </td>
+								</tr>
+							<?php
+                        	} ?>
 	                        </tbody>
 	                    </table>
 	                    <script>
