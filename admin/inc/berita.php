@@ -94,7 +94,7 @@ if(@$_GET['action'] == '') { ?>
                         </div>
                         <div class="form-group">
 	                        <input type="submit" name="simpan" value="Simpan" class="btn btn-success" />
-	                        <button type="reset" class="btn btn-danger"><i class="fa fa-refresh"></i> Reset</button>
+	                        <button type="reset" class="btn btn-danger">Reset</button>
                         </div>
                     </form>
                     <?php
@@ -141,7 +141,7 @@ if(@$_GET['action'] == '') { ?>
                         </div>
                         <div class="form-group">
 	                        <input type="submit" name="simpan" value="Simpan" class="btn btn-success" />
-	                        <button type="reset" class="btn btn-danger"><i class="fa fa-refresh"></i> Reset</button>
+	                        <button type="reset" class="btn btn-danger">Reset</button>
                         </div>
                     </form>
                     <?php

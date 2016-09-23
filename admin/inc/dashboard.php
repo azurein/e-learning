@@ -216,6 +216,11 @@ if(@$_SESSION['admin']) {
                                             <td>:</td>
                                             <td><?php echo $data['pass']; ?></td>
                                         </tr>
+                                        <tr>
+                                    		<td><b>Status</b></td>
+                                    		<td>:</td>
+                                    		<td><?php echo ucfirst($data['status']); ?></td>
+                                    	</tr>
                                     </table>
                                 </div>
                             </div>

@@ -70,81 +70,85 @@ if(@$_SESSION['admin']) { ?>
 	        <div class="panel panel-default">
 	            <div class="panel-heading">Detail Data Pengajar &nbsp; <a href="?page=pengajar" class="btn btn-warning btn-sm">Kembali</a></div>
 	            <div class="panel-body">
-	            	<div class="table-responsive">
-                        <table width="100%">
-                        	<tr>
-                        		<td align="right" width="46%"><b>NIP</b></td>
-                        		<td align="center">:</td>
-                        		<td width="46%"><?php echo $data['nip']; ?></td>
-                        	</tr>
-                        	<tr>
-                        		<td align="right"><b>Nama Lengkap</b></td>
-                        		<td align="center">:</td>
-                        		<td><?php echo $data['nama_lengkap']; ?></td>
-                        	</tr>
-                        	<tr>
-                        		<td align="right"><b>Tempat Tanggal Lahir</b></td>
-                        		<td align="center">:</td>
-                        		<td><?php echo $data['tempat_lahir'].", ".tgl_indo($data['tgl_lahir']); ?></td>
-                        	</tr>
-                        	<tr>
-                        		<td align="right"><b>Jenis Kelamin</b></td>
-                        		<td align="center">:</td>
-                        		<td><?php if($data['jenis_kelamin'] == 'L') { echo "Laki-laki"; } else { echo "Perempuan"; } ?></td>
-                        	</tr>
-                        	<tr>
-                        		<td align="right"><b>Agama</b></td>
-                        		<td align="center">:</td>
-                        		<td><?php echo $data['agama']; ?></td>
-                        	</tr>
-                        	<tr>
-                        		<td align="right"><b>Nomor Telepon</b></td>
-                        		<td align="center">:</td>
-                        		<td><?php echo $data['no_telp']; ?></td>
-                        	</tr>
-                        	<tr>
-                        		<td align="right"><b>Email</b></td>
-                        		<td align="center">:</td>
-                        		<td><?php echo $data['email']; ?></td>
-                        	</tr>
-                        	<tr>
-                        		<td align="right"><b>Alamat</b></td>
-                        		<td align="center">:</td>
-                        		<td><?php echo $data['alamat']; ?></td>
-                        	</tr>
-                        	<tr>
-                        		<td align="right"><b>Jabatan</b></td>
-                        		<td align="center">:</td>
-                        		<td><?php echo $data['jabatan']; ?></td>
-                        	</tr>
-                        	<tr>
-                        		<td align="right" valign="top"><b>Foto</b></td>
-                        		<td align="center" valign="top">:</td>
-                        		<td>
-                        			<div style="padding:10px 0;"><img width="250px" src="../admin/img/foto_pengajar/<?php echo $data['foto']; ?>" /></div>
-                        		</td>
-                        	</tr>
-                        	<tr>
-                        		<td align="right"><b>Website</b></td>
-                        		<td align="center">:</td>
-                        		<td><?php echo $data['web']; ?></td>
-                        	</tr>
-                        	<tr>
-                        		<td align="right"><b>Username</b></td>
-                        		<td align="center">:</td>
-                        		<td><?php echo $data['username']; ?></td>
-                        	</tr>
-                        	<tr>
-                        		<td align="right"><b>Password</b></td>
-                        		<td align="center">:</td>
-                        		<td><?php echo $data['pass']; ?></td>
-                        	</tr>
-                        	<tr>
-                        		<td align="right"><b>Status</b></td>
-                        		<td align="center">:</td>
-                        		<td><?php echo ucfirst($data['status']); ?></td>
-                        	</tr>
-                        </table>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tr>
+                                        <td><b>NIP</b></td>
+                                        <td>:</td>
+                                        <td><?php echo $data['nip']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Nama Lengkap</b></td>
+                                        <td>:</td>
+                                        <td><?php echo $data['nama_lengkap']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Tempat Tanggal Lahir</b></td>
+                                        <td>:</td>
+                                        <td><?php echo $data['tempat_lahir'].", ".tgl_indo($data['tgl_lahir']); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Jenis Kelamin</b></td>
+                                        <td>:</td>
+                                        <td><?php if($data['jenis_kelamin'] == 'L') { echo "Laki-laki"; } else { echo "Perempuan"; } ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Agama</b></td>
+                                        <td>:</td>
+                                        <td><?php echo $data['agama']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Nomor Telepon</b></td>
+                                        <td>:</td>
+                                        <td><?php echo $data['no_telp']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Email</b></td>
+                                        <td>:</td>
+                                        <td><?php echo $data['email']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Alamat</b></td>
+                                        <td>:</td>
+                                        <td><?php echo $data['alamat']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Jabatan</b></td>
+                                        <td>:</td>
+                                        <td><?php echo $data['jabatan']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="top"><b>Foto</b></td>
+                                        <td valign="top">:</td>
+                                        <td>
+                                            <div style="padding:10px 0;"><img width="250px" src="../admin/img/foto_pengajar/<?php echo $data['foto']; ?>" /></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Website</b></td>
+                                        <td>:</td>
+                                        <td><?php echo $data['web']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Username</b></td>
+                                        <td>:</td>
+                                        <td><?php echo $data['username']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Password</b></td>
+                                        <td>:</td>
+                                        <td><?php echo $data['pass']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Status</b></td>
+                                        <td>:</td>
+                                        <td><?php echo ucfirst($data['status']); ?></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
                     </div>
 	            </div>
 		    </div>
@@ -233,8 +237,8 @@ if(@$_SESSION['admin']) { ?>
                             </select>
                         </div>
                         <div class="form-group">
-	                        <button type="submit" name="simpan" class="btn btn-success"><i class="fa fa-check"></i> Simpan</button>
-	                        <button type="reset" class="btn btn-danger"><i class="fa fa-refresh"></i> Reset</button>
+	                        <button type="submit" name="simpan" class="btn btn-success">Simpan</button>
+	                        <button type="reset" class="btn btn-danger">Reset</button>
                         </div>
                     </form>
 	            </div>
@@ -354,8 +358,8 @@ if(@$_SESSION['admin']) { ?>
                             </select>
                         </div>
                         <div class="form-group">
-	                        <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Simpan</button>
-	                        <button type="reset" class="btn btn-danger"><i class="fa fa-refresh"></i> Reset</button>
+	                        <button type="submit" class="btn btn-success">Simpan</button>
+	                        <button type="reset" class="btn btn-danger">Reset</button>
                         </div>
                     </form>
 	            </div>

@@ -67,7 +67,6 @@ if(@$_GET['data'] == "pengajar") {
 	$pdf->Cell(19,6,'No. Telepon',1,0,'C');
 	$pdf->Cell(35,6,'Email',1,0,'C');
 	$pdf->Cell(38,6,'Alamat',1,0,'C');
-	$pdf->Cell(10,6,'Kelas',1,0,'C');
 	$pdf->Ln(2);
 	$no = 1;
 	$sql = mysqli_query($db, "SELECT * FROM tb_siswa LEFT JOIN tb_kelas ON tb_siswa.id_kelas = tb_kelas.id_kelas WHERE status = 'aktif' ORDER BY id_siswa ASC") or die ($db->error);
@@ -85,7 +84,6 @@ if(@$_GET['data'] == "pengajar") {
 		$pdf->Cell(19,4,$data['no_telp'],1,0,'L');
 		$pdf->Cell(35,4,$data['email'],1,0,'L');
 		$pdf->Cell(38,4,$data['alamat'],1,0,'L');
-		$pdf->Cell(10,4,$data['nama_kelas'],1,0,'C');
 	}
 } else if(@$_GET['data'] == "siswaregistrasi") {
 	$pdf->SetFont('Arial','B',11);
@@ -104,7 +102,6 @@ if(@$_GET['data'] == "pengajar") {
 	$pdf->Cell(19,6,'No. Telepon',1,0,'C');
 	$pdf->Cell(35,6,'Email',1,0,'C');
 	$pdf->Cell(38,6,'Alamat',1,0,'C');
-	$pdf->Cell(10,6,'Kelas',1,0,'C');
 	$pdf->Ln(2);
 	$no = 1;
 	$sql = mysqli_query($db, "SELECT * FROM tb_siswa LEFT JOIN tb_kelas ON tb_siswa.id_kelas = tb_kelas.id_kelas WHERE status = 'tidak aktif' ORDER BY id_siswa ASC") or die ($db->error);
@@ -122,7 +119,6 @@ if(@$_GET['data'] == "pengajar") {
 		$pdf->Cell(19,4,$data['no_telp'],1,0,'L');
 		$pdf->Cell(35,4,$data['email'],1,0,'L');
 		$pdf->Cell(38,4,$data['alamat'],1,0,'L');
-		$pdf->Cell(10,4,$data['nama_kelas'],1,0,'C');
 	}
 } else if(@$_GET['data'] == "mapel") {
 	$pdf->SetFont('Arial','B',11);
@@ -171,7 +167,7 @@ if(@$_GET['data'] == "pengajar") {
         } else {
             $pdf->Cell(50,4,"Belum diatur",1,0,'L');
         }
-		
+
 		$sql_tampil_siswa = tampil_per_id("tb_siswa", "id_siswa = '$data[ketua_kelas]'");
 	    $data_tampil_siswa = mysqli_fetch_array($sql_tampil_siswa);
 	    $cek_tampil_siswa = mysqli_num_rows($sql_tampil_siswa);
@@ -243,7 +239,7 @@ if(@$_GET['data'] == "pengajar") {
 	    $sql_topik = mysqli_query($db, "SELECT * FROM tb_topik_quiz JOIN tb_kelas ON tb_topik_quiz.id_kelas = tb_kelas.id_kelas JOIN tb_mapel ON tb_topik_quiz.id_mapel = tb_mapel.id ORDER BY tgl_buat ASC") or die ($db->error);
 	} else if(@$_SESSION[pengajar]) {
 	    $sql_topik = mysqli_query($db, "SELECT * FROM tb_topik_quiz JOIN tb_kelas ON tb_topik_quiz.id_kelas = tb_kelas.id_kelas JOIN tb_mapel ON tb_topik_quiz.id_mapel = tb_mapel.id WHERE pembuat != 'admin' AND pembuat = '$_SESSION[pengajar]' ORDER BY tgl_buat ASC") or die ($db->error);
-	} 
+	}
 	while($data = mysqli_fetch_array($sql_topik)) {
 		$pdf->Ln(4);
 		$pdf->SetFont('Arial','',8);

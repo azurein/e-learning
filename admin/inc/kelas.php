@@ -10,7 +10,7 @@ if (@$_SESSION['pengajar']) {
     $pengajar = "WHERE tb_mapel_ajar.id_pengajar = '$_SESSION[pengajar]'";
 }
 $sql_kelas = mysqli_query($db, "
-    SELECT
+    SELECT DISTINCT
     tb_mapel_ajar.id,
     tb_mapel_ajar.id_kelas,
     nama_kelas,
@@ -94,9 +94,9 @@ if(@$_GET['action'] == '') { ?>
                                 <td>
                                 <?php
                                 if(@$_SESSION['admin']) {
-                                    echo tgl_indo($data_kelas['tgl_mulai'])."<br>s/d<br>".tgl_indo($data_kelas['tgl_mulai']);
+                                    echo tgl_indo($data_kelas['tgl_mulai'])."<br>s/d<br>".tgl_indo($data_kelas['tgl_selesai']);
                                 } elseif(@$_SESSION['pengajar']) {
-                                    echo tgl_indo($data_kelas['tgl_mulai'])." s/d ".tgl_indo($data_kelas['tgl_mulai']);
+                                    echo tgl_indo($data_kelas['tgl_mulai'])." s/d ".tgl_indo($data_kelas['tgl_selesai']);
                                 }
                                 ?>
                                 </td>
@@ -104,8 +104,8 @@ if(@$_GET['action'] == '') { ?>
                                     <?php
                                     if(@$_SESSION['admin']) {
                                     ?>
-                                        <a href="?page=kelas&action=edit&id=<?php echo $data_kelas['id']; ?>" class="btn btn-warning btn-xs">Edit</a>
-                                        <a onclick="return confirm('Yakin akan menghapus kelas?');" href="?page=kelas&action=hapus&id=<?php echo $data_kelas['id']; ?>" class="btn btn-danger btn-xs">Hapus</a>
+                                        <a href="?page=kelas&action=edit&id=<?php echo $data_kelas['id']; ?>&id_kelas=<?php echo $data_kelas['id_kelas']; ?>" class="btn btn-warning btn-xs">Edit</a>
+                                        <a onclick="return confirm('Yakin akan menghapus kelas?');" href="?page=kelas&action=hapus&id=<?php echo $data_kelas['id']; ?>&id_kelas=<?php echo $data_kelas['id_kelas']; ?>" class="btn btn-danger btn-xs">Hapus</a>
                                         <?php
                                         if ($data_kelas['status_aktif']) { ?>
                                             <a onclick="return confirm('Yakin akan non aktifkan kelas?');" href="?page=kelas&action=nonaktifkan&id=<?php echo $data_kelas['id']; ?>" class="btn btn-primary btn-xs">Non Aktifkan</a>
@@ -123,7 +123,7 @@ if(@$_GET['action'] == '') { ?>
                                 ?>
                                     <td align="center" width="200px">
                                         <a href="?page=kelas&action=buatoutline&id=<?php echo $data_kelas['id']; ?>" class="btn btn-default btn-xs">Buat</a>
-                                        <a href="?page=kelas&action=copyoutline&id=<?php echo $data_kelas['id']; ?>" class="btn btn-default btn-xs">Copy</a><br>
+                                        <a href="?page=kelas&action=copyoutline&id=<?php echo $data_kelas['id']; ?>&kelas=<?php echo $data_kelas['id_kelas']; ?>&mapel=<?php echo $data_kelas['id_mapel']; ?>" class="btn btn-default btn-xs">Copy</a><br>
                                         <a href="?page=kelas&action=daftaroutline&id=<?php echo $data_kelas['id']; ?>" class="btn btn-default btn-xs">Daftar Outline</a>
                                     </td>
                                 <?php
@@ -252,7 +252,7 @@ if(@$_GET['action'] == '') { ?>
                     }
                     mysqli_query($db, "
                         INSERT INTO tb_mapel_ajar(id_kelas, id_mapel, id_pengajar, keterangan, tgl_mulai, tgl_selesai, status_aktif)
-                        SELECT
+                        SELECT DISTINCT
                         '$id_kelas',
                         '$id_mapel',
                         '$id_pengajar',
@@ -277,7 +277,7 @@ if(@$_GET['action'] == '') { ?>
     <?php
 } else if(@$_GET['action'] == 'edit') {
     $sql_kelas_perid = mysqli_query($db, "
-        SELECT
+        SELECT DISTINCT
         tb_mapel_ajar.id,
         tb_mapel_ajar.id_kelas,
         nama_kelas,
@@ -316,7 +316,11 @@ if(@$_GET['action'] == '') { ?>
             <div class="panel-body">
                 <form method="post">
                     <div class="form-group">
-                        <label>Nama Kelas: <?php echo $data_kelas_perid['nama_kelas']; ?>, Mata Pelajaran: <?php echo $data_kelas_perid['mapel']; ?></label>
+                        <label>Mata Pelajaran: <?php echo $data_kelas_perid['mapel']; ?></label>
+                    </div>
+                    <div class="form-group">
+                        <label>Nama Kelas *</label>
+                        <input id="nama_kelas_txt" type="text" name="nama_kelas_txt" class="form-control" value="<?php if(isset($_POST['nama_kelas_txt'])) echo $_POST['nama_kelas_txt']; else echo $data_kelas_perid['nama_kelas']; ?>" required />
                     </div>
                     <div class="form-group">
                         <label>Pengajar</label>
@@ -358,6 +362,7 @@ if(@$_GET['action'] == '') { ?>
                 </form>
                 <?php
                 if(@$_POST['simpan']) {
+                    $nama_kelas = @mysqli_real_escape_string($db, $_POST['nama_kelas_txt']);
                     $id_pengajar = @mysqli_real_escape_string($db, $_POST['pengajar']);
                     $keterangan = @mysqli_real_escape_string($db, $_POST['keterangan']);
                     $tgl_mulai = @mysqli_real_escape_string($db, $_POST['tgl_mulai']);
@@ -366,7 +371,7 @@ if(@$_GET['action'] == '') { ?>
                     $tgl_mulai = $tgl_mulai == '' ? '01-01-0001' : $tgl_mulai;
                     $tgl_selesai = $tgl_selesai == '' ? '01-01-0001' : $tgl_selesai;
 
-                    $nama_kelas = @mysqli_real_escape_string($db, $_POST['nama_kelas']);
+                    mysqli_query($db, "UPDATE tb_kelas SET nama_kelas = '$nama_kelas' WHERE id_kelas = '$_GET[id_kelas]'") or die ($db->error);
                     mysqli_query($db, "UPDATE tb_mapel_ajar SET id_pengajar = '$id_pengajar', keterangan = '$keterangan', tgl_mulai = '$tgl_mulai', tgl_selesai = '$tgl_selesai' WHERE id = '$_GET[id]'") or die ($db->error);
                     echo "<script>window.location='?page=kelas';</script>";
                 }
@@ -397,7 +402,7 @@ if(@$_GET['action'] == '') { ?>
                                 <tbody>
                                 <?php
                                 $sql_siswa = mysqli_query($db, "
-                                    SELECT
+                                    SELECT DISTINCT
                                     tb_siswa.id_siswa,
                                     tb_siswa.nis,
                                     tb_siswa.nama_lengkap,
@@ -411,6 +416,7 @@ if(@$_GET['action'] == '') { ?>
 
                                     LEFT JOIN tb_jadwal_siswa
                                     ON tb_siswa.id_siswa = tb_jadwal_siswa.id_siswa
+                                    AND tb_jadwal_siswa.id_mapel_ajar = '$_GET[id]'
 
                                     WHERE status LIKE 'aktif'
                                 ") or die ($db->error);
@@ -464,6 +470,7 @@ if(@$_GET['action'] == '') { ?>
     </div>
 <?php
 } else if(@$_GET['action'] == 'hapus') {
+    mysqli_query($db, "DELETE FROM tb_kelas WHERE id_kelas = '$_GET[id_kelas]'") or die ($db->error);
     mysqli_query($db, "DELETE FROM tb_mapel_ajar WHERE id = '$_GET[id]'") or die ($db->error);
     echo "<script>window.location='?page=kelas';</script>";
 } else if(@$_GET['action'] == 'nonaktifkan') {

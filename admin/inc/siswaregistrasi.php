@@ -54,7 +54,7 @@ if(@$_SESSION['admin']) {
 	                                <td><?php echo $data_siswa['alamat']; ?></td>
 	                                <td><?php echo ucfirst($data_siswa['status']); ?></td>
 	                                <td align="center" width="200px">
-	                                    <a href="?page=siswaregistrasi&action=aktifkan&id=<?php echo $data_siswa['id_siswa']; ?>" class="btn btn-success btn-xs">Aktifkan</a>
+	                                    <a href="?page=siswaregistrasi&action=aktifkan&id=<?php echo $data_siswa['id_siswa']; ?>" onclick="return confirm('Yakin akan mengaktifkan siswa?');" class="btn btn-success btn-xs">Aktifkan</a>
                                         <a onclick="return confirm('Yakin akan menghapus data ?');" href="?page=siswaregistrasi&action=hapus&id=<?php echo $data_siswa['id_siswa']; ?>" class="btn btn-danger btn-xs">Hapus</a>
                                          <a href="?page=siswaregistrasi&action=detail&IDsiswa=<?php echo $data_siswa['id_siswa']; ?>" class="btn btn-default btn-xs">Detail</a>
 	                                </td>
@@ -88,7 +88,7 @@ if(@$_SESSION['admin']) {
         <div class="row">
             <div class="col-md-6">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Detail Profil Siswa</div>
+                    <div class="panel-heading">Detail Profil Siswa &nbsp; <a href="?page=siswaregistrasi" class="btn btn-warning btn-sm">Kembali</a></div>
                     <div class="panel-body">
                         <div class="table-responsive">
                             <table class="table">
@@ -141,11 +141,6 @@ if(@$_SESSION['admin']) {
                                     <td>Alamat</td>
                                     <td>:</td>
                                     <td><?php echo $data['alamat']; ?></td>
-                                </tr>
-                                <tr>
-                                    <td>Kelas</td>
-                                    <td>:</td>
-                                    <td><?php echo $data['nama_kelas']; ?></td>
                                 </tr>
                                 <tr>
                                     <td>Tahun Masuk</td>

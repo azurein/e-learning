@@ -235,7 +235,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 					</div>
 					<div class="col-md-10">
 						<div class="form-group">
-							<input type="text" name="prioritas" class="form-control" value="<?php if(isset($_POST['prioritas'])) echo $_POST['prioritas']; else echo $data_tujuan_ajar['prioritas']; ?>" onkeypress="return isNumberKey(event);" required></input>
+							<input type="number" name="prioritas" class="form-control" value="<?php if(isset($_POST['prioritas'])) echo $_POST['prioritas']; else echo $data_tujuan_ajar['prioritas']; ?>" required></input>
 						</div>
 					</div>
 
@@ -354,7 +354,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 					</div>
 					<div class="col-md-10">
 						<div class="form-group">
-							<input type="text" name="tahun" class="form-control" value="<?php if(isset($_POST['tahun'])) echo $_POST['tahun']; else echo $data_bukupendukung['tahun']; ?>"></input>
+							<input type="number" name="tahun" class="form-control" value="<?php if(isset($_POST['tahun'])) echo $_POST['tahun']; else echo $data_bukupendukung['tahun']; ?>"></input>
 						</div>
 					</div>
 

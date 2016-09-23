@@ -14,17 +14,17 @@ if(@$_GET['hal'] == 'essay') { ?>
                         $urut = 1;
                         $sql_jawaban = mysqli_query($db, "
 
-                            SELECT
+                            SELECT DISTINCT
                             tb_soal_essay.pertanyaan,
                             tb_soal_essay.gambar,
                             tb_jawaban.jawaban,
                             tb_jawaban.gambar as attachment
 
 
-                            FROM tb_jawaban 
+                            FROM tb_jawaban
 
-                            JOIN tb_soal_essay 
-                            ON tb_jawaban.id_soal = tb_soal_essay.id_essay 
+                            JOIN tb_soal_essay
+                            ON tb_jawaban.id_soal = tb_soal_essay.id_essay
                             AND tb_jawaban.id_tq = tb_soal_essay.id_tq
 
                             LEFT JOIN tb_nilai_essay
@@ -63,7 +63,7 @@ if(@$_GET['hal'] == 'essay') { ?>
                                          <?php
                                         if($data_jawaban['attachment'] != '') { ?>
                                             <tr>
-                                                <td colspan="2"><a href="../uploads/essay_attachment/<?php echo $data_jawaban['attachment']; ?>" 
+                                                <td colspan="2"><a href="../uploads/essay_attachment/<?php echo $data_jawaban['attachment']; ?>"
                                                 download>Unduh lampiran</a></td>
                                             </tr>
                                         <?php
@@ -116,18 +116,18 @@ if(@$_GET['hal'] == 'essay') { ?>
                         <?php
                         $urut = 1;
                         $sql_jawaban = mysqli_query($db, "
-                            
-                            SELECT
+
+                            SELECT DISTINCT
                             tb_soal_essay.pertanyaan,
                             tb_soal_essay.gambar,
                             tb_jawaban.jawaban,
                             tb_jawaban.gambar as attachment
 
 
-                            FROM tb_jawaban 
+                            FROM tb_jawaban
 
-                            JOIN tb_soal_essay 
-                            ON tb_jawaban.id_soal = tb_soal_essay.id_essay 
+                            JOIN tb_soal_essay
+                            ON tb_jawaban.id_soal = tb_soal_essay.id_essay
                             AND tb_jawaban.id_tq = tb_soal_essay.id_tq
 
                             LEFT JOIN tb_nilai_essay

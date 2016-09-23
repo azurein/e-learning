@@ -10,7 +10,7 @@ $id_tq = @$_GET['id_tq'];
 $no = 1;
 if(@$_SESSION[admin]) {
     $sql_topik = mysqli_query($db, "
-        SELECT
+        SELECT DISTINCT
         tb_topik_quiz.id_tq,
         tb_topik_quiz.judul,
         tb_topik_quiz.id_kelas,
@@ -42,7 +42,7 @@ if(@$_SESSION[admin]) {
     $pembuat = "admin";
 } else if(@$_SESSION[pengajar]) {
     $sql_topik = mysqli_query($db, "
-        SELECT
+        SELECT DISTINCT
         tb_topik_quiz.id_tq,
         tb_topik_quiz.judul,
         tb_topik_quiz.id_kelas,
@@ -331,7 +331,7 @@ if(@$_GET['action'] == '') { ?>
     	                        <tbody>
     	                        <?php
 	                        	$sql_materi = mysqli_query($db, "
-                                    SELECT
+                                    SELECT DISTINCT
                                     tb_file_materi.id_materi,
                                     tb_file_materi.id_kelas,
                                     tb_file_materi.id_mapel,
@@ -359,6 +359,7 @@ if(@$_GET['action'] == '') { ?>
 
                                     LEFT JOIN tb_quiz_materi
                                     ON tb_file_materi.id_materi = tb_quiz_materi.id_materi
+                                    AND tb_quiz_materi.id_tq = '$_GET[id_tq]'
 
                                     WHERE tb_mapel_ajar.id = '$_GET[id_ma]'
 

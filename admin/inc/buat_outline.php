@@ -41,7 +41,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 					</div>
 					<div class="col-md-10">
 						<div class="form-group">
-							<input type="text" name="prioritas" class="form-control" value="<?php if(isset($_POST['prioritas'])) echo $_POST['prioritas']; else echo ""; ?>" onkeypress="return isNumberKey(event);" required></input>
+							<input type="number" name="prioritas" class="form-control" value="<?php if(isset($_POST['prioritas'])) echo $_POST['prioritas']; else echo ""; ?>" required></input>
 	                    </div>
 	                </div>
 
@@ -78,7 +78,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 					</div>
 					<div class="col-md-10">
 						<div class="form-group">
-							<textarea name="namaSertifikasi" class="form-control" rows="2" required><?php if(isset($_POST['namaSertifikasi'])) echo $_POST['namaSertifikasi']; else echo ""; ?></textarea>
+							<textarea name="namaSertifikasi" class="form-control" rows="1" required><?php if(isset($_POST['namaSertifikasi'])) echo $_POST['namaSertifikasi']; else echo ""; ?></textarea>
 						</div>
 					</div>
 
@@ -87,7 +87,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 					</div>
 					<div class="col-md-10">
 						<div class="form-group">
-							<textarea name="deskripsiSertifikasi" class="form-control" rows="1" required><?php if(isset($_POST['deskripsiSertifikasi'])) echo $_POST['deskripsiSertifikasi']; else echo ""; ?></textarea>
+							<textarea name="deskripsiSertifikasi" class="form-control" rows="2" required><?php if(isset($_POST['deskripsiSertifikasi'])) echo $_POST['deskripsiSertifikasi']; else echo ""; ?></textarea>
 	                    </div>
 	                </div>
 
@@ -143,7 +143,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 					</div>
 					<div class="col-md-10">
 						<div class="form-group">
-							<input type="text" name="tahun" value="<?php if(isset($_POST['tahun'])) echo $_POST['tahun']; else echo ""; ?>" class="form-control" ></input>
+							<input type="number" min="0" max="9999" name="tahun" value="<?php if(isset($_POST['tahun'])) echo $_POST['tahun']; else echo ""; ?>" class="form-control" ></input>
 						</div>
 					</div>
 

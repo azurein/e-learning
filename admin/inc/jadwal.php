@@ -42,7 +42,7 @@ if(@$_GET['action'] == '') { ?>
                             $condition = "WHERE tb_mapel_ajar.id_pengajar = '$_SESSION[pengajar]'";
                         }
                         $sql_jadwal = mysqli_query($db, "
-                            SELECT
+                            SELECT DISTINCT
                             id_jadwal,
                             tanggal,
                             kode_mapel,
@@ -111,7 +111,7 @@ if(@$_GET['action'] == '') { ?>
                         <select id="mapelkelas_ddl" name="mapelkelas_ddl" class="form-control">
                         <?php
                         $sql_mapelkelas_ddl = mysqli_query($db, "
-                            SELECT
+                            SELECT DISTINCT
                             tb_mapel_ajar.id as id_mapel_ajar,
                             tb_mapel_ajar.id_mapel,
                             nama_kelas,
@@ -179,7 +179,7 @@ if(@$_GET['action'] == '') { ?>
     <?php
 } else if(@$_GET['action'] == 'edit') {
     $sql_jadwal_perid = mysqli_query($db, "
-        SELECT
+        SELECT DISTINCT
         id_jadwal,
         tanggal,
         kode_mapel,
