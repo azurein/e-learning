@@ -18,11 +18,16 @@ if(!@$_SESSION['siswa']) {
     <link href="style/assets/css/bootstrap.css" rel="stylesheet" />
     <link href="style/assets/css/font-awesome.css" rel="stylesheet" />
     <link href="style/assets/css/style.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="style/assets/css/Article-List.css">
+    <link rel="stylesheet" href="style/assets/css/lightbox.min.css">
+    <link rel="stylesheet" href="style/assets/css/Lightbox-Gallery.css">
 </head>
 <body>
 
 <script src="style/assets/js/jquery-1.11.1.js"></script>
 <script src="style/assets/js/bootstrap.js"></script>
+<script src="style/assets/js/lightbox.min.js"></script>
 <?php
 $sql_terlogin = mysqli_query($db, "SELECT * FROM tb_siswa WHERE id_siswa = '$_SESSION[siswa]'") or die ($db->error);
 $data_terlogin = mysqli_fetch_array($sql_terlogin);
@@ -88,10 +93,13 @@ $data_terlogin = mysqli_fetch_array($sql_terlogin);
                     <div class="navbar-collapse collapse ">
                         <ul id="menu-top" class="nav navbar-nav navbar-right">
                             <li><a <?php if(@$_GET['page'] == '') { echo 'class="menu-top-active"'; } ?> href="./">Beranda</a></li>
-                            <li><a <?php if(@$_GET['page'] == 'quiz') { echo 'class="menu-top-active"'; } ?> href="?page=quiz">Tugas / Quiz</a></li>
+                            <li><a <?php if(@$_GET['page'] == 'jadwal') { echo 'class="menu-top-active"'; } ?> href="?page=jadwal">Jadwal</a></li>
+                            <li><a <?php if(@$_GET['page'] == 'forum') { echo 'class="menu-top-active"'; } ?> href="?page=forum">Forum</a></li>
+                            <li><a <?php if(@$_GET['page'] == 'quiz') { echo 'class="menu-top-active"'; } ?> href="?page=quiz">Tugas / Ujian</a></li>
                             <li><a <?php if(@$_GET['page'] == 'nilai') { echo 'class="menu-top-active"'; } ?> href="?page=nilai">Nilai</a></li>
                             <li><a <?php if(@$_GET['page'] == 'materi') { echo 'class="menu-top-active"'; } ?> href="?page=materi">Materi</a></li>
                             <li><a <?php if(@$_GET['page'] == 'berita') { echo 'class="menu-top-active"'; } ?> href="?page=berita">Berita</a></li>
+                            <li><a <?php if(@$_GET['page'] == 'katalog') { echo 'class="menu-top-active"'; } ?> href="?page=katalog">Katalog</a></li>
                         </ul>
                     </div>
                 </div>
@@ -104,6 +112,10 @@ $data_terlogin = mysqli_fetch_array($sql_terlogin);
         <?php
         if(@$_GET['page'] == '') {
             include "inc/beranda.php";
+        } else if(@$_GET['page'] == 'jadwal') {
+            include "inc/jadwal.php";
+        } else if(@$_GET['page'] == 'forum') {
+            include "inc/forum/index.php";
         } else if(@$_GET['page'] == 'quiz') {
             include "inc/quiz.php";
         } else if(@$_GET['page'] == 'nilai') {
@@ -112,6 +124,8 @@ $data_terlogin = mysqli_fetch_array($sql_terlogin);
             include "inc/materi.php";
         } else if(@$_GET['page'] == 'berita') {
             include "inc/berita.php";
+        } else if(@$_GET['page'] == 'katalog') {
+            include "inc/katalog.php";
         } ?>
         </div>
     </div>

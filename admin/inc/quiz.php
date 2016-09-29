@@ -80,7 +80,7 @@ if(@$_GET['action'] == '') { ?>
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Data Topik Ujian / Tugas &nbsp; <a href="?page=quiz&action=tambah" class="btn btn-primary btn-sm">Tambah Data</a> &nbsp; <a href="./laporan/cetak.php?data=topikquiz" target="_blank" class="btn btn-default btn-sm">Cetak</a></div>
+                <div class="panel-heading">Data Topik Tugas / Ujian &nbsp; <a href="?page=quiz&action=tambah" class="btn btn-primary btn-sm">Tambah Data</a> &nbsp; <a href="./laporan/cetak.php?data=topikquiz" target="_blank" class="btn btn-default btn-sm">Cetak</a></div>
                 <div class="panel-body">
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover" id="dataquiz">
@@ -105,7 +105,7 @@ if(@$_GET['action'] == '') { ?>
                             <?php
                             while($data_topik = mysqli_fetch_array($sql_topik)) { ?>
                                 <tr>
-                                    <td align="center"><?php echo $no++; ?></td>
+                                    <td><?php echo $no++; ?></td>
                                     <td><?php echo $data_topik['judul']; ?></td>
                                     <td align="center"><?php echo $data_topik['nama_kelas']; ?></td>
                                     <td><?php echo $data_topik['mapel']; ?></td>
@@ -229,7 +229,7 @@ if(@$_GET['action'] == '') { ?>
     <div class="row">
         <div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading">Edit Tugas / Quiz &nbsp; <a href="?page=quiz" class="btn btn-warning btn-sm">Kembali</a></div>
+                <div class="panel-heading">Edit Tugas / Ujian &nbsp; <a href="?page=quiz" class="btn btn-warning btn-sm">Kembali</a></div>
                 <div class="panel-body">
                 <?php
                 $sql_topik_id = mysqli_query($db, "SELECT * FROM tb_topik_quiz JOIN tb_kelas ON tb_topik_quiz.id_kelas = tb_kelas.id_kelas JOIN tb_mapel ON tb_topik_quiz.id_mapel = tb_mapel.id WHERE id_tq = '$id'") or die ($db->error);

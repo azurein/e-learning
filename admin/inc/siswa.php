@@ -62,7 +62,7 @@ if(@$_GET['action'] == '') {
                                 }
                             ?>
 	                            <tr>
-	                                <td align="center"><?php echo $no++; ?></td>
+	                                <td><?php echo $no++; ?></td>
 	                                <td><?php echo $data_siswa['nis']; ?></td>
 	                                <td><?php echo $data_siswa['nama_lengkap']; ?></td>
 	                                <td><?php echo $gender_persiswa; ?></td>

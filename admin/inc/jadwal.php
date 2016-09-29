@@ -23,6 +23,7 @@ if(@$_GET['action'] == '') { ?>
                     <table class="table table-striped table-bordered table-hover" id="datajadwal">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Tanggal</th>
                                 <th>Mata Pelajaran</th>
                                 <th>Kelas</th>
@@ -37,6 +38,7 @@ if(@$_GET['action'] == '') { ?>
                         </thead>
                         <tbody>
                         <?php
+                        $no = 1;
                         $condition = "";
                         if (@$_SESSION['pengajar']) {
                             $condition = "WHERE tb_mapel_ajar.id_pengajar = '$_SESSION[pengajar]'";
@@ -70,6 +72,7 @@ if(@$_GET['action'] == '') { ?>
 
                         while($data_jadwal = mysqli_fetch_array($sql_jadwal)) { ?>
                             <tr>
+                                <td><?php echo $no++; ?></td>
                                 <td><?php echo tgl_indo($data_jadwal['tanggal']); ?></td>
                                 <td><?php echo $data_jadwal['kode_mapel']; ?> - <?php echo $data_jadwal['mapel']; ?></td>
                                 <td><?php echo $data_jadwal['nama_kelas']; ?></td>

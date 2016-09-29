@@ -53,7 +53,7 @@ if(@$_GET['action'] == '') { ?>
                             ") or die ($db->error);
 	                        while($data_mapel = mysqli_fetch_array($sql_mapel)) { ?>
 	                            <tr>
-	                                <td width="40px" align="center"><?php echo $no++; ?></td>
+	                                <td width="25px" align="center"><?php echo $no++; ?></td>
 	                                <td><?php echo $data_mapel['mapel']; ?></td>
                                     <td><?php echo $data_mapel['nama_kelas']; ?></td>
 	                                <td width="200px" align="center">
@@ -75,7 +75,7 @@ if(@$_GET['action'] == '') { ?>
 	<div class="row">
 	    <div class="col-md-12">
 	        <div class="panel panel-default">
-	            <div class="panel-heading">Data Tugas / Ujian Setiap Mata Pelajaran</div>
+	            <div class="panel-heading">Data Tugas / Ujian Setiap Mata Pelajaran &nbsp; <a onClick="window.history.back()" class="btn btn-warning btn-sm">Kembali</a></div>
 	            <div class="panel-body">
 					<div class="table-responsive">
 					<?php
@@ -131,6 +131,7 @@ if(@$_GET['action'] == '') { ?>
 									        	<td></td>
 									        	<td>
 									        		<a href="?page=quiz&action=infokerjakan&id_tq=<?php echo $data_tq['id_tq']; ?>" class="btn btn-primary btn-xs">Kerjakan Soal</a>
+                                                    <a href="?page=materi&action=lihatmateri&id_tq=<?php echo $data_tq['id_tq']; ?>" class="btn btn-info btn-xs">Lihat Materi</a>
 									        	</td>
 									        </tr>
 									    </tbody>
@@ -141,7 +142,7 @@ if(@$_GET['action'] == '') { ?>
 						<?php
 						}
 					} else { ?>
-						<div class="alert alert-danger">Data quiz yang berada di kelas ini dengan mapel tersebut tidak ada</div>
+						<div class="alert alert-danger">Tidak ada Tugas / Ujian terkait mata pelajaran dan kelas ini.</div>
 						<?php
 					} ?>
 					</div>
@@ -160,9 +161,9 @@ if(@$_GET['action'] == '') { ?>
 	            $sql_nilai = mysqli_query($db, "SELECT * FROM tb_nilai_pilgan WHERE id_tq = '$_GET[id_tq]' AND id_siswa = '$_SESSION[siswa]'") or die ($db->error);
 	            $sql_jwb = mysqli_query($db, "SELECT * FROM tb_jawaban WHERE id_tq = '$_GET[id_tq]' AND id_siswa = '$_SESSION[siswa]'") or die ($db->error);
 	            if(mysqli_num_rows($sql_nilai) > 0 || mysqli_num_rows($sql_jwb) > 0) {
-	            	echo "Anda sudah mengerjakan ujian / test ini, silahkan lihat nilai Anda di halaman nilai.";
+	            	echo "Anda sudah mengerjakan tugas / ujian ini, silahkan lihat nilai Anda di halaman nilai.";
 	            } else { ?>
-					1. Baca dengan seksama dan teliti sebelum mengerjakan Tugas / Quiz.<br />
+					1. Baca dengan seksama dan teliti sebelum mengerjakan Tugas / Ujian.<br />
 					2. Pastikan koneksi anda terjamin dan bagus.<br />
 					3. Pilih browser yang versi terbaru.<br />
 					4. Waktu akan berjalan otomatis berlanjut walau anda close halaman ujiannya, oleh karena itu siapkan waktu untuk ujian anda.<br />
@@ -173,7 +174,7 @@ if(@$_GET['action'] == '') { ?>
 	            <div class="panel-footer">
 					<?php
 					if(mysqli_num_rows($sql_nilai) > 0 || mysqli_num_rows($sql_jwb) > 0) { ?>
-						<a href="?page=quiz" class="btn btn-primary">Kembali</a>
+						<a onClick="window.history.back()" class="btn btn-warning">Kembali</a>
 						<?php
 					} else {
 						$sql_cek_soal_pilgan = mysqli_query($db, "SELECT * FROM tb_soal_pilgan WHERE id_tq = '$_GET[id_tq]'") or die ($db->error);

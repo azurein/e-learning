@@ -218,7 +218,7 @@ if(@$_GET['data'] == "pengajar") {
 	}
 } else if(@$_GET['data'] == "topikquiz") {
 	$pdf->SetFont('Arial','B',11);
-	$pdf->Cell(50,5,'Laporan Data Topik Quiz / Tugas','0','1','L',false);
+	$pdf->Cell(50,5,'Laporan Data Topik Tugas / Ujian','0','1','L',false);
 	$pdf->Ln(3);
 
 	$pdf->SetFont('Arial','B',8);

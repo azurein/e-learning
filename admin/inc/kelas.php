@@ -391,7 +391,11 @@ if(@$_GET['action'] == '') { ?>
                             <table class="table table-striped table-bordered table-hover" id="datasiswa">
                                 <thead>
                                     <tr>
-                                        <th style="text-align:center;"><input type="checkbox" id="checkAll"></th>
+                                        <?php
+                                        if(@$_SESSION['admin']) { ?>
+                                            <th style="text-align:center;"><input type="checkbox" id="checkAll"></th>
+                                        <?php
+                                        } ?>
                                         <th>NIS</th>
                                         <th>Nama Lengkap</th>
                                         <th>Jenis Kelamin</th>
@@ -429,7 +433,11 @@ if(@$_GET['action'] == '') { ?>
                                     }
                                 ?>
     	                            <tr>
-    	                                <td align="center"><input <?php if($data_siswa['isChecked'] != 0) echo "checked"; ?> type="checkbox" name="listsiswa[]" value="<?php echo $data_siswa['id_siswa']; ?>"></td>
+                                        <?php
+                                        if(@$_SESSION['admin']) { ?>
+                                            <td align="center"><input <?php if($data_siswa['isChecked'] != 0) echo "checked"; ?> type="checkbox" name="listsiswa[]" value="<?php echo $data_siswa['id_siswa']; ?>"></td>
+                                        <?php
+                                        } ?>
     	                                <td><?php echo $data_siswa['nis']; ?></td>
     	                                <td><?php echo $data_siswa['nama_lengkap']; ?></td>
     	                                <td><?php echo $gender_persiswa; ?></td>
@@ -450,9 +458,13 @@ if(@$_GET['action'] == '') { ?>
                             </script>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <input type="submit" name="simpan" value="Simpan" class="btn btn-success" />
-                    </div>
+                    <?php
+                    if(@$_SESSION['admin']) { ?>
+                        <div class="form-group">
+                            <input type="submit" name="simpan" value="Simpan" class="btn btn-success" />
+                        </div>
+                    <?php
+                    } ?>
                 </form>
                 <?php
                 if(@$_POST['simpan']) {

@@ -112,11 +112,20 @@ if(@$_SESSION['admin'] || @$_SESSION['pengajar']) {
                         <a class="<?php if(@$_GET['page'] == 'materi') { echo 'active-menu'; } ?>" href="?page=materi"><i class="fa fa-file-text"></i> Manajemen Materi</a>
                     </li>
                     <li>
-                        <a class="<?php if(@$_GET['page'] == 'quiz') { echo 'active-menu'; } ?>" href="?page=quiz"><i class="fa fa-file"></i> Manajemen Tugas / Quiz</a>
+                        <a class="<?php if(@$_GET['page'] == 'quiz') { echo 'active-menu'; } ?>" href="?page=quiz"><i class="fa fa-file"></i> Manajemen Tugas / Ujian</a>
                     </li>
                     <li>
                         <a class="<?php if(@$_GET['page'] == 'berita') { echo 'active-menu'; } ?>" href="?page=berita"><i class="fa fa-newspaper-o"></i> Manajemen Berita</a>
                     </li>
+                    <?php
+                    if(@$_SESSION['admin']) {
+                    ?>
+                    <li>
+                        <a class="<?php if(@$_GET['page'] == 'katalog') { echo 'active-menu'; } ?>" href="?page=katalog"><i class="fa fa-file-image-o"></i> Manajemen Katalog</a>
+                    </li>
+                    <?php
+                    }
+                    ?>
                 </ul>
             </div>
         </nav>
@@ -145,6 +154,8 @@ if(@$_SESSION['admin'] || @$_SESSION['pengajar']) {
                     include "inc/materi.php";
                 } else if(@$_GET['page'] == 'berita') {
                     include "inc/berita.php";
+                } else if(@$_GET['page'] == 'katalog') {
+                    include "inc/katalog.php";
                 } else {
                     echo "<div class='col-xs-12'><div class='alert alert-danger'>[404] Halaman tidak ditemukan! Silahkan pilih menu yang ada!</div></div>";
                 } ?>

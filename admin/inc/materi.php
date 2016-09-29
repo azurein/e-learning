@@ -36,7 +36,7 @@ if(@$_GET['action'] == '') { ?>
 	                        }
                         	while($data_materi = mysqli_fetch_array($sql_materi)) { ?>
 								<tr>
-									<td align="center"><?php echo $no++; ?></td>
+									<td><?php echo $no++; ?></td>
 									<td><?php echo $data_materi['judul']; ?></td>
 									<td><?php echo $data_materi['nama_kelas']; ?></td>
 									<td><?php echo $data_materi['mapel']; ?></td>
@@ -76,7 +76,7 @@ if(@$_GET['action'] == '') { ?>
 	<div class="row">
 		<div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading">Tambah File Materi &nbsp; <a href="?page=materi" class="btn btn-warning btn-xs">Kembali</a></div>
+                <div class="panel-heading">Tambah File Materi &nbsp; <a href="?page=materi" class="btn btn-warning btn-sm">Kembali</a></div>
                 <div class="panel-body">
                 	<form method="post" enctype="multipart/form-data">
                     	<div class="form-group">

@@ -11,15 +11,18 @@
             <div class="panel-body">
                 <div class="table-responsive">
                 	<table class="table table-striped table-bordered table-hover">
-                		<tr>
-                			<th>#</th>
-                			<th>Mata Pelajaran</th>
-                            <th>Kelas</th>
-                			<th>Judul Ujian</th>
-                			<th>Nilai Pilihan Ganda</th>
-                			<th>Nilai Essay</th>
-                			<th>Nilai Akhir</th>
-                		</tr>
+                        <thead>
+                    		<tr>
+                    			<th>#</th>
+                    			<th>Mata Pelajaran</th>
+                                <th>Kelas</th>
+                    			<th>Judul Ujian</th>
+                    			<th>Nilai Pilihan Ganda</th>
+                    			<th>Nilai Essay</th>
+                    			<th>Nilai Akhir</th>
+                    		</tr>
+                        </thead>
+                        <tbody>
                 		<?php
                 		$no = 1;
                 		$sql_cek_nilai = mysqli_query($db, "
@@ -115,6 +118,7 @@
             				</tr>
             			<?php
                 		} ?>
+                        </tbody>
                 	</table>
                	</div>
             </div>

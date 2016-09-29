@@ -35,7 +35,7 @@ if(@$_GET['action'] == '') { ?>
 
                         	while($data_berita = mysqli_fetch_array($sql_berita)) { ?>
 								<tr>
-									<td align="center"><?php echo $no++; ?></td>
+									<td><?php echo $no++; ?></td>
 									<td><?php echo $data_berita['judul']; ?></td>
 									<td><?php echo substr($data_berita['isi'], 0, 50)." ..."; ?></td>
 									<td><?php echo tgl_indo($data_berita['tgl_posting']); ?></td>
@@ -74,7 +74,7 @@ if(@$_GET['action'] == '') { ?>
 	<div class="row">
 		<div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading">Tambah Berita &nbsp; <a href="?page=berita" class="btn btn-warning btn-xs">Kembali</a></div>
+                <div class="panel-heading">Tambah Berita &nbsp; <a href="?page=berita" class="btn btn-warning btn-sm">Kembali</a></div>
                 <div class="panel-body">
                 	<form method="post">
                     	<div class="form-group">
@@ -118,7 +118,7 @@ if(@$_GET['action'] == '') { ?>
 	<div class="row">
 		<div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading">Edit Berita &nbsp; <a href="?page=berita" class="btn btn-warning btn-xs">Kembali</a></div>
+                <div class="panel-heading">Edit Berita &nbsp; <a href="?page=berita" class="btn btn-warning btn-sm">Kembali</a></div>
                 <div class="panel-body">
                 <?php
                 $sql_beritaID = mysqli_query($db, "SELECT * FROM tb_berita WHERE id_berita = '$_GET[id]'") or die($db->error);

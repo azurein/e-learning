@@ -13,7 +13,7 @@ $sql_essay = mysqli_query($db, "SELECT * FROM tb_soal_essay WHERE id_tq = '$id'"
 		if(@$_GET['hal'] == "pilgan" || @$_GET['hal'] == "essay") { ?>
 			<div class="panel-body">
 				<fieldset>
-					<legend>Info Tugas / Quiz</legend>
+					<legend>Info Tugas / Ujian</legend>
 					<?php
 					$sql_tq = mysqli_query($db, "SELECT * FROM tb_topik_quiz JOIN tb_kelas ON tb_topik_quiz.id_kelas = tb_kelas.id_kelas JOIN tb_mapel ON tb_topik_quiz.id_mapel = tb_mapel.id WHERE id_tq = '$id'") or die ($db->error);
 					$data_tq = mysqli_fetch_array($sql_tq);

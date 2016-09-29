@@ -15,7 +15,7 @@ if(@$_GET['action'] == 'copyoutline') { ?>
 	<div class="row">
 		<div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading">Copy Outline &nbsp; <a href="?page=kelas" class="btn btn-warning btn-xs">Kembali</a></div>
+                <div class="panel-heading">Copy Outline &nbsp; <a href="?page=kelas" class="btn btn-warning btn-sm">Kembali</a></div>
                 <div class="panel-body">
                 	<form method="post" enctype="multipart/form-data">
                     	<div class="form-group">

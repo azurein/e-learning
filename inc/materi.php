@@ -44,7 +44,7 @@ if(@$_GET['action'] == '') { ?>
                             ") or die ($db->error);
 	                        while($data_mapel = mysqli_fetch_array($sql_mapel)) { ?>
 	                            <tr>
-	                                <td width="40px" align="center"><?php echo $no++; ?></td>
+	                                <td width="25px" align="center"><?php echo $no++; ?></td>
 	                                <td><?php echo $data_mapel['mapel']; ?></td>
                                     <td><?php echo $data_mapel['nama_kelas']; ?></td>
 	                                <td width="200px" align="center">
@@ -65,7 +65,7 @@ if(@$_GET['action'] == '') { ?>
 	<div class="row">
 	    <div class="col-md-12">
 	        <div class="panel panel-default">
-	            <div class="panel-heading">Lihat Data Materi Pelajaran</div>
+	            <div class="panel-heading">Lihat Data Materi Pelajaran &nbsp; <a onClick="window.history.back()" class="btn btn-warning btn-sm">Kembali</a></div>
 	            <div class="panel-body">
 					<div class="table-responsive">
 						<table class="table table-striped table-bordered table-hover">
@@ -82,12 +82,12 @@ if(@$_GET['action'] == '') { ?>
 						    <tbody id="materi">
 						    <?php
 						    $no = 1;
+                            $id_mapel = $_GET['id_mapel'];
 						    $sql_materi = mysqli_query($db, "
                                 SELECT DISTINCT
                                 id_materi,
                                 judul,
                                 tgl_posting,
-                                pembuat,
                                 pembuat,
                                 hits,
                                 nama_file
@@ -102,10 +102,42 @@ if(@$_GET['action'] == '') { ?>
                                 ON tb_mapel_ajar.id = tb_jadwal_siswa.id_mapel_ajar
 
                                 WHERE id_siswa = '$_SESSION[siswa]'
+                                AND tb_mapel_ajar.id_mapel = '$id_mapel'
                             ") or die ($db->error);
+                            if($_GET['id_tq']) {
+                                $sql_materi = mysqli_query($db, "
+                                    SELECT DISTINCT
+                                    tb_file_materi.id_materi,
+                                    tb_file_materi.judul,
+                                    tgl_posting,
+                                    tb_file_materi.pembuat,
+                                    hits,
+                                    nama_file
+
+                                    FROM tb_file_materi
+
+                                    JOIN tb_mapel_ajar
+                                    ON tb_file_materi.id_mapel = tb_mapel_ajar.id_mapel
+                                    AND tb_file_materi.id_kelas = tb_mapel_ajar.id_kelas
+
+                                    JOIN tb_jadwal_siswa
+                                    ON tb_mapel_ajar.id = tb_jadwal_siswa.id_mapel_ajar
+
+                                    JOIN tb_topik_quiz
+                                    ON tb_mapel_ajar.id_mapel = tb_topik_quiz.id_mapel
+                                    AND tb_mapel_ajar.id_kelas = tb_topik_quiz.id_kelas
+
+                                    JOIN tb_quiz_materi
+                                    ON tb_topik_quiz.id_tq = tb_quiz_materi.id_tq
+                                    AND tb_file_materi.id_materi = tb_quiz_materi.id_materi
+
+                                    WHERE id_siswa = '$_SESSION[siswa]'
+                                    AND tb_topik_quiz.id_tq = '$_GET[id_tq]'
+                                ") or die ($db->error);
+                            }
 						    while($data_materi = mysqli_fetch_array($sql_materi)) { ?>
 						        <tr>
-						            <td width="40px" align="center"><?php echo $no++; ?></td>
+						            <td width="25px" align="center"><?php echo $no++; ?></td>
 						            <td id="judul"><?php echo $data_materi['judul']; ?></td>
 						            <td><?php echo $data_materi['tgl_posting']; ?></td>
 						            <td>
@@ -120,7 +152,7 @@ if(@$_GET['action'] == '') { ?>
 						            </td>
 						            <td><?php echo $data_materi['hits']." kali"; ?></td>
 						            <td align="center">
-						            	<a href="./admin/file_materi/<?php echo $data_materi['nama_file']; ?>" target="_blank" id="klik" isi="<?php echo $data_materi['id_materi']; ?>" class="btn btn-info btn-xs">Lihat / Download</a>
+						            	<a href="./admin/file_materi/<?php echo $data_materi['nama_file']; ?>" target="_blank" id="klik" isi="<?php echo $data_materi['id_materi']; ?>" class="btn btn-primary btn-xs">Lihat / Download</a>
 						            </td>
 						        </tr>
 						    	<?php
