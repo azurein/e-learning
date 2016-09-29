@@ -69,7 +69,9 @@ $db = mysqli_connect("localhost", "root", "root", "elearn_db");
     <div class="content-wrapper">
         <div class="container">
             <?php
-            if(@$_GET['page'] == '') { ?>
+            if(@$_GET['page'] == 'berita') {
+                include "inc/berita.php";
+            } else { ?>
                 <div class="row">
                     <div class="col-md-12">
                         <h4 class="page-head-line">Silahkan login untuk masuk ke e-learning</h4>
@@ -86,7 +88,7 @@ $db = mysqli_connect("localhost", "root", "root", "elearn_db");
                             if(mysqli_num_rows($sql) > 0) {
                                 if($data['status'] == 'aktif') {
                                     @$_SESSION['siswa'] = $data['id_siswa'];
-                                    echo "<script>window.location='./';</script>";
+                                    echo "<script>location.reload();</script>";
                                 } else {
                                     echo '<div class="alert alert-warning">Login gagal, akun Anda sedang tidak aktif</div>';
                                 }
@@ -112,8 +114,6 @@ $db = mysqli_connect("localhost", "root", "root", "elearn_db");
                     </div>
                 </div>
             <?php
-            } else if(@$_GET['page'] == 'berita') {
-                include "inc/berita.php";
             } ?>
         </div>
     </div>

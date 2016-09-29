@@ -14,22 +14,24 @@
                 		<tr>
                 			<th>#</th>
                 			<th>Mata Pelajaran</th>
+                            <th>Kelas</th>
                 			<th>Judul Ujian</th>
-                			<th>Presentase Nilai Pilihan Ganda</th>
-                			<th>Presentase Nilai Essay</th>
-                			<th>Nilai Total</th>
+                			<th>Nilai Pilihan Ganda</th>
+                			<th>Nilai Essay</th>
+                			<th>Nilai Akhir</th>
                 		</tr>
                 		<?php
                 		$no = 1;
                 		$sql_cek_nilai = mysqli_query($db, "
 
                             SELECT DISTINCT
-                                id_mapel,
+                                tb_topik_quiz.id_mapel,
                                 kode_mapel,
                                 mapel,
                                 tb_topik_quiz.id_tq,
                                 judul,
                                 tb_topik_quiz.id_kelas,
+                                tb_kelas.nama_kelas,
                                 tb_siswa.id_siswa,
                                 tb_nilai_pilgan.id as id_pilgan,
                                 benar,
@@ -47,11 +49,19 @@
                             LEFT JOIN tb_nilai_essay
                             ON tb_topik_quiz.id_tq = tb_nilai_essay.id_tq
 
-                            JOIN tb_mapel ON tb_topik_quiz.id_mapel = tb_mapel.id
+                            JOIN tb_mapel_ajar
+                            ON tb_topik_quiz.id_mapel = tb_mapel_ajar.id_mapel
+                            AND tb_topik_quiz.id_kelas = tb_mapel_ajar.id_kelas
+
+                            JOIN tb_jadwal_siswa
+                            ON tb_mapel_ajar.id = tb_jadwal_siswa.id_mapel_ajar
 
                             JOIN tb_siswa
-                            ON tb_nilai_pilgan.id_siswa = tb_nilai_pilgan.id_siswa
-                            OR tb_nilai_essay.id_siswa = tb_siswa.id_siswa
+                            ON tb_jadwal_siswa.id_siswa = tb_siswa.id_siswa
+
+                            JOIN tb_mapel ON tb_topik_quiz.id_mapel = tb_mapel.id
+
+                            JOIN tb_kelas ON tb_topik_quiz.id_kelas = tb_kelas.id_kelas
 
                             WHERE tb_topik_quiz.status like 'aktif'
                             AND tb_siswa.id_siswa = '$_SESSION[siswa]'
@@ -61,6 +71,7 @@
             				<tr>
                 				<td><?php echo $no++; ?></td>
             					<td><?php echo $data_nilai['mapel']; ?></td>
+                                <td><?php echo $data_nilai['nama_kelas']; ?></td>
             					<td><?php echo $data_nilai['judul']; ?></td>
             					<td>
                                     <?php

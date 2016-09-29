@@ -18,19 +18,37 @@ if(@$_GET['action'] == '') { ?>
 	                            <tr>
 	                                <th>#</th>
 	                                <th>Mata Pelajaran</th>
+                                    <th>Kelas</th>
 	                                <th>Aksi</th>
 	                            </tr>
 	                        </thead>
 	                        <tbody>
 	                        <?php
 	                        $no = 1;
-	                        $sql_mapel = mysqli_query($db, "SELECT * FROM tb_mapel") or die ($db->error);
+	                        $sql_mapel = mysqli_query($db, "
+                                SELECT DISTINCT tb_mapel_ajar.id_mapel, tb_mapel.mapel, tb_kelas.nama_kelas
+
+                                FROM tb_jadwal_siswa
+
+                                JOIN tb_mapel_ajar
+                                ON tb_jadwal_siswa.id_mapel_ajar = tb_mapel_ajar.id
+
+                                JOIN tb_mapel
+                                ON tb_mapel_ajar.id_mapel = tb_mapel.id
+
+                                JOIN tb_kelas
+                                ON tb_mapel_ajar.id_kelas = tb_kelas.id_kelas
+
+                                WHERE tb_jadwal_siswa.id_siswa = '$_SESSION[siswa]'
+                                AND tb_mapel_ajar.status_aktif = 1
+                            ") or die ($db->error);
 	                        while($data_mapel = mysqli_fetch_array($sql_mapel)) { ?>
 	                            <tr>
 	                                <td width="40px" align="center"><?php echo $no++; ?></td>
 	                                <td><?php echo $data_mapel['mapel']; ?></td>
+                                    <td><?php echo $data_mapel['nama_kelas']; ?></td>
 	                                <td width="200px" align="center">
-	                                	<a href="?page=materi&action=lihatmateri&id_mapel=<?php echo $data_mapel['id']; ?>" class="btn btn-primary btn-xs">Lihat Materi</a>
+	                                	<a href="?page=materi&action=lihatmateri&id_mapel=<?php echo $data_mapel['id_mapel']; ?>" class="btn btn-primary btn-xs">Lihat Materi</a>
 	                                </td>
 	                            </tr>
 	                        	<?php
@@ -55,7 +73,6 @@ if(@$_GET['action'] == '') { ?>
 						        <tr>
 						            <th>#</th>
 						            <th>Judul Materi</th>
-						            <th>Nama File</th>
 						            <th>Tanggal Posting</th>
 						            <th>Pembuat</th>
 						            <th>Dilihat</th>
@@ -64,15 +81,32 @@ if(@$_GET['action'] == '') { ?>
 						    </thead>
 						    <tbody id="materi">
 						    <?php
-						    $sql_siswa = mysqli_query($db, "SELECT * FROM tb_siswa WHERE id_siswa = '$_SESSION[siswa]'") or die($db->error);
-						    $data_siswa = mysqli_fetch_array($sql_siswa);
 						    $no = 1;
-						    $sql_materi = mysqli_query($db, "SELECT * FROM tb_file_materi WHERE id_mapel = '$_GET[id_mapel]' AND id_kelas = '$data_siswa[id_kelas]'") or die ($db->error);
+						    $sql_materi = mysqli_query($db, "
+                                SELECT DISTINCT
+                                id_materi,
+                                judul,
+                                tgl_posting,
+                                pembuat,
+                                pembuat,
+                                hits,
+                                nama_file
+
+                                FROM tb_file_materi
+
+                                JOIN tb_mapel_ajar
+                                ON tb_file_materi.id_mapel = tb_mapel_ajar.id_mapel
+                                AND tb_file_materi.id_kelas = tb_mapel_ajar.id_kelas
+
+                                JOIN tb_jadwal_siswa
+                                ON tb_mapel_ajar.id = tb_jadwal_siswa.id_mapel_ajar
+
+                                WHERE id_siswa = '$_SESSION[siswa]'
+                            ") or die ($db->error);
 						    while($data_materi = mysqli_fetch_array($sql_materi)) { ?>
 						        <tr>
 						            <td width="40px" align="center"><?php echo $no++; ?></td>
 						            <td id="judul"><?php echo $data_materi['judul']; ?></td>
-						            <td><?php echo $data_materi['nama_file']; ?></td>
 						            <td><?php echo $data_materi['tgl_posting']; ?></td>
 						            <td>
 						            	<?php
@@ -101,9 +135,7 @@ if(@$_GET['action'] == '') { ?>
 							url : 'inc/prosesklik.php',
 							type : 'POST',
 							data : 'id='+id,
-							success : function(msg) {
-								window.location='?page=materi&action=lihatmateri&id_mapel=<?php echo @$_GET["id_mapel"]; ?>';
-							}
+							success : function(msg) {}
 						});
                     });
                     </script>

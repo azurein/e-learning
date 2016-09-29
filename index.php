@@ -120,7 +120,7 @@ $data_terlogin = mysqli_fetch_array($sql_terlogin);
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    &copy; 2016 E-Learning TAX INSTITUTE 
+                    &copy; 2016 E-Learning TAX INSTITUTE
                 </div>
 
             </div>

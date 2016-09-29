@@ -37,7 +37,7 @@ if(@$_GET['action'] == 'copyoutline') { ?>
                             <label>Kelas *</label>
                             <select name="kelas" class="form-control" required>
                             	<?php
-                            	$sql_kelas = mysqli_query($db, "SELECT tb_kelas.id_kelas, tb_kelas.nama_kelas FROM tb_kelas JOIN tb_mapel_ajar ON tb_kelas.id_kelas = tb_mapel_ajar.id_kelas WHERE tb_mapel_ajar.id_mapel = '$_GET[idmapel]'") or die ($db->error);
+                            	$sql_kelas = mysqli_query($db, "SELECT DISTINCT tb_kelas.id_kelas, tb_kelas.nama_kelas FROM tb_kelas JOIN tb_mapel_ajar ON tb_kelas.id_kelas = tb_mapel_ajar.id_kelas WHERE tb_mapel_ajar.id_mapel = '$_GET[idmapel]'") or die ($db->error);
                             	while($data_kelas = mysqli_fetch_array($sql_kelas)) {
                             		echo '<option value="'.$data_kelas['id_kelas'].'">'.$data_kelas['nama_kelas'].'</option>';
                             	} ?>

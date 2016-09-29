@@ -23,19 +23,41 @@ if(@$_GET['action'] == '') { ?>
 	                        <thead>
 	                            <tr>
 	                                <th>#</th>
-	                                <th>Tema Pelatihan</th>
+	                                <th>Mata Pelajaran</th>
+                                    <th>Kelas</th>
 	                                <th>Aksi</th>
 	                            </tr>
 	                        </thead>
 	                        <tbody>
 	                        <?php
-	                        $sql_mapel = mysqli_query($db, "SELECT * FROM tb_mapel") or die ($db->error);
+	                        $sql_mapel = mysqli_query($db, "
+                                SELECT DISTINCT
+                                tb_mapel_ajar.id_mapel,
+                                tb_mapel_ajar.id_kelas,
+                                tb_mapel.mapel,
+                                tb_kelas.nama_kelas
+
+                                FROM tb_jadwal_siswa
+
+                                JOIN tb_mapel_ajar
+                                ON tb_jadwal_siswa.id_mapel_ajar = tb_mapel_ajar.id
+
+                                JOIN tb_mapel
+                                ON tb_mapel_ajar.id_mapel = tb_mapel.id
+
+                                JOIN tb_kelas
+                                ON tb_mapel_ajar.id_kelas = tb_kelas.id_kelas
+
+                                WHERE tb_jadwal_siswa.id_siswa = '$_SESSION[siswa]'
+                                AND tb_mapel_ajar.status_aktif = 1
+                            ") or die ($db->error);
 	                        while($data_mapel = mysqli_fetch_array($sql_mapel)) { ?>
 	                            <tr>
 	                                <td width="40px" align="center"><?php echo $no++; ?></td>
 	                                <td><?php echo $data_mapel['mapel']; ?></td>
+                                    <td><?php echo $data_mapel['nama_kelas']; ?></td>
 	                                <td width="200px" align="center">
-	                                	<a href="?page=quiz&action=daftartopik&id_mapel=<?php echo $data_mapel['id']; ?>" class="btn btn-primary btn-xs">Lihat Ujian</a>
+	                                	<a href="?page=quiz&action=daftartopik&id_mapel=<?php echo $data_mapel['id_mapel']; ?>&id_kelas=<?php echo $data_mapel['id_kelas']; ?>" class="btn btn-primary btn-xs">Lihat Ujian</a>
 	                                </td>
 	                            </tr>
 	                        	<?php
@@ -58,7 +80,8 @@ if(@$_GET['action'] == '') { ?>
 					<div class="table-responsive">
 					<?php
 					$id_mapel = @$_GET['id_mapel'];
-					$sql_tq = mysqli_query($db, "SELECT * FROM tb_topik_quiz WHERE id_mapel = '$id_mapel' AND id_kelas = '$data_terlogin[id_kelas]' AND status = 'aktif'") or die ($db->error);
+                    $id_kelas = @$_GET['id_kelas'];
+					$sql_tq = mysqli_query($db, "SELECT * FROM tb_topik_quiz WHERE id_mapel = '$id_mapel' AND id_kelas = '$id_kelas' AND status = 'aktif'") or die ($db->error);
 					if(mysqli_num_rows($sql_tq) > 0) {
 						while($data_tq = mysqli_fetch_array($sql_tq)) { ?>
 						<table width="100%">
@@ -170,5 +193,5 @@ if(@$_GET['action'] == '') { ?>
 	    </div>
 	</div>
 	<?php
-} 
+}
 ?>

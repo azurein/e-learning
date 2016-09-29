@@ -98,7 +98,7 @@ if(@$_GET['action'] == '') { ?>
                                     <th>Waktu</th>
                                     <th>Info</th>
                                     <th>Status</th>
-                                    <th>Aksi</th>
+                                    <th>Opsi</th>
                                 </tr>
                             </thead>
                             <tbody>
