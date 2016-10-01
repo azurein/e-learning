@@ -125,6 +125,14 @@ if(@$_SESSION['admin'] || @$_SESSION['pengajar']) {
                     </li>
                     <?php
                     }
+                    if(@$_SESSION['pengajar']) {
+                    ?>
+                    <li>
+                        <a class="<?php if(@$_GET['page'] == 'forum') { echo 'active-menu'; } ?>" href="?page=forum"><i class="fa fa-comments"></i> Forum</a>
+                    </li>
+                    <?php
+                    }
+                    ?>
                     ?>
                 </ul>
             </div>
@@ -156,6 +164,8 @@ if(@$_SESSION['admin'] || @$_SESSION['pengajar']) {
                     include "inc/berita.php";
                 } else if(@$_GET['page'] == 'katalog') {
                     include "inc/katalog.php";
+                } else if(@$_GET['page'] == 'forum') {
+                    include "inc/forum/index.php";
                 } else {
                     echo "<div class='col-xs-12'><div class='alert alert-danger'>[404] Halaman tidak ditemukan! Silahkan pilih menu yang ada!</div></div>";
                 } ?>

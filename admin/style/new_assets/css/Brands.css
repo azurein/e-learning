@@ -1,0 +1,35 @@
+.brands {
+  color:#313437;
+  background-color:#fff;
+}
+
+.brands a {
+  display:block;
+  text-align:center;
+  padding:40px 0;
+}
+
+@media (max-width:767px) {
+  .brands a {
+    padding:30px 0;
+  }
+}
+
+.brands a img {
+  display:inline-block;
+  margin:10px 20px;
+  vertical-align:middle;
+}
+
+button.btn.btn-success.enroll-button {
+  float:right;
+  margin:4em 2em 0em 0em;
+}
+
+h2.text-center.form-heading {
+}
+
+h2.text-center.form-heading.login-heading {
+  margin-bottom:1em;
+}
+

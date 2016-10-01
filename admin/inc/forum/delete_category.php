@@ -7,8 +7,6 @@ $id = intval($_GET['id']);
 $dn1 = mysql_fetch_array(mysql_query('select count(id) as nb1, name, position from categories where id="'.$id.'" group by id'));
 if($dn1['nb1']>0)
 {
-if(isset($_SESSION['username']) and $_SESSION['username']==$admin)
-{
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -66,11 +64,6 @@ else
 	</body>
 </html>
 <?php
-}
-else
-{
-	echo '<h2>You must be logged as an administrator to access this page: <a href="login.php">Login</a> - <a href="signup.php">Sign Up</a></h2>';
-}
 }
 else
 {

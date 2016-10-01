@@ -184,7 +184,7 @@ if(@$_GET['hal'] == "tujuanajar") { ?>
 										<tr>
 											<td>File Buku</td>
 											<td>:</td>
-											<td><?php echo $data_sertifikasi['file_buku']; ?></td>
+											<td><a href="./file_buku/<?php echo $data_sertifikasi['file_buku']; ?>" target="_blank"><?php echo $data_sertifikasi['file_buku']; ?></a></td>
 										</tr>
 										<tr>
 											<td>Opsi</td>

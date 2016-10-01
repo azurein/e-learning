@@ -108,7 +108,7 @@ if(@$_SESSION['siswa']) { ?>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <title>Ujian Online E-Learning TAX INSTITUTE</title>
+    <title>Ujian Online E-Learning Pajak</title>
     <link href="style/assets/css/bootstrap.css" rel="stylesheet" />
     <link href="style/assets/css/font-awesome.css" rel="stylesheet" />
     <link href="style/assets/css/style.css" rel="stylesheet" />
@@ -295,7 +295,7 @@ if(@$_SESSION['siswa']) { ?>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                &copy; 2016 E-Learning Tax INSTITUTE
+                &copy; 2016 E-Learning Pajak
             </div>
 
         </div>
