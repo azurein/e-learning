@@ -26,6 +26,10 @@
                                 <tbody>
                         		<?php
                         		$no = 1;
+                                $condition = "";
+                                if($_GET['id'] > 0) {
+                                    $condition = "AND tb_mapel_ajar.id_mapel = $_GET[id]";
+                                }
                         		$sql_cek_nilai = mysqli_query($db, "
 
                                     SELECT DISTINCT
@@ -69,6 +73,9 @@
 
                                     WHERE tb_topik_quiz.status like 'aktif'
                                     AND tb_siswa.id_siswa = '$_SESSION[siswa]'
+                                    ".$condition."
+
+                                    ORDER BY mapel, tb_kelas.nama_kelas ASC
 
                                 ") or die ($db->error);
                     			while($data_nilai = mysqli_fetch_array($sql_cek_nilai)) { ?>

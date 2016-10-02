@@ -27,6 +27,10 @@
                 	                        <tbody>
                 	                        <?php
                 	                        $no = 1;
+                                            $condition = "";
+                                            if($_GET['id'] > 0) {
+                                                $condition = "AND tb_mapel_ajar.id_mapel = $_GET[id]";
+                                            }
                 	                        $sql_mapel = mysqli_query($db, "
                                                 SELECT DISTINCT tb_mapel_ajar.id_mapel, tb_mapel.mapel, tb_kelas.nama_kelas
 
@@ -43,6 +47,9 @@
 
                                                 WHERE tb_jadwal_siswa.id_siswa = '$_SESSION[siswa]'
                                                 AND tb_mapel_ajar.status_aktif = 1
+                                                ".$condition."
+
+                                                ORDER BY tb_mapel.mapel, tb_kelas.nama_kelas ASC
                                             ") or die ($db->error);
                 	                        while($data_mapel = mysqli_fetch_array($sql_mapel)) { ?>
                 	                            <tr>

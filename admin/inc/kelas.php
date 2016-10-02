@@ -51,7 +51,7 @@ if(@$_GET['action'] == '') { ?>
                     echo '<a href="?page=kelas&action=tambah" class="btn btn-primary btn-sm">Tambah Data</a> &nbsp;';
                 }
                 ?>
-                <a href="./laporan/cetak.php?data=kelas" target="_blank" class="btn btn-default btn-sm">Cetak</a>
+                <!-- <a href="./laporan/cetak.php?data=kelas" target="_blank" class="btn btn-default btn-sm">Cetak</a> -->
             </div>
             <div class="panel-body">
                 <div class="table-responsive">

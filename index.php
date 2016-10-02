@@ -47,7 +47,7 @@ $data = mysqli_fetch_array($sql_siswa);
                         <ul class="nav navbar-nav">
                             <?php
                             if(isset($_SESSION['siswa'])) { ?>
-                            <li><a href="#">Dashboard</a></li>
+                            <li><a href="./">Beranda</a></li>
                             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Kelas Saya<span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li <?php if(@$_GET['page'] == 'jadwal') { echo 'class="active"'; } ?> ><a href="?page=jadwal">Jadwal</a></li>
@@ -129,6 +129,8 @@ $data = mysqli_fetch_array($sql_siswa);
         include "inc/berita.php";
     } else if(@$_GET['page'] == 'katalog') {
         include "inc/katalog.php";
+    } else {
+        echo "<br><br><center><h1>404 Page Not Found</h1><center><br><br>";
     } ?>
 
     <div class="footer-dark">

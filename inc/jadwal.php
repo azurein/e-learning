@@ -25,6 +25,10 @@
                                 <tbody>
                         		<?php
                                 $no = 1;
+                                $condition = "";
+                                if($_GET['id'] > 0) {
+                                    $condition = "AND tb_mapel_ajar.id_mapel = $_GET[id]";
+                                }
                                 $sql_jadwal = mysqli_query($db, "
                                     SELECT DISTINCT
                                     id_jadwal,
@@ -51,6 +55,7 @@
                                     ON tb_mapel_ajar.id_kelas = tb_kelas.id_kelas
 
                                     WHERE tb_jadwal_siswa.id_siswa = '$_SESSION[siswa]'
+                                    ".$condition."
 
                                     ORDER BY tanggal, jam_mulai, jam_selesai, mapel DESC
                                 ") or die ($db->error);

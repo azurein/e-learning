@@ -88,15 +88,15 @@
                 <div class="col-md-6 col-md-offset-3 form-container">
                     <h2>Edit Profil &nbsp; <a href="?page=profile" class="btn btn-warning btn-sm">Kembali</a></h2><hr>
                     <form method="post" enctype="multipart/form-data">
-                        Nama Lengkap* : <input type="text" name="nama_lengkap" value="<?php echo $data['nama_lengkap']; ?>" class="form-control" required />
-                        Tempat Lahir* : <input type="text" name="tempat_lahir" value="<?php echo $data['tempat_lahir']; ?>" class="form-control" required />
-                        Tanggal Lahir* : <input type="date" name="tgl_lahir" value="<?php echo $data['tgl_lahir']; ?>" class="form-control" required />
-                        Jenis Kelamin* :
+                        <div class="form-group">Nama Lengkap* : <input type="text" name="nama_lengkap" value="<?php echo $data['nama_lengkap']; ?>" class="form-control" required /></div>
+                        <div class="form-group">Tempat Lahir* : <input type="text" name="tempat_lahir" value="<?php echo $data['tempat_lahir']; ?>" class="form-control" required /></div>
+                        <div class="form-group">Tanggal Lahir* : <input type="date" name="tgl_lahir" value="<?php echo $data['tgl_lahir']; ?>" class="form-control" required /></div>
+                        <div class="form-group">Jenis Kelamin* :
                         <select name="jenis_kelamin" class="form-control" required>
                             <option value="L">Laki-laki</option>
                             <option value="P" <?php if($data['jenis_kelamin'] == 'P') { echo "selected"; } ?>>Perempuan</option>
-                        </select>
-                        Agama* :
+                        </select></div>
+                        <div class="form-group">Agama* :
                         <select name="agama" class="form-control" required>
                             <option value="Islam">Islam</option>
                             <option value="Kristen" <?php if($data['agama'] == 'Kristen') { echo "selected"; } ?>>Kristen</option>
@@ -104,17 +104,19 @@
                             <option value="Hindu" <?php if($data['agama'] == 'Hindu') { echo "selected"; } ?>>Hindu</option>
                             <option value="Budha" <?php if($data['agama'] == 'Budha') { echo "selected"; } ?>>Budha</option>
                             <option value="Konghucu" <?php if($data['agama'] == 'Konghucu') { echo "selected"; } ?>>Konghucu</option>
-                        </select>
-                        Nama Ayah* : <input type="text" name="nama_ayah" value="<?php echo $data['nama_ayah']; ?>" class="form-control" required />
-                        Nama Ibu* : <input type="text" name="nama_ibu" value="<?php echo $data['nama_ibu']; ?>" class="form-control" required />
-                        Nomor Telepon : <input type="text" name="no_telp" value="<?php echo $data['no_telp']; ?>" class="form-control" />
-                        Email : <input type="email" name="email" value="<?php echo $data['email']; ?>" class="form-control" />
-                        Alamat* : <textarea name="alamat" class="form-control" rows="3" required><?php echo $data['alamat']; ?></textarea>
-                        Foto : <br /><img src="./img/foto_siswa/<?php echo $data['foto']; ?>" width="150px" style="margin-bottom:5px;" /><input type="file" name="gambar" class="form-control" />
-                        Username* : <input type="text" name="user" value="<?php echo $data['username']; ?>" class="form-control" required />
-                        Password* : <input type="text" name="pass" value="<?php echo $data['pass']; ?>" class="form-control" required />
+                        </select></div>
+                        <div class="form-group">Nama Ayah* : <input type="text" name="nama_ayah" value="<?php echo $data['nama_ayah']; ?>" class="form-control" required /></div>
+                        <div class="form-group">Nama Ibu* : <input type="text" name="nama_ibu" value="<?php echo $data['nama_ibu']; ?>" class="form-control" required /></div>
+                        <div class="form-group">Nomor Telepon : <input type="text" name="no_telp" value="<?php echo $data['no_telp']; ?>" class="form-control" /></div>
+                        <div class="form-group">Email : <input type="email" name="email" value="<?php echo $data['email']; ?>" class="form-control" /></div>
+                        <div class="form-group">Alamat* : <textarea name="alamat" class="form-control" rows="3" required><?php echo $data['alamat']; ?></textarea></div>
+                        <div class="form-group">Foto : <br /><img src="./img/foto_siswa/<?php echo $data['foto']; ?>" width="150px" style="margin-bottom:5px;" /><input type="file" name="gambar" class="form-control" /></div>
+                        <div class="form-group">Username* : <input type="text" name="user" value="<?php echo $data['username']; ?>" class="form-control" required /></div>
+                        <div class="form-group">Password* : <input type="text" name="pass" value="<?php echo $data['pass']; ?>" class="form-control" required /></div>
                         <hr />
-                        <input type="submit" name="simpan" value="Simpan" class="btn btn-success" />
+                        <div class="form-group">
+                            <input type="submit" name="simpan" value="Simpan" class="btn btn-success" />
+                        </div>
                     </form>
                     <?php
                     if(@$_POST['simpan']) {
