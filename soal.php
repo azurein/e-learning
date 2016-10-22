@@ -108,7 +108,7 @@ if(@$_SESSION['siswa']) { ?>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <title>Ujian Online E-Learning Pajak</title>
+    <title>E-Learn Pajak</title>
     <link href="style/assets/css/bootstrap.css" rel="stylesheet" />
     <link href="style/assets/css/font-awesome.css" rel="stylesheet" />
     <link href="style/assets/css/style.css" rel="stylesheet" />
@@ -121,38 +121,11 @@ if(@$_SESSION['siswa']) { ?>
 </head>
 <body onLoad="init(),noBack();" onpageshow="if (event.persisted) noBack();" onUnload="keluar()">
 
-<div class="navbar navbar-inverse set-radius-zero">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="./">
-                <img src="style/assets/img/logo.png" />
-            </a>
-        </div>
-
-        <div class="left-div">
-            <div class="user-settings-wrapper">
-                <ul class="nav">
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                            <span class="glyphicon glyphicon-user" style="font-size: 25px;"></span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="content-wrapper">
     <div class="container">
 		<div class="row">
 		    <div class="col-md-12">
-		        <h4 class="page-head-line">Test : <u><?php echo $data_tq['judul']; ?></u><br />Mata Pelajaran : <u><?php echo $data_tq['mapel']; ?></u></h4>
+		        <h3>Test : <u><?php echo $data_tq['judul']; ?></u><br />Mata Pelajaran : <u><?php echo $data_tq['mapel']; ?></u></h3><br>
 		    </div>
 		</div>
 
@@ -290,17 +263,6 @@ if(@$_SESSION['siswa']) { ?>
 
 	</div>
 </div>
-
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                &copy; 2016 E-Learning Pajak
-            </div>
-
-        </div>
-    </div>
-</footer>
 
 </body>
 </html>

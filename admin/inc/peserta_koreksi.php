@@ -120,7 +120,7 @@
                                     <?php
                                     }
                                 } ?>
-                                <a onclick="return confirm('Yakin akan menghapus siswa ini dari daftar peserta ujian?');" href="?page=quiz&action=hapuspeserta&id_tq=<?php echo $id_tq; ?>&id_siswa=<?php echo $data_siswa_mengikuti_tes['id_siswa']; ?>" class="btn btn-default btn-xs">Hapus Siswa dari Peserta Ujian</a>
+                                <a onclick="return confirm('Yakin akan menghapus siswa ini dari daftar peserta ujian?');" href="?page=quiz&action=hapuspeserta&id_tq=<?php echo $id_tq; ?>&id_siswa=<?php echo $data_nilai['id_siswa']; ?>" class="btn btn-default btn-xs">Hapus Siswa dari Peserta Ujian</a>
                             </td>
                         </tr>
 					<?php

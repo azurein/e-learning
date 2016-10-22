@@ -7,7 +7,7 @@ if(@$_SESSION['admin']) {
 
     <div class="row">
         <div class="col-md-12">
-            <h1 class="page-header">Manajemenen Registrasi Siswa</h1>
+            <h1 class="page-header">Manajemen Registrasi Siswa</h1>
         </div>
     </div>
 

@@ -5,7 +5,7 @@ $id = @$_GET['id'];
 if(@$_SESSION['admin']) { ?>
     <div class="row">
         <div class="col-md-12">
-            <h1 class="page-header">Manajemenen Data Siswa</h1>
+            <h1 class="page-header">Manajemen Data Siswa</h1>
         </div>
     </div>
 <?php

@@ -175,14 +175,14 @@
     					2. Pastikan koneksi anda terjamin dan bagus.<br />
     					3. Pilih browser yang versi terbaru.<br />
     					4. Waktu akan berjalan otomatis berlanjut walau anda close halaman ujiannya, oleh karena itu siapkan waktu untuk ujian anda.<br />
-    					5. Jika mati lampu hubungi pengajar mata pelajaran terkait untuk melakukan jian ulang.
+    					5. Jika mati lampu hubungi pengajar mata pelajaran terkait untuk melakukan ujian ulang.
     					<?php
     				} ?>
     	            </div>
     	            <div class="panel-footer">
     					<?php
     					if(mysqli_num_rows($sql_nilai) > 0 || mysqli_num_rows($sql_jwb) > 0) { ?>
-    						<a onClick="window.history.back()" class="btn btn-warning">Kembali</a>
+    						<a href="?page=quiz" class="btn btn-warning">Kembali</a>
     						<?php
     					} else {
     						$sql_cek_soal_pilgan = mysqli_query($db, "SELECT * FROM tb_soal_pilgan WHERE id_tq = '$_GET[id_tq]'") or die ($db->error);
