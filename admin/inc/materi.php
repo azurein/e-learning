@@ -88,7 +88,13 @@ if(@$_GET['action'] == '') { ?>
                             <select name="mapel" class="form-control mapel_ddl" required>
                                 <option>- Pilih -</option>
                             	<?php
-                            	$sql_mapel = mysqli_query($db, "SELECT * FROM tb_mapel") or die ($db->error);
+                                $query = "";
+                                if(@$_SESSION[admin]) {
+                                    $query = "SELECT * FROM tb_mapel";
+                                } else if(@$_SESSION[pengajar]) {
+                                    $query = "SELECT tb_mapel.* FROM tb_mapel JOIN tb_mapel_ajar ON tb_mapel.id = tb_mapel_ajar.id_mapel WHERE tb_mapel_ajar.id_pengajar = '$_SESSION[pengajar]'";
+                                }
+                            	$sql_mapel = mysqli_query($db, $query) or die ($db->error);
                             	while($data_mapel = mysqli_fetch_array($sql_mapel)) {
                                     if($data_mapel['id'] == $_GET['idmapel']) {
 	                            		echo '<option selected value="'.$data_mapel['id'].'">'.$data_mapel['mapel'].'</option>';

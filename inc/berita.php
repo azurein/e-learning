@@ -14,7 +14,21 @@
                             <ul class="list-group">
                                 <li class="list-group-item" style="color: #333333; background: #f5f5f5"><span>Daftar Berita (klik judul untuk membaca isi)</span></li>
                                 <?php
-                                $sql_berita = mysqli_query($db, "SELECT * FROM tb_berita WHERE status = 'aktif' ORDER BY tgl_posting DESC LIMIT 0, 4") or die($db->error);
+                                $query = "";
+                                if(@$_SESSION[siswa]) {
+                                    $query =    "SELECT * FROM tb_berita WHERE status = 'aktif' AND penerbit like 'admin'
+                                                UNION
+                                                SELECT tb_berita.* FROM tb_berita
+                                                JOIN tb_mapel_ajar
+                                                ON tb_berita.penerbit = tb_mapel_ajar.id_pengajar
+                                                JOIN tb_jadwal_siswa
+                                                ON tb_mapel_ajar.id = tb_jadwal_siswa.id_mapel_ajar
+                                                WHERE status = 'aktif' AND tb_jadwal_siswa.id_siswa = '$_SESSION[siswa]'
+                                                ORDER BY tgl_posting DESC LIMIT 0, 4";
+                                } else {
+                                    $query = "SELECT * FROM tb_berita WHERE status = 'aktif' AND penerbit like 'admin' ORDER BY tgl_posting DESC LIMIT 0, 4";
+                                }
+                                $sql_berita = mysqli_query($db, $query) or die($db->error);
                                 while($data_berita = mysqli_fetch_array($sql_berita)) { ?>
                                     <li class="list-group-item"><span>
                                         <i class="fa fa-newspaper-o"></i> &nbsp;
