@@ -1,5 +1,5 @@
 <?php
-$db = mysqli_connect("localhost", "root", "root", "elearn_db");
+$db = mysqli_connect("127.0.0.1", "root", "root", "elearn_db");
 
 //---fungsi2---//
 function cek_session($isi_admin, $isi_pengajar) {

@@ -18,8 +18,9 @@ $sql_kelas = mysqli_query($db, "
         SELECT id_mapel_ajar FROM tb_jadwal_siswa WHERE id_siswa = '$_SESSION[siswa]'
     )
 ") or die ($db->error);
-if(mysqli_num_rows($sql_kelas) > 0 && $_SESSION['siswa']) {
-?>
+
+if(mysqli_num_rows($sql_kelas) > 0 && $_SESSION['siswa']) { ?>
+
 <div class="features-clean">
     <div class="container">
         <div class="intro">
@@ -115,7 +116,7 @@ if(mysqli_num_rows($sql_kelas) > 0 && $_SESSION['siswa']) {
         </div>
     </div>
 </div>
-<?
+<?php
 } ?>
 <div class="features-clean">
     <div class="container">
